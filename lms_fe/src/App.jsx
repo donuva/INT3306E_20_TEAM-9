@@ -1,10 +1,10 @@
 import logo from './logo.svg';
-import './App.css';
-import Home from './Components/Home';
+import './CSS/App.css';
+import SideNav from './Components/SideNav';
 function App() {
   return (
     <div className="App">
-     <Home/>
+     <SideNav/>
     </div>
   );
 }
