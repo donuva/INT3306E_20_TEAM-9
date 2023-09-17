@@ -8,15 +8,11 @@ import {
 } from '@ant-design/icons'
 import { RiArticleLine } from 'react-icons/ri'
 import { ImBooks } from 'react-icons/im'
-//import { NavLink, useLocation } from 'react-router-dom'
-//import 'CSS/App.css'; // Cài đặt CSS của bạn tại đây
-//import Sidebar from './Sidebar';
 
 function Home() {
   return (
     <Layout>
     <Menu
-        //mode="inline"
         style={{
           overflow: 'auto',
           height: '200vh',
