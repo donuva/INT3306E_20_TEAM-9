@@ -14,10 +14,14 @@ public class Lesson extends TimeAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String topic;
     private String content;
 
     @ElementCollection
     @CollectionTable(name="lesson_url", joinColumns = @JoinColumn(name="lesson_id"))
     @Column(name="url")
     private List<String> urls;
+
+    @ManyToOne
+    private Course course;
 }

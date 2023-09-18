@@ -2,21 +2,20 @@ package com.example.backend_lms.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Conversation extends TimeAuditable{
-
+public class CourseEnroll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    private User user;
-    private String topic;
-    private String msg;
+    private Student student;
 
+    @ManyToOne
+    private Course course;
 
+    //0 la chua duoc accept, 1 la duoc accept roi -> luu sang student list
+    private int isAccept;
 }

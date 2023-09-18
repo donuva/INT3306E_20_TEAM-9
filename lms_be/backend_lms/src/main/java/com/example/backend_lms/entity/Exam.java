@@ -22,10 +22,10 @@ public class Exam extends TimeAuditable {
 
     private int duration;
 
-    @OneToMany(mappedBy = "exam")
+    @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ScoreExam> scoreExamList;
 
-    @OneToMany(mappedBy = "exam")
+    @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questionList;
 
 

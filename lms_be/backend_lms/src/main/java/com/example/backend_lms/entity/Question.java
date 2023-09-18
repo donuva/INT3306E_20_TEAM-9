@@ -16,7 +16,7 @@ public class Question extends TimeAuditable{
 
     private String content;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Answer> answerList;
 
     @OneToOne

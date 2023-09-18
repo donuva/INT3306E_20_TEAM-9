@@ -12,6 +12,7 @@ public class Notification extends TimeAuditable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String topic;
     private String msg;
 
     @ManyToOne
