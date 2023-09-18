@@ -18,7 +18,7 @@ public class Student{
             fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "studentList", fetch = FetchType.EAGER)
     private List<Course> courseList;
 
 }
