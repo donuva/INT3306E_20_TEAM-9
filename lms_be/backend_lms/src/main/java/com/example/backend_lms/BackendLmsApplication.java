@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class BackendLmsApplication {
 
     public static void main(String[] args) {
-        log.info("hello");
         SpringApplication.run(BackendLmsApplication.class, args);
     }
 
