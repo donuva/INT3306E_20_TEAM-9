@@ -5,9 +5,10 @@ import {
   DashboardOutlined,
   CrownOutlined,
   HddOutlined
-} from '@ant-design/icons'
-import { RiArticleLine } from 'react-icons/ri'
-import { ImBooks } from 'react-icons/im'
+} from '@ant-design/icons';
+import { RiArticleLine } from 'react-icons/ri';
+import { ImBooks } from 'react-icons/im';
+import { NavLink } from 'react-router-dom';
 
 function Home() {
   return (
@@ -21,23 +22,23 @@ function Home() {
           backgroundColor:'orange',
         }}
       >
-        <Menu.Item key="/app/dashboard" icon={<DashboardOutlined />}>
-          DashBoard
+         <Menu.Item key="/app/dashboard" icon={<DashboardOutlined />}>
+          <NavLink to="/app/dashboard">Dashboard</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/courses" icon={<ImBooks />}>
-          Courses
+          <NavLink to="/app/courses">Courses</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/articles" icon={<RiArticleLine />}>
-          Notification
+          <NavLink to="/app/articles">Articles</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/acheivements" icon={<CrownOutlined />}>
-          Grade
+          <NavLink to="/app/acheivements">Acheivements</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/archives" icon={<HddOutlined />}>
-          Achive
+          <NavLink to="/app/archives">Archives</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/profile" icon={<UserOutlined />}>
-          Profile
+          <NavLink to="/app/profile">Profile</NavLink>
         </Menu.Item>
       </Menu>
   </Layout>
