@@ -1,18 +1,19 @@
 import logo from './logo.svg';
 import './CSS/App.css';
-import './CSS/footer.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CoursePage from './CoursePage';
 import SideNav from './Components/SideNav';
-import Footer from './Components/footer';
-import ProfileIcon from './Components/ProfileIcon';
-import Notification from './Components/Notification';
 
 function App() {
   return (
     <div className="App">
      
-      <ProfileIcon/>
-      <SideNav/>
-     <Footer/>
+     <Router>
+     <SideNav/>
+      <Routes>
+        <Route path="/app/courses" element={<CoursePage />} />
+      </Routes>
+    </Router>
     </div>
   );
 }
