@@ -21,4 +21,5 @@ public class Student{
     @ManyToMany(mappedBy = "studentList", fetch = FetchType.EAGER)
     private List<Course> courseList;
 
+
 }
