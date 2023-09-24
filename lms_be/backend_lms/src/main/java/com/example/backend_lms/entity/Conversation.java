@@ -18,5 +18,8 @@ public class Conversation extends TimeAuditable{
     private String topic;
     private String msg;
 
+    @ManyToOne
+    private Course course;
+
 
 }
