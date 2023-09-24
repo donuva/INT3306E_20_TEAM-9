@@ -5,12 +5,14 @@ import Footer from './Components/footer';
 import ProfileIcon from './Components/ProfileIcon';
 import Profile from './Components/Profile';
 import Grade from './Components/Grade';
+import TeacherGrade from './Components/TeacherGrade';
+
 
 function CoursePage() {
   return (
     <div className="App">
       <ProfileIcon/>
-      <Profile/>
+      <TeacherGrade/>
       <SideNav/>
      <Footer/>
     </div>
