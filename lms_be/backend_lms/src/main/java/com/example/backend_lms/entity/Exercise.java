@@ -22,6 +22,5 @@ public class Exercise extends TimeAuditable{
     @ManyToOne
     private Course course;
 
-    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ScoreExercise> scoreExerciseList;
+
 }

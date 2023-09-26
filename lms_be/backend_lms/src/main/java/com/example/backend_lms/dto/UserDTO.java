@@ -24,8 +24,8 @@ public class UserDTO {
     private String ava_url;
 
     private String bio;
-
-    @NotBlank
+    
+    @JsonIgnore
     private String password;
 
     @NotBlank
