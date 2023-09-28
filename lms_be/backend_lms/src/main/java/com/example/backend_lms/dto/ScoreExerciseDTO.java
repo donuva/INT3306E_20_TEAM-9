@@ -1,9 +1,11 @@
 package com.example.backend_lms.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -13,7 +15,13 @@ public class ScoreExerciseDTO {
 
     private String msg;
 
-    private double grade;
+    private Double grade;
+
+
+    private String exercise_url;
+
+    @JsonIgnore
+    private MultipartFile file;
 
     @JsonIncludeProperties("id")
     private ExerciseDTO exercise;

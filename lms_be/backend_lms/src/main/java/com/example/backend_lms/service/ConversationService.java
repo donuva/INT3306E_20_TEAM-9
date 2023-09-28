@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ConversationService {
-    //TODO: CRUD conversation
 
     @Autowired
     ConversationRepo conversationRepo;

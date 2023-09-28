@@ -1,6 +1,7 @@
 package com.example.backend_lms.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class ExamDTO {
 
     private int duration;
 
-    @JsonIgnoreProperties("exam")
+    @JsonIgnore
     private List<ScoreExamDTO> scoreExamList;
 
     @JsonIgnoreProperties("exam")

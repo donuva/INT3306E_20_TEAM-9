@@ -1,10 +1,15 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.ExerciseDTO;
+import com.example.backend_lms.dto.ScoreExerciseDTO;
 import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.entity.Exercise;
+import com.example.backend_lms.entity.ScoreExercise;
+import com.example.backend_lms.exception.ExpiredDate;
 import com.example.backend_lms.repo.CourseRepo;
 import com.example.backend_lms.repo.ExerciseRepo;
+import com.example.backend_lms.repo.ScoreExerciseRepo;
+import com.example.backend_lms.repo.StudentRepo;
 import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -12,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static org.assertj.core.util.DateUtil.now;
 
 @Service
 public class ExerciseService {
-    //TODO: cham diem exercise
 
     @Autowired
     ExerciseRepo exerciseRepo;
@@ -24,6 +31,11 @@ public class ExerciseService {
     @Autowired
     CourseRepo courseRepo;
 
+    @Autowired
+    StudentRepo studentRepo;
+
+    @Autowired
+    ScoreExerciseRepo scoreExerciseRepo;
     public ExerciseDTO convert(Exercise exercise){
         return new ModelMapper().map(exercise, ExerciseDTO.class);
     }
@@ -65,6 +77,74 @@ public class ExerciseService {
             return convert(exerciseRepo.findById(id).orElse(null));
         }else{
             throw new NotFoundException("Không tìm thấy bài tập");
+        }
+    }
+
+
+    /*
+    Phan nay cua hoc sinh
+     */
+    //them bai nop
+    public void submitWork(ScoreExerciseDTO scoreExercise) throws NotFoundException, ExpiredDate {
+        if (scoreExerciseRepo.findById(scoreExercise.getExercise().getId()).isPresent()
+                && studentRepo.findById(scoreExercise.getExercise().getId()).isPresent()) {
+            if(scoreExercise.getExercise().getDeadline().after(now())) {
+                scoreExerciseRepo.save(new ModelMapper().map(scoreExercise, ScoreExercise.class));
+            }else{
+                throw new ExpiredDate("Quá hạn làm bài");
+            }
+        }else {
+            throw new NotFoundException("Id học sinh hoặc bài tập không đúng");
+        }
+    }
+
+    //xoa bai nop
+    public void deleteWork(int id) throws NotFoundException, ExpiredDate {
+        if(scoreExerciseRepo.findById(id).isPresent()){
+            if(scoreExerciseRepo.findById(id).orElse(null).getExercise().getDeadline().after(now())) {
+                scoreExerciseRepo.deleteById(id);
+            }else{
+                throw new ExpiredDate("Quá hạn làm bài");
+            }
+            scoreExerciseRepo.deleteById(id);
+        }else{
+            throw new NotFoundException("Id của bài tập không hợp lệ");
+        }
+    }
+
+    //sua bai nop
+    public ScoreExerciseDTO updateWork(ScoreExerciseDTO scoreExercise) throws NotFoundException, ExpiredDate {
+        if (scoreExerciseRepo.findById(scoreExercise.getExercise().getId()).isPresent()
+                && studentRepo.findById(scoreExercise.getExercise().getId()).isPresent()
+                && scoreExerciseRepo.findById(scoreExercise.getId()).isPresent()) {
+            if(scoreExercise.getExercise().getDeadline().after(now())) {
+                scoreExerciseRepo.save(new ModelMapper().map(scoreExercise, ScoreExercise.class));
+                return new ModelMapper().map(scoreExerciseRepo.findById(scoreExercise.getId()), ScoreExerciseDTO.class);
+            }else{
+                throw new ExpiredDate("Quá hạn làm bài");
+            }
+        } else {
+            throw new NotFoundException("Id học sinh hoặc bài tập không đúng");
+        }
+    }
+
+    /*
+    Phan nay cua giao vien
+     */
+    //them, sua diem
+    public void addScore(int scoreExercise_id, Double grade) throws NotFoundException {
+        if(scoreExerciseRepo.findById(scoreExercise_id).isPresent()){
+            Objects.requireNonNull(scoreExerciseRepo.findById(scoreExercise_id).orElse(null)).setGrade(grade);
+        }else{
+            throw new NotFoundException("Id bài tập không đúng");
+        }
+    }
+
+    public void deleteScore(int scoreExercise_id) throws NotFoundException {
+        if(scoreExerciseRepo.findById(scoreExercise_id).isPresent()){
+            Objects.requireNonNull(scoreExerciseRepo.findById(scoreExercise_id).orElse(null)).setGrade(null);
+        }else{
+            throw new NotFoundException("Id bài tập không đúng");
         }
     }
 

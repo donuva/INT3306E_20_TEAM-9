@@ -14,7 +14,9 @@ public class ScoreExercise extends TimeAuditable {
 
     private String msg;
 
-    private double grade;
+    private Double grade;
+
+    private String exercise_url;
 
     @ManyToOne
     private Exercise exercise;
