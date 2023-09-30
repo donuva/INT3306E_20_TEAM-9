@@ -3,7 +3,9 @@ package com.example.backend_lms.dto;
 import com.example.backend_lms.entity.Exercise;
 import com.example.backend_lms.entity.Lesson;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,19 +20,19 @@ public class CourseDTO {
 
     private String description;
 
-    @JsonIgnoreProperties("courseList")
-    private TeacherDTO teacherDTO;
+    @JsonIncludeProperties({"user.name","id"})
+    private TeacherDTO teacher;
 
-    @JsonIgnoreProperties("course")
+    @JsonIncludeProperties({"id", "topic"})
     private List<LessonDTO> lessonList;
 
-    @JsonIgnoreProperties("course")
+    @JsonIncludeProperties({"id", "title"})
     private List<ExamDTO> examList;
 
-    @JsonIgnoreProperties("course")
+    @JsonIncludeProperties({"id","title"})
     private List<ExerciseDTO> exerciseList;
 
-    @JsonIgnoreProperties("courseList")
+    @JsonIgnore
     private List<StudentDTO> studentList;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")

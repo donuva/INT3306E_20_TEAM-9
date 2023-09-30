@@ -63,7 +63,7 @@ public class TeacherService {
         PageRequest pageRequest = PageRequest.of(searchTeacherDTO.getCurrentPage(), 15, sortBy);
         Page<Teacher> page = teacherRepo.findAll(pageRequest);
         if(StringUtils.hasText(searchTeacherDTO.getName())) {
-            page = teacherRepo.findByName(searchTeacherDTO.getName());
+            page = teacherRepo.findByName(searchTeacherDTO.getName(), pageRequest);
         }
         List<TeacherDTO> teacherDTOS = page.get().map(this::convert).collect(Collectors.toList());
         PageDTO<List<TeacherDTO>> pageDTO = new PageDTO<>();

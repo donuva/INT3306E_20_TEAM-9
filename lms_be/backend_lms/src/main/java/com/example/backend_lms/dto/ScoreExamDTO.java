@@ -7,7 +7,7 @@ import lombok.Data;
 public class ScoreExamDTO {
     private int id;
 
-    private double grade;
+    private Double grade;
 
     @JsonIncludeProperties({"id","user"})
     private StudentDTO student;

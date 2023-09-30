@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,23 +17,22 @@ public class QuestionDTO {
 
     private String content;
 
-    @JsonIgnoreProperties("question")
-    private AnswerDTO correct_answer;
+    private String opt1;
 
-    @JsonIgnoreProperties("question")
-    private List<AnswerDTO> answerList;
+    private String opt2;
+
+    private String opt3;
+
+    private String opt4;
+
+    @NotBlank
+    private Integer correct_answer;
 
     @JsonIncludeProperties("id")
     private ExamDTO exam;
 
+    //lay dap an dau vao
     @JsonIgnore
-    private int chosen_answer_id;
+    private Integer chosen_answer_id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
-    private Date createdDate;
-
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
-    private Date updatedAt;
 }

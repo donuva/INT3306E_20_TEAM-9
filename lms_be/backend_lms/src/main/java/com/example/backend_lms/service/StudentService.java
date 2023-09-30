@@ -67,7 +67,7 @@ public class StudentService {
         PageRequest pageRequest = PageRequest.of(searchStudentDTO.getCurrentPage(), 15, sortBy);
         Page<Student> page = studentRepo.findAll(pageRequest);
         if(StringUtils.hasText(searchStudentDTO.getName())) {
-            page = studentRepo.findByName("%"+searchStudentDTO.getName()+"%");
+            page = studentRepo.findByName("%"+searchStudentDTO.getName()+"%", pageRequest);
         }
         List<StudentDTO> studentDTOS = page.get().map(this::convert).collect(Collectors.toList());
         PageDTO<List<StudentDTO>> pageDTO = new PageDTO<>();

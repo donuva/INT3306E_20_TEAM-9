@@ -15,6 +15,8 @@ public class Exam extends TimeAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String title;
+
     @ManyToOne
     private Course course;
 

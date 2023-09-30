@@ -17,6 +17,8 @@ public class ExerciseDTO {
 
     private String content;
 
+    private String title;
+
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date deadline;

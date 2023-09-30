@@ -17,6 +17,8 @@ public class ExamDTO {
     @JsonIncludeProperties("id")
     private CourseDTO course;
 
+    private String title;
+
     private Date deadline;
 
     private int duration;

@@ -4,10 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
 public class ExamFormDTO {
-    @JsonIncludeProperties({"id","content", "answerList", "chosen_answer_id"})
+    @JsonIgnoreProperties("correct_answer")
     List<QuestionDTO> questionList;
+    private int id; //exam id
+
+    @JsonIncludeProperties("id")
+    private CourseDTO course;
+
+    private StudentDTO student;
+
+    private String title;
+
+    private Date deadline;
+
+    private int duration;
 }

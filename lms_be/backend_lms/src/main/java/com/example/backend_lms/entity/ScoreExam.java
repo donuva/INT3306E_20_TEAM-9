@@ -12,7 +12,7 @@ public class ScoreExam extends TimeAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private double grade;
+    private Double grade;
 
     @ManyToOne
     private Student student;
