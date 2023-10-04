@@ -21,5 +21,10 @@ public class Student{
     @ManyToMany(mappedBy = "studentList", fetch = FetchType.EAGER)
     private List<Course> courseList;
 
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<ScoreExam> scoreExamList;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<ScoreExercise> scoreExerciseList;
 
 }

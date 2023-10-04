@@ -17,10 +17,7 @@ public class Lesson extends TimeAuditable {
     private String topic;
     private String content;
 
-    @ElementCollection
-    @CollectionTable(name="lesson_url", joinColumns = @JoinColumn(name="lesson_id"))
-    @Column(name="url")
-    private List<String> urls;
+    private String url;
 
     @ManyToOne
     private Course course;
