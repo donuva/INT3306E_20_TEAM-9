@@ -6,13 +6,14 @@ import ProfileIcon from './Components/ProfileIcon';
 import Profile from './Components/Profile';
 import Grade from './Components/Grade';
 import TeacherGrade from './Components/TeacherGrade';
+import Forum from './Components/Forum';
 
 
 function CoursePage() {
   return (
     <div className="App">
       <ProfileIcon/>
-      <TeacherGrade/>
+      <Profile/>
       <SideNav/>
      <Footer/>
     </div>
