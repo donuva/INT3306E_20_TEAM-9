@@ -18,7 +18,6 @@ function Home() {
           overflow: 'auto',
           height: '200vh',
           position: 'fixed',
-          left: 0,
           backgroundColor:'orange',
         }}
       >
@@ -34,8 +33,8 @@ function Home() {
         <Menu.Item key="/app/acheivements" icon={<CrownOutlined />}>
           <NavLink to="/app/acheivements">Acheivements</NavLink>
         </Menu.Item>
-        <Menu.Item key="/app/archives" icon={<HddOutlined />}>
-          <NavLink to="/app/archives">Archives</NavLink>
+        <Menu.Item key="/app/archieves" icon={<HddOutlined />}>
+          <NavLink to="/app/archieves">Archieves</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/profile" icon={<UserOutlined />}>
           <NavLink to="/app/profile">Profile</NavLink>

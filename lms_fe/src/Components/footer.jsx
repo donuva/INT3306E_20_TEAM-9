@@ -1,6 +1,5 @@
 import React from "react"
-//import { blog } from "../../../dummydata"
-//import "./Components/footer.css"
+//import "./CSS/footer.css"
 
 const Footer = () => {
   return (
