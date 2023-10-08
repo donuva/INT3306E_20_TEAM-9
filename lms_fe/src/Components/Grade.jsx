@@ -20,7 +20,8 @@ const Grade = () => {
     {
       title: 'Type',
       dataIndex: 'type',
-      key: 'type'
+      key: 'type',
+      
     },
     {
       title: 'Name',
@@ -43,15 +44,7 @@ const Grade = () => {
         compare: (a, b) => a.maxScore - b.maxScore
       }
     },
-    {
-      title: 'Weight',
-      dataIndex: 'weight',
-      key: 'weight',
-      sorter: {
-        compare: (a, b) => Number(a.weight) - Number(b.weight)
-      },
-      render: (text) => <span>{String(text * 100) + '%'}</span>
-    },
+    
     {
       title: 'Graded At',
       key: 'gradedAt',
@@ -90,23 +83,7 @@ const Grade = () => {
   ];
 
   return (
-    <div>
-      {/* <BarChart
-        width={350}
-        height={250}
-        data={data?.grades
-          ?.map((v) => {
-            let res = {
-              key: v.title,
-              data: v.score / v.maxScore
-            };
-            return res;
-          })
-          .sort(function (a, b) {
-            return b.data - a.data;
-          })}
-        gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
-      /> */}
+    <div style={{marginLeft:'180px'}} >
       <Table
         rowKey={(record) => record?.id}
         columns={columns}
