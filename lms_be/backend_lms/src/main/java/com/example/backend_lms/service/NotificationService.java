@@ -36,6 +36,7 @@ public class NotificationService {
     @Transactional
     public void create(NotificationDTO notificationDTO){
         notificationRepo.save(new ModelMapper().map(notificationDTO, Notification.class));
+        //todo: gui thong bao toi email
     }
 
     @Transactional
@@ -89,4 +90,6 @@ public class NotificationService {
             throw new NotFoundException("Student_id không hợp lệ");
         }
     }
+
+
 }

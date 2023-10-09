@@ -1,17 +1,16 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.*;
-import com.example.backend_lms.entity.*;
+import com.example.backend_lms.entity.ScoreExam;
+import com.example.backend_lms.entity.ScoreExercise;
+import com.example.backend_lms.entity.Student;
 import com.example.backend_lms.repo.*;
-import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,7 @@ public class ScoreService {
 
     @Autowired
     ExamRepo examRepo;
+
     public Student getStudentEnrolledCourse(int course_id, int student_id) {
         List<Student> students = Objects.requireNonNull(courseRepo.findById(course_id).orElse(null)).getStudentList();
         for (Student student : students) {
@@ -44,6 +44,7 @@ public class ScoreService {
         }
         return null;
     }
+
 
     public ScoreExamDTO convertScoreExam(ScoreExam scoreExam) {
         return new ModelMapper().map(scoreExam, ScoreExamDTO.class);
@@ -59,20 +60,21 @@ public class ScoreService {
     public List<CourseScoreDTO> getScoreByCourse(int course_id) throws NotFoundException {
         if (courseRepo.findById(course_id).isPresent()) {
             List<Student> students = Objects.requireNonNull(courseRepo.findById(course_id).orElse(null)).getStudentList();
+            students.sort((a, b) -> a.getUser().getName().compareToIgnoreCase(b.getUser().getName()));
             List<CourseScoreDTO> courseScoreDTOS = new ArrayList<>();
-            for(Student s: students){
+            for (Student s : students) {
                 courseScoreDTOS.add(getCourseScoreByStudentAndCourse(course_id, s.getId()));
             }
             return courseScoreDTOS;
-        }else{
+        } else {
             throw new NotFoundException("Không tìm được course");
         }
 
     }
 
     public CourseScoreDTO getCourseScoreByStudentAndCourse(int course_id, int student_id) throws NotFoundException {
-        double GPA=0;
-        double total =0;
+        double GPA = 0;
+        double total = 0;
         CourseScoreDTO courseScoreDTO = new CourseScoreDTO();
         if (courseRepo.findById(course_id).isPresent()) {
             Student student = getStudentEnrolledCourse(course_id, student_id);
@@ -85,80 +87,82 @@ public class ScoreService {
                 List<ScoreExerciseDTO> scoreExerciseDTOS = scoreExerciseRepo.findByStudentAndCourse(course_id, student_id).stream()
                         .map(this::convertScoreExercise).collect(Collectors.toList());
                 courseScoreDTO.setScoreExerciseDTOS(scoreExerciseDTOS);
-                for(ScoreExerciseDTO sExercise: scoreExerciseDTOS){
+                for (ScoreExerciseDTO sExercise : scoreExerciseDTOS) {
                     GPA += sExercise.getGrade();
                     total += 1;
                 }
-                for (ScoreExamDTO sExam: scoreExamDTOS){
-                    GPA+=sExam.getGrade();
+                for (ScoreExamDTO sExam : scoreExamDTOS) {
+                    GPA += sExam.getGrade();
                     total += 1;
                 }
-                courseScoreDTO.setGPA(GPA/total);
-            }else{
+                courseScoreDTO.setGPA(GPA / total);
+            } else {
                 throw new NotFoundException("Không tìm được học sinh");
             }
             return courseScoreDTO;
-        }else{
+        } else {
             throw new NotFoundException("Không tìm được khóa học");
         }
     }
 
 
-
     //lay ra bang diem cua hoc sinh theo exam_id, exercise_id
     //cho giao vien
     public PageDTO<List<ScoreExerciseDTO>> getScoreByExercise(int exercise_id, int current_page) throws NotFoundException {
-        Sort sortBy = Sort.by("id").ascending();
-        PageRequest pageRequest = PageRequest.of(current_page, 40, sortBy);
-        if(exerciseRepo.findById(exercise_id).isPresent()) {
+
+        PageRequest pageRequest = PageRequest.of(current_page, 40);
+        if (exerciseRepo.findById(exercise_id).isPresent()) {
 
             Page<ScoreExercise> page = scoreExerciseRepo.findAllByExerciseId(exercise_id, pageRequest);
 
-            List<ScoreExerciseDTO> scoreExerciseDTOS = page.get().map(this::convertScoreExercise).toList();
+            List<ScoreExerciseDTO> scoreExerciseDTOS = new ArrayList<>(page.get().map(this::convertScoreExercise).toList());
+            scoreExerciseDTOS.sort((a, b) -> a.getStudent().getUser().getName().compareToIgnoreCase(b.getStudent().getUser().getName()));
+
             PageDTO<List<ScoreExerciseDTO>> pageDTO = new PageDTO<>();
             pageDTO.setTotalPages(page.getTotalPages());
             pageDTO.setSize(page.getSize());
             pageDTO.setTotalElements(page.getTotalElements());
             pageDTO.setData(scoreExerciseDTOS);
             return pageDTO;
-        }else{
+        } else {
             throw new NotFoundException("Exercise_id không hợp lệ");
         }
     }
 
     public PageDTO<List<ScoreExamDTO>> getScoreByExam(int exam_id, int current_page) throws NotFoundException {
-        Sort sortBy = Sort.by("id").ascending();
-        PageRequest pageRequest = PageRequest.of(current_page, 40, sortBy);
-        if(examRepo.findById(exam_id).isPresent()) {
+        PageRequest pageRequest = PageRequest.of(current_page, 40);
+        if (examRepo.findById(exam_id).isPresent()) {
 
             Page<ScoreExam> page = scoreExamRepo.findAllByExamId(exam_id, pageRequest);
 
-            List<ScoreExamDTO> scoreExamDTOS = page.get().map(this::convertScoreExam).toList();
+            List<ScoreExamDTO> scoreExamDTOS = new ArrayList<>(page.get().map(this::convertScoreExam).toList());
+            scoreExamDTOS.sort((a, b) -> a.getStudent().getUser().getName().compareToIgnoreCase(b.getStudent().getUser().getName()));
             PageDTO<List<ScoreExamDTO>> pageDTO = new PageDTO<>();
             pageDTO.setTotalPages(page.getTotalPages());
             pageDTO.setSize(page.getSize());
             pageDTO.setTotalElements(page.getTotalElements());
             pageDTO.setData(scoreExamDTOS);
             return pageDTO;
-        }else{
+        } else {
             throw new NotFoundException("Exam_id không hợp lệ");
         }
     }
 
-    //lay ra diem cua hoc sinh theo exam_id, exercise_id cho hoc sinh
+    //lay ra diem cua hoc sinh theo exam_id, exercise_id cho hoc sinh va cho giao vien
 
     public ScoreExamDTO getScoreByExamAndStudent(int exam_id, int student_id) throws NotFoundException {
-        if(scoreExamRepo.findByStudentAndExam(student_id, exam_id).isPresent()){
+        if (scoreExamRepo.findByStudentAndExam(student_id, exam_id).isPresent()) {
             return convertScoreExam(scoreExamRepo.findByStudentAndExam(student_id, exam_id).orElse(null));
-        }else{
+        } else {
             throw new NotFoundException("Exam_id hoặc student_id không hợp lệ");
         }
     }
 
+    //giao vien lay bai tu day ra de cham
     public ScoreExerciseDTO getScoreByExerciseAndStudent(int exercise_id, int student_id) throws NotFoundException {
-        if(scoreExerciseRepo.findByStudentAndExercise(student_id, exercise_id).isPresent()){
+        if (scoreExerciseRepo.findByStudentAndExercise(student_id, exercise_id).isPresent()) {
             return convertScoreExercise(scoreExerciseRepo.findByStudentAndExercise(student_id, exercise_id).orElse(null));
-        }else{
+        } else {
             throw new NotFoundException("Exercise_id hoặc student_id không hợp lệ");
         }
     }

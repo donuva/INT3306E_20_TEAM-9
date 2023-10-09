@@ -14,6 +14,8 @@ import java.util.List;
 public class UserDTO {
     private int id;
 
+    private String name;
+
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date birthdate;

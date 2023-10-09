@@ -14,5 +14,5 @@ public class CourseEnrollDTO {
     private CourseDTO course;
 
     //0 la chua duoc accept, 1 la duoc accept roi -> luu sang student list
-    private int isAccept;
+    private int status;
 }

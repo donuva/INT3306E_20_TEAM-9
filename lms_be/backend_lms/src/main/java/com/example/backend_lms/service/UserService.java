@@ -51,6 +51,25 @@ public class UserService {
     }
 
 
+    public UserDTO findByUsername(String username) {
+        return convert(userRepo.findByUsername(username));
+    }
+
+    public UserDTO updateAdmin(UserDTO userDTO) throws NotFoundException {
+        User user = userRepo.findById(userDTO.getId()).orElse(null);
+        if(user!=null){
+            userDTO.setPassword(user.getPassword());
+            userRepo.save(new ModelMapper().map(userDTO, User.class));
+            return convert(userRepo.findById(userDTO.getId()).orElse(null));
+        }else{
+            throw new NotFoundException("Không tìm thấy Id người dùng");
+        }
+    }
+
+    public UserDTO findById(int id) {
+        return convert(userRepo.findById(id).orElse(null));
+    }
+
 
     //TODO quen mat khau
 

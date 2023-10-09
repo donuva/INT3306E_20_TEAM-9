@@ -16,6 +16,8 @@ public class Course extends TimeAuditable{
 
     private String name;
 
+    private String category; //viết theo các chuẩn để search cho dễ, VD: math, literature, biology, computer ...
+
     private String description;
 
     @ManyToOne

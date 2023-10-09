@@ -16,6 +16,6 @@ public class CourseEnroll {
     @ManyToOne
     private Course course;
 
-    //0 la chua duoc accept, 1 la duoc accept roi -> luu sang student list
-    private int isAccept;
+    //0 la chua duoc accept ->pending, 1 la duoc accept roi -> luu sang student list, 2 la bi deny
+    private int status;
 }

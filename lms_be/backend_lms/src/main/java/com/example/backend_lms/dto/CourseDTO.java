@@ -1,10 +1,7 @@
 package com.example.backend_lms.dto;
 
-import com.example.backend_lms.entity.Exercise;
-import com.example.backend_lms.entity.Lesson;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +14,8 @@ public class CourseDTO {
     private int id;
 
     private String name;
+
+    private String category;
 
     private String description;
 

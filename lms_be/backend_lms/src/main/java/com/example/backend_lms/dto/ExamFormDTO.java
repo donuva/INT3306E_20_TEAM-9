@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
+//map ra cho hoc sinh lam
 @Data
 public class ExamFormDTO {
     @JsonIgnoreProperties("correct_answer")
