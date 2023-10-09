@@ -14,15 +14,11 @@ import java.io.File;
 @EnableScheduling
 @Slf4j
 public class BackendLmsApplication {
-    @Value("${upload.folder}")
 
-    static String Upload_Folder;
 
     public static void main(String[] args) {
 
-        if (! new File(Upload_Folder).exists()) {
-            new File(Upload_Folder).mkdirs();
-        }
+
         SpringApplication.run(BackendLmsApplication.class, args);
 
     }
