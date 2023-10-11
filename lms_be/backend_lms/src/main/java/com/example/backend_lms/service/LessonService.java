@@ -24,11 +24,11 @@ public class LessonService {
         return new ModelMapper().map(lesson, LessonDTO.class);
     }
 
-    private void create(LessonDTO lessonDTO) {
+    public void create(LessonDTO lessonDTO) {
         lessonRepo.save(new ModelMapper().map(lessonDTO, Lesson.class));
     }
 
-    private void delete(int id) throws NotFoundException {
+    public void delete(int id) throws NotFoundException {
         if (lessonRepo.findById(id).isPresent()) {
             lessonRepo.deleteById(id);
         } else {
@@ -36,8 +36,13 @@ public class LessonService {
         }
     }
 
-    private LessonDTO update(LessonDTO lessonDTO) throws NotFoundException {
-        if (lessonRepo.findById(lessonDTO.getId()).isPresent()) {
+    public LessonDTO update(LessonDTO lessonDTO) throws NotFoundException {
+        LessonDTO current_lesson = convert(lessonRepo.findById(lessonDTO.getId()).orElse(null));
+        if (current_lesson!= null) {
+            if(lessonDTO.getFile()==null){
+                lessonDTO.setUrl(current_lesson.getUrl());
+            }
+            lessonDTO.setCourse(current_lesson.getCourse());
             lessonRepo.save(new ModelMapper().map(lessonDTO, Lesson.class));
             return convert(lessonRepo.findById(lessonDTO.getId()).orElse(null));
         } else {
@@ -45,7 +50,7 @@ public class LessonService {
         }
     }
 
-    private LessonDTO getById(int id) throws NotFoundException {
+    public LessonDTO getById(int id) throws NotFoundException {
         if (lessonRepo.findById(id).isPresent()) {
             return convert(lessonRepo.findById(id).orElse(null));
         } else {
@@ -53,7 +58,7 @@ public class LessonService {
         }
     }
 
-    private List<LessonDTO> getByCourse(int course_id) throws NotFoundException {
+    public List<LessonDTO> getByCourse(int course_id) throws NotFoundException {
         if (courseRepo.findById(course_id).isPresent()) {
             return lessonRepo.findByCourse(course_id).stream().map(this::convert).toList();
         }else{

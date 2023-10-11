@@ -1,12 +1,9 @@
 package com.example.backend_lms.controller;
 import com.example.backend_lms.dto.*;
-import com.example.backend_lms.entity.CourseEnroll;
-import com.example.backend_lms.service.CourseService;
-import com.example.backend_lms.service.StudentService;
-import com.example.backend_lms.service.TeacherService;
-import com.example.backend_lms.service.UserService;
+import com.example.backend_lms.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +24,12 @@ public class CourseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    NotificationService notificationService;
+
+    @Autowired
+    ConversationService conversationService;
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/teacher/courseCreate")
@@ -116,4 +119,39 @@ public class CourseController {
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
         courseService.removeStudent(studentDTO.getId(), course_id);
     }
+
+
+    //THONG BAO
+    @GetMapping("/course/notification")
+    public ResponseEntity<PageDTO<List<NotificationDTO>>> getCourseNotification(@RequestParam("course_id") int course_id,
+                                      @RequestParam("current_page") int current_page){
+       return ResponseEntity.ok(notificationService.searchNotiByCourse(course_id, current_page));
+    }
+
+    @PostMapping("/teacher/course/notification/create")
+    @ResponseStatus(HttpStatus.OK)
+    public void createNotification(@RequestBody NotificationDTO notificationDTO){
+        notificationService.create(notificationDTO);
+    }
+
+    @DeleteMapping("/teacher/course/notification/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteNotification(@RequestParam("id") int id) throws NotFoundException {
+        notificationService.delete(id);
+    }
+
+    //Conversation
+
+    @GetMapping("/course/conversation")
+    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(int course_id, int current_page){
+        return ResponseEntity.ok(conversationService.getConversation(course_id, current_page));
+    }
+
+    @DeleteMapping("/course/conversation")
+    public void deleteConversation(@RequestParam("id") int id, Principal p) throws NotFoundException {
+        UserDTO userDTO = userService.findByUsername(p.getName());
+        conversationService.delete(id, userDTO.getId());
+    }
+
+
 }

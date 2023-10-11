@@ -17,7 +17,6 @@ public class ScoreExerciseDTO {
 
     private Double grade;
 
-
     private String exercise_url;
 
     @JsonIgnore

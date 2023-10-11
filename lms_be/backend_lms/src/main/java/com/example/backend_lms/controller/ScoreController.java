@@ -53,7 +53,7 @@ public class ScoreController {
         return ResponseEntity.ok(scoreService.getCourseScoreByStudentAndCourse(course_id, studentDTO.getId()));
     }
 
-    //lay list diem theo tung bai
+    //lay list diem theo tung bai, lay tu day ra roi lay theo id de cham tung bai
     @GetMapping("/teacher/getScoreByExercise")
     public ResponseEntity<PageDTO<List<ScoreExerciseDTO>>> getScoreByExercise(@RequestParam("exercise_id") int exercise_id,
                                                                               @RequestParam("current_page") int current_page) throws NotFoundException {
@@ -65,6 +65,7 @@ public class ScoreController {
                                                                       @RequestParam("current_page") int current_page) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getScoreByExam(exam_id, current_page));
     }
+
 
     //lay TUNG BAI cua ban than (dung principle)
     @GetMapping("/student/getScoreByExam")
@@ -82,6 +83,10 @@ public class ScoreController {
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
         return ResponseEntity.ok(scoreService.getScoreByExerciseAndStudent(exercise_id, studentDTO.getId()));
     }
+
+
+
+
 
     //lay tung bai cho giao vien, giao vien cung lay bai ra de cham tu day
     @GetMapping("/teacher/exam/getScoreByStudent")

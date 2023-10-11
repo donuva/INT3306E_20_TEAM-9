@@ -1,6 +1,7 @@
 package com.example.backend_lms.controller;
 
 import com.example.backend_lms.exception.ExpiredDateException;
+import com.example.backend_lms.exception.NotAllowedException;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,11 @@ public class ExceptionController{
 
     @ExceptionHandler({ExpiredDateException.class})
     public ResponseEntity<Object> expired(ExpiredDateException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler({NotAllowedException.class})
+    public ResponseEntity<Object> expired(NotAllowedException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
 }

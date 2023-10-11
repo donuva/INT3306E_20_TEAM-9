@@ -5,6 +5,7 @@ import com.example.backend_lms.dto.ScoreExerciseDTO;
 import com.example.backend_lms.entity.Exercise;
 import com.example.backend_lms.entity.ScoreExercise;
 import com.example.backend_lms.exception.ExpiredDateException;
+import com.example.backend_lms.exception.NotAllowedException;
 import com.example.backend_lms.repo.CourseRepo;
 import com.example.backend_lms.repo.ExerciseRepo;
 import com.example.backend_lms.repo.ScoreExerciseRepo;
@@ -49,9 +50,11 @@ public class ExerciseService {
     }
 
     @Transactional
-    public ExerciseDTO update(Exercise exerciseDTO) throws NotFoundException {
-        if(exerciseRepo.findById(exerciseDTO.getId()).isPresent()) {
-            new ModelMapper().map(exerciseDTO, Exercise.class);
+    public ExerciseDTO update(ExerciseDTO exerciseDTO) throws NotFoundException {
+        ExerciseDTO current = convert(exerciseRepo.findById(exerciseDTO.getId()).orElse(null));
+        if(current!=null) {
+            exerciseDTO.setCourse(current.getCourse());
+            exerciseRepo.save(new ModelMapper().map(exerciseDTO, Exercise.class));
             return new ModelMapper().map(exerciseRepo.findById(exerciseDTO.getId()),ExerciseDTO.class);
         }else{
             throw new NotFoundException("Không tìm thấy bài tập");
@@ -88,6 +91,7 @@ public class ExerciseService {
         if (exerciseRepo.findById(scoreExercise.getExercise().getId()).isPresent()
                 && studentRepo.findById(scoreExercise.getExercise().getId()).isPresent()) {
             if(scoreExercise.getExercise().getDeadline().after(now())) {
+                scoreExercise.setGrade(null);
                 scoreExerciseRepo.save(new ModelMapper().map(scoreExercise, ScoreExercise.class));
             }else{
                 throw new ExpiredDateException("Quá hạn làm bài");
@@ -98,10 +102,14 @@ public class ExerciseService {
     }
 
     //xoa bai nop
-    public void deleteWork(int id) throws NotFoundException, ExpiredDateException {
+    public void deleteWork(int id) throws NotFoundException, ExpiredDateException, NotAllowedException {
         if(scoreExerciseRepo.findById(id).isPresent()){
             if(Objects.requireNonNull(scoreExerciseRepo.findById(id).orElse(null)).getExercise().getDeadline().after(now())) {
-                scoreExerciseRepo.deleteById(id);
+                if(Objects.requireNonNull(scoreExerciseRepo.findById(id).orElse(null)).getGrade() == null) {
+                    scoreExerciseRepo.deleteById(id);
+                }else{
+                    throw new NotAllowedException("Bài làm đã được chấm");
+                }
             }else{
                 throw new ExpiredDateException("Quá hạn làm bài");
             }
