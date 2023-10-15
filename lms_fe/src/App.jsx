@@ -6,27 +6,21 @@ import SideNav from './Components/SideNav';
 import Lectures from './Views/FakeLecture';
 import Lecture from './Views/Lecture';
 import { Col, Row } from 'antd';
+import LectureDetail from './Views/Lecture/components/LectureDetail';
 
 function App() {
   return (
     <div className="App">
      
      <Router>
-      <Row style={{display:'flex'}}>
-        <Col style={{position: 'fixed', width: '15%'}}><SideNav/></Col>
-        <Col style={{marginLeft: '20%'}}>
-        
+
+     <SideNav/> 
       <Routes>
         <Route path="/app/courses" element={<CoursePage />} />
         <Route path="/app/lectures" element={<Lecture />} />
+        <Route path="/app/lecture-detail" element={<LectureDetail />} />
+
       </Routes>
-        </Col>
-      </Row>
-     {/* <SideNav/> 
-      <Routes>
-        <Route path="/app/courses" element={<CoursePage />} />
-        <Route path="/app/lectures" element={<Lecture />} />
-      </Routes> */}
     </Router>
     </div>
   );

@@ -17,7 +17,7 @@ function Home() {
         style={{
           overflow: 'auto',
           height: '200vh',
-          display: 'fixed',
+          position: 'fixed',
           left: 0,
           backgroundColor:'orange',
         }}
