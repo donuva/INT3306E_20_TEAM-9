@@ -90,7 +90,24 @@ const course = {
   createdDate: "2023-10-14T07:57:02.152Z",
   updatedAt: "2023-10-14T07:57:02.152Z",
 };
-const list = [...course.lessonList, ...course.examList, ...course.exerciseList];
+const lists = [...course.lessonList, ...course.examList, ...course.exerciseList];
+lists.map(list => {
+  list.contentHtml = (
+    <ul>
+      <li style={{ listStyle: "none" }}>
+        <a style={{display:"flex",alignItems:'center'}}>
+          <YoutubeOutlined  
+            style={{ marginRight: "8px", width: "50px", height: "50px",fontSize:'40px'}}
+          ></YoutubeOutlined>
+          <span>{list.content}</span>
+        </a>
+      </li>
+      <li>
+        <a>rw</a>
+      </li>
+    </ul>
+  )
+})
 const items = [
   {
     key: "1",
@@ -148,12 +165,12 @@ const items = [
 // add field to convert children text to html
 const LectureDetail = () => (
   <Collapse defaultActiveKey={["1", "2", "3"]} style={customStyle}>
-    {items.map((item) => (
+    {lists.map((item) => (
       <Collapse.Panel
-        key={item.key}
-        header={<CustomPanel label={item.label}></CustomPanel>}
+        key={item.id}
+        header={<CustomPanel label={item.title}></CustomPanel>}
       >
-        {item.childrenHtml}
+        {item.contentHtml}
       </Collapse.Panel>
     ))}
   </Collapse>
