@@ -16,6 +16,6 @@ public class Teacher {
             fetch = FetchType.EAGER)
     private User user;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<Course> courseList;
 }

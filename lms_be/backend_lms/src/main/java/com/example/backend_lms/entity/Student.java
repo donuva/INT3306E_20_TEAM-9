@@ -18,7 +18,7 @@ public class Student{
             fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToMany(mappedBy = "studentList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "studentList", fetch = FetchType.LAZY)
     private List<Course> courseList;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
