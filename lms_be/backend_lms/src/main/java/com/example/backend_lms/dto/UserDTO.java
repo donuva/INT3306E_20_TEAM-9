@@ -36,7 +36,7 @@ public class UserDTO {
     @NotBlank
     private String phone;
 
-    private List<String> roles;
+    private String role;
 
     @JsonIgnore
     private MultipartFile file;

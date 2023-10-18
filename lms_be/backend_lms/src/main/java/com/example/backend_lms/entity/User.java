@@ -35,8 +35,6 @@ public class User extends TimeAuditable {
     @Column(unique = true)
     private String phone;
 
-    @ElementCollection
-    @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id"))
-    @Column(name="role")
-    private List<String> roles;
+
+    private String role;
 }
