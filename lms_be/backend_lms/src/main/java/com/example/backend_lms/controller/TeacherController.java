@@ -2,7 +2,6 @@ package com.example.backend_lms.controller;
 
 import com.example.backend_lms.dto.PageDTO;
 import com.example.backend_lms.dto.TeacherDTO;
-import com.example.backend_lms.dto.search.SearchTeacherDTO;
 import com.example.backend_lms.service.TeacherService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class TeacherController {
     TeacherService teacherService;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/teacher/create")
+    @PostMapping("/create/teacher")
     public void createTeacher(@ModelAttribute TeacherDTO teacherDTO) throws IOException {
 
         if (!teacherDTO.getUser().getFile().isEmpty()) {
@@ -62,11 +61,7 @@ public class TeacherController {
         return ResponseEntity.ok(teacherService.update(teacherDTO));
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("teacher/delete/{id}")
-    public void deleteTeacher(@PathVariable("id") int id) throws NotFoundException {
-        teacherService.delete(id);
-    }
+
 
     @GetMapping("/getTeacher/{id}")
     public ResponseEntity<TeacherDTO> findTeacher(@PathVariable("id")int id) throws NotFoundException {
@@ -74,7 +69,7 @@ public class TeacherController {
     }
 
     @GetMapping("/searchTeacher")
-    public ResponseEntity<PageDTO<List<TeacherDTO>>>searchTeacher(@RequestParam("name") String name, @RequestParam("page") int current_page){
+    public ResponseEntity<PageDTO<List<TeacherDTO>>>searchTeacher(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") int current_page){
         return ResponseEntity.ok(teacherService.search(name, current_page));
     }
 

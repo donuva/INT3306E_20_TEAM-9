@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -243,6 +244,24 @@ public class CourseService {
         pageDTO.setSize(page.getSize());
         pageDTO.setTotalElements(page.getTotalElements());
         pageDTO.setData(courseDTOS);
+        return pageDTO;
+    }
+
+    public PageDTO<List<CourseListDTO>> searchCourse(String course_name, int current_page) {
+        Sort sortBy = Sort.by("name").descending();
+        PageRequest pageRequest = PageRequest.of(current_page, 25, sortBy);
+        Page<Course> page;
+        if(!StringUtils.hasText(course_name)){
+             page = courseRepo.findAll(pageRequest);
+        }else{
+            page = courseRepo.findCourseByName("%"+course_name+"%", pageRequest);
+        }
+
+        PageDTO<List<CourseListDTO>> pageDTO = new PageDTO<>();
+        pageDTO.setTotalPages(page.getTotalPages());
+        pageDTO.setSize(page.getSize());
+        pageDTO.setTotalElements(page.getTotalElements());
+        pageDTO.setData(page.stream().map(this::convertListing).collect(Collectors.toList()));
         return pageDTO;
     }
 }

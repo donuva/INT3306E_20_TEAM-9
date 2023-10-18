@@ -166,4 +166,13 @@ public class ScoreService {
             throw new NotFoundException("Exercise_id hoặc student_id không hợp lệ");
         }
     }
+
+    public ScoreExerciseDTO getScoreExerciseById(int scoreExerciseId) throws NotFoundException {
+        ScoreExercise scoreExercise = scoreExerciseRepo.findById(scoreExerciseId).orElse(null);
+        if (scoreExercise != null) {
+            return convertScoreExercise(scoreExercise);
+        } else {
+            throw new NotFoundException("Id bài làm không hợp lệ");
+        }
+    }
 }

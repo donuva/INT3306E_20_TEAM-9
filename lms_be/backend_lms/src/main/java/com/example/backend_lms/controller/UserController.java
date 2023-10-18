@@ -1,6 +1,8 @@
 package com.example.backend_lms.controller;
 
 import com.example.backend_lms.dto.UserDTO;
+import com.example.backend_lms.service.StudentService;
+import com.example.backend_lms.service.TeacherService;
 import com.example.backend_lms.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TeacherService teacherService;
+
+    @Autowired
+    StudentService studentService;
+
     @Value("${upload.folder}")
     String Upload_Folder;
 
@@ -29,7 +37,17 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/admin/delete-student/{id}")
+    public void deleteStudent(@PathVariable("id") int id) throws NotFoundException {
+        studentService.delete(id);
+    }
 
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/admin/delete-teacher/{id}")
+    public void deleteTeacher(@PathVariable("id") int id) throws NotFoundException {
+        teacherService.delete(id);
+    }
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/admin/new")
     public void createAdminAccount(@ModelAttribute UserDTO userDTO) throws IOException {

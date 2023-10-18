@@ -29,14 +29,14 @@ public class ScoreController {
     ExerciseService exerciseService;
 
     //hiển thị bang điểm theo course cho giáo viên
-    @GetMapping("/teacher/getCourseScore")
+    @GetMapping("/teacher/getCourseScore/{id}")
     public ResponseEntity<List<CourseScoreDTO>> getScoreByCourse(@RequestParam("id") int course_id) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getScoreByCourse(course_id));
     }
 
     //hien thi bang diem theo course cua tung hoc sinh cho giao vien
     @GetMapping("/teacher/getCourseScoreByStudent")
-    public ResponseEntity<CourseScoreDTO> getCourseScoreByStudentAndCourse(@RequestParam("course_id") int course_id,
+    public ResponseEntity<CourseScoreDTO> getCourseScoreByStudentAndCourse(@RequestParam("course_id")  int course_id,
                                                                            @RequestParam("student_id") int student_id) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getCourseScoreByStudentAndCourse(course_id,
                 student_id));
@@ -44,8 +44,8 @@ public class ScoreController {
 
 
     // hiển thị điểm theo course cho học sinh
-    @GetMapping("/student/getCourseScore")
-    public ResponseEntity<CourseScoreDTO> getCourseScoreByStudentAndCourse(@RequestParam("course_id") int course_id,
+    @GetMapping("/student/getCourseScore/{course_id}")
+    public ResponseEntity<CourseScoreDTO> getCourseScoreByStudentAndCourse(@PathVariable("course_id") int course_id,
                                                                            Principal p) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
@@ -76,8 +76,8 @@ public class ScoreController {
         return ResponseEntity.ok(scoreService.getScoreByExamAndStudent(exam_id, studentDTO.getId()));
     }
 
-    @GetMapping("/student/getScoreByExercise")
-    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise") int exercise_id, Principal p) throws NotFoundException {
+    @GetMapping("/student/getExerciseScore/{exercise_id}")
+    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise_id") int exercise_id, Principal p) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
@@ -88,27 +88,36 @@ public class ScoreController {
 
 
 
-    //lay tung bai cho giao vien, giao vien cung lay bai ra de cham tu day
-    @GetMapping("/teacher/exam/getScoreByStudent")
-    public ResponseEntity<ScoreExamDTO> getExamScoreByStudent(@RequestParam("exam_id") int exam_id,
-                                                              @RequestParam("student_id") int student_id) throws NotFoundException {
-        return ResponseEntity.ok(scoreService.getScoreByExamAndStudent(exam_id, student_id));
+//    //lay tung bai cho giao vien, giao vien cung lay bai ra de cham tu day
+//    @GetMapping("/teacher/exam/getScoreByStudent")
+//    public ResponseEntity<ScoreExamDTO> getExamScoreByStudent(@RequestParam("exam_id") int exam_id,
+//                                                              @RequestParam("student_id") int student_id) throws NotFoundException {
+//        return ResponseEntity.ok(scoreService.getScoreByExamAndStudent(exam_id, student_id));
+//    }
+//
+//    @GetMapping("/teacher/exercise/getScoreByStudent")
+//    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise_id") int exercise_id,
+//                                                                      @RequestParam("student_id") int student_id) throws NotFoundException {
+//        return ResponseEntity.ok(scoreService.getScoreByExerciseAndStudent(exercise_id, student_id));
+//    }
+
+
+
+
+    //lấy bài làm để chấm từ đây, cũng có thể xem điểm của học sinh từ đây
+    @GetMapping("/teacher/exercise/getWork/{scoreExerciseId}")
+    public ResponseEntity<ScoreExerciseDTO> getExerciseWork(@PathVariable("scoreExerciseId") int scoreExerciseId) throws NotFoundException {
+        return ResponseEntity.ok(scoreService.getScoreExerciseById(scoreExerciseId));
     }
 
-    @GetMapping("/teacher/exercise/getScoreByStudent")
-    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise_id") int exercise_id,
-                                                                      @RequestParam("student_id") int student_id) throws NotFoundException {
-        return ResponseEntity.ok(scoreService.getScoreByExerciseAndStudent(exercise_id, student_id));
-    }
-
-    @PostMapping("/teacher/exercise/addScore")
-    public void addScore(@RequestParam("scoreExerciseId") int scoreExerciseId,
+    @PostMapping("/teacher/exercise/addScore/{scoreExerciseId}")
+    public void addScore(@PathVariable("scoreExerciseId") int scoreExerciseId,
                          @RequestParam("grade") Double grade) throws NotFoundException {
         exerciseService.addScore(scoreExerciseId, grade);
     }
 
-    @DeleteMapping("/teacher/exercise/deleteScore")
-    public void deleteScore(@RequestParam("scoreExerciseId") int scoreExerciseId) throws NotFoundException {
+    @DeleteMapping("/teacher/exercise/deleteScore/{scoreExerciseId}")
+    public void deleteScore(@PathVariable("scoreExerciseId") int scoreExerciseId) throws NotFoundException {
         exerciseService.deleteScore(scoreExerciseId);
     }
 

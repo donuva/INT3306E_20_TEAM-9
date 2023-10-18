@@ -1,6 +1,5 @@
 package com.example.backend_lms.controller;
 
-import com.example.backend_lms.dto.CourseDTO;
 import com.example.backend_lms.dto.LessonDTO;
 import com.example.backend_lms.service.LessonService;
 import javassist.NotFoundException;
@@ -15,9 +14,7 @@ import java.util.UUID;
 
 @RestController
 public class LessonController {
-    //TODO: CRUD lesson controller
-    //TODO: findById
-    //TODO: dẫn link
+
 
     @Autowired
     LessonService lessonService;
@@ -47,9 +44,9 @@ public class LessonController {
         lessonService.create(lessonDTO);
     }
 
-    @DeleteMapping("/teacher/course/lesson")
+    @DeleteMapping("/teacher/course/lesson/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteLesson(@RequestParam("id") int id) throws NotFoundException {
+    public void deleteLesson(@PathVariable("id") int id) throws NotFoundException {
         lessonService.delete(id);
     }
 

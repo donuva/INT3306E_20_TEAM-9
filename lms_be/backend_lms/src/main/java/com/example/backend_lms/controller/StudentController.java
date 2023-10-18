@@ -27,7 +27,7 @@ public class StudentController {
     StudentService studentService;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/student/create")
+    @PostMapping("/create/student")
     public void createStudent(@ModelAttribute StudentDTO studentDTO) throws IOException {
 
         if (!studentDTO.getUser().getFile().isEmpty()) {
@@ -44,7 +44,7 @@ public class StudentController {
         studentService.create(studentDTO);
     }
 
-    @PutMapping("/student/update")
+    @PutMapping("student/update/")
     public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO) throws IOException, NotFoundException {
 
         if (!studentDTO.getUser().getFile().isEmpty()) {
@@ -63,11 +63,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.update(studentDTO));
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("student/delete/{id}")
-    public void deleteStudent(@PathVariable("id") int id) throws NotFoundException {
-        studentService.delete(id);
-    }
+
 
     @GetMapping("/getStudent/{id}")
     public ResponseEntity<StudentDTO> findStudent(@PathVariable("id")int id) throws NotFoundException {
@@ -75,7 +71,7 @@ public class StudentController {
     }
 
     @GetMapping("/searchStudent")
-    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam("name") String name, @RequestParam("page") int page){
+    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") int page){
         return ResponseEntity.ok(studentService.search(name, page));
     }
 }

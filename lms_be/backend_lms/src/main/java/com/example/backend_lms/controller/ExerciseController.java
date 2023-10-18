@@ -19,9 +19,6 @@ import java.util.UUID;
 
 @RestController
 public class ExerciseController {
-    //TODO: CRUD exercise
-    //Find By Id
-    //TODO: Nop bai
 
     @Autowired
     ExerciseService exerciseService;
@@ -45,12 +42,12 @@ public class ExerciseController {
     }
 
     @PutMapping("teacher/exercise/update")
-    public ResponseEntity<ExerciseDTO> updateExercise(ExerciseDTO exerciseDTO) throws NotFoundException {
+    public ResponseEntity<ExerciseDTO> updateExercise(@RequestBody ExerciseDTO exerciseDTO) throws NotFoundException {
         return ResponseEntity.ok(exerciseService.update(exerciseDTO));
     }
 
-    @DeleteMapping("/teacher/exercise/delete")
-    public void deleteCourse(@RequestParam("id") int id) throws NotFoundException {
+    @DeleteMapping("/teacher/exercise/delete/{id}")
+    public void deleteCourse(@PathVariable("id") int id) throws NotFoundException {
         exerciseService.delete(id);
     }
 
@@ -69,11 +66,5 @@ public class ExerciseController {
             scoreExerciseDTO.setExercise_url(newFilename); //luu file xuong db
         }
         exerciseService.submitWork(scoreExerciseDTO);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/student/exercise/submit")
-    public void deleteWork(@RequestParam("id") int id) throws ExpiredDateException, NotAllowedException, NotFoundException {
-        exerciseService.deleteWork(id);
     }
 }

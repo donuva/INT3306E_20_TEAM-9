@@ -17,4 +17,7 @@ public interface CourseRepo extends JpaRepository<Course, Integer> {
 
     @Query("select c FROM Course c where c.category in :x")
     Page<Course> findByCourseCategory(@Param("x") List<String> categories, Pageable pageable);
+
+    @Query("SELECT c FROM Course c WHERE c.name like :x")
+    Page<Course> findCourseByName(@Param("x") String x, Pageable pageable);
 }
