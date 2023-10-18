@@ -4,8 +4,6 @@ import com.example.backend_lms.dto.PageDTO;
 import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.dto.TeacherDTO;
 import com.example.backend_lms.dto.UserDTO;
-import com.example.backend_lms.dto.search.SearchStudentDTO;
-import com.example.backend_lms.dto.search.SearchTeacherDTO;
 import com.example.backend_lms.entity.Student;
 import com.example.backend_lms.entity.Teacher;
 import com.example.backend_lms.repo.StudentRepo;
@@ -51,7 +49,9 @@ public class StudentService {
 
     @Transactional
     public StudentDTO update(StudentDTO studentDTO) throws NotFoundException {
-        if(studentRepo.findById(studentDTO.getId()).isPresent()){
+        Student student = studentRepo.findById(studentDTO.getId()).orElse(null);
+        if(student!=null){
+            studentDTO.getUser().setPassword(student.getUser().getPassword());
             studentRepo.save(new ModelMapper().map(studentDTO, Student.class));
             return new ModelMapper().map(studentRepo.findById(studentDTO.getId()), StudentDTO.class);
         }else{
@@ -59,16 +59,13 @@ public class StudentService {
         }
     }
 
-    public PageDTO<List<StudentDTO>> search(SearchStudentDTO searchStudentDTO){
+    public PageDTO<List<StudentDTO>> search(String name, int current_page){
         Sort sortBy = Sort.by("user.name").descending();
-        if(searchStudentDTO.getCurrentPage()==null){
-            searchStudentDTO.setCurrentPage(0);
-        }
-        PageRequest pageRequest = PageRequest.of(searchStudentDTO.getCurrentPage(), 15, sortBy);
-        Page<Student> page = studentRepo.findAll(pageRequest);
-        if(StringUtils.hasText(searchStudentDTO.getName())) {
-            page = studentRepo.findByName("%"+searchStudentDTO.getName()+"%", pageRequest);
-        }
+
+        PageRequest pageRequest = PageRequest.of(current_page, 15, sortBy);
+
+        Page<Student> page = studentRepo.findByName("%"+name+"%", pageRequest);
+
         List<StudentDTO> studentDTOS = page.get().map(this::convert).collect(Collectors.toList());
         PageDTO<List<StudentDTO>> pageDTO = new PageDTO<>();
         pageDTO.setTotalPages(page.getTotalPages());

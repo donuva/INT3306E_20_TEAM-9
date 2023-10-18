@@ -4,7 +4,6 @@ package com.example.backend_lms.controller;
 import com.example.backend_lms.dto.PageDTO;
 import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.dto.TeacherDTO;
-import com.example.backend_lms.dto.search.SearchStudentDTO;
 import com.example.backend_lms.service.StudentService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,7 @@ public class StudentController {
     }
 
     @GetMapping("/searchStudent")
-    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestBody SearchStudentDTO searchStudentDTO){
-        return ResponseEntity.ok(studentService.search(searchStudentDTO));
+    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam("name") String name, @RequestParam("page") int page){
+        return ResponseEntity.ok(studentService.search(name, page));
     }
 }

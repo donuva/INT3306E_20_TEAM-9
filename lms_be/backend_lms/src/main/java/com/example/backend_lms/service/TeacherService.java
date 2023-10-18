@@ -1,7 +1,6 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.*;
-import com.example.backend_lms.dto.search.SearchTeacherDTO;
 import com.example.backend_lms.entity.Teacher;
 import com.example.backend_lms.repo.TeacherRepo;
 import jakarta.transaction.Transactional;
@@ -38,7 +37,9 @@ public class TeacherService {
 
     @Transactional
     public TeacherDTO update(TeacherDTO teacherDTO) throws NotFoundException {
-        if(teacherRepo.findById(teacherDTO.getId()).isPresent()){
+        Teacher teacher = teacherRepo.findById(teacherDTO.getId()).orElse(null);
+        if(teacher!=null){
+            teacherDTO.getUser().setPassword(teacher.getUser().getPassword());
             teacherRepo.save(new ModelMapper().map(teacherDTO, Teacher.class));
             return new ModelMapper().map(teacherRepo.findById(teacherDTO.getId()), TeacherDTO.class);
         }else{
@@ -55,16 +56,12 @@ public class TeacherService {
         }
     }
 
-    public PageDTO<List<TeacherDTO>> search(SearchTeacherDTO searchTeacherDTO){
+    public PageDTO<List<TeacherDTO>> search(String name, int current_page){
         Sort sortBy = Sort.by("user.name").descending();
-        if(searchTeacherDTO.getCurrentPage()==null){
-            searchTeacherDTO.setCurrentPage(0);
-        }
-        PageRequest pageRequest = PageRequest.of(searchTeacherDTO.getCurrentPage(), 15, sortBy);
-        Page<Teacher> page = teacherRepo.findAll(pageRequest);
-        if(StringUtils.hasText(searchTeacherDTO.getName())) {
-            page = teacherRepo.findByName(searchTeacherDTO.getName(), pageRequest);
-        }
+
+        PageRequest pageRequest = PageRequest.of(current_page, 15, sortBy);
+        Page<Teacher>  page = teacherRepo.findByName(name, pageRequest);
+
         List<TeacherDTO> teacherDTOS = page.get().map(this::convert).collect(Collectors.toList());
         PageDTO<List<TeacherDTO>> pageDTO = new PageDTO<>();
         pageDTO.setTotalPages(page.getTotalPages());
