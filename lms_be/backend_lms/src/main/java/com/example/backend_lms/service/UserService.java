@@ -25,7 +25,7 @@ public class UserService {
     @Transactional
     public void createAdmin(UserDTO userDTO) {
         //userDTO.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
-        userDTO.getRoles().add("ROLE_ADMIN");
+        userDTO.setRole("ADMIN");
         userRepo.save(new ModelMapper().map(userDTO, User.class));
     }
 
