@@ -39,6 +39,7 @@ public class TeacherController {
             teacherDTO.getUser().getFile().transferTo(saveFile);
             teacherDTO.getUser().setAva_url(newFilename); //luu file xuong db
         }
+        teacherDTO.getUser().setRole("TEACHER");
         teacherService.create(teacherDTO);
     }
 
@@ -57,7 +58,7 @@ public class TeacherController {
             teacherDTO.getUser().getFile().transferTo(saveFile);
             teacherDTO.getUser().setAva_url(newFilename); //luu file xuong db
         }
-
+        teacherDTO.getUser().setRole("TEACHER");
         return ResponseEntity.ok(teacherService.update(teacherDTO));
     }
 

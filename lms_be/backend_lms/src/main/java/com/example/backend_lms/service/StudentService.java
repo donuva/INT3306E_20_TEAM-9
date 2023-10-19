@@ -34,6 +34,7 @@ public class StudentService {
     public void create(StudentDTO studentDTO){
         UserDTO user = studentDTO.getUser();
         //user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        user.setRole("STUDENT");
         studentDTO.setUser(user);
         studentRepo.save(new ModelMapper().map(studentDTO, Student.class));
     }
@@ -52,6 +53,7 @@ public class StudentService {
         Student student = studentRepo.findById(studentDTO.getId()).orElse(null);
         if(student!=null){
             studentDTO.getUser().setPassword(student.getUser().getPassword());
+            studentDTO.getUser().setRole(student.getUser().getRole());
             studentRepo.save(new ModelMapper().map(studentDTO, Student.class));
             return new ModelMapper().map(studentRepo.findById(studentDTO.getId()), StudentDTO.class);
         }else{
