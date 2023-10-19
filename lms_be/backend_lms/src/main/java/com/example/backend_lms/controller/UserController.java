@@ -1,5 +1,7 @@
 package com.example.backend_lms.controller;
 
+import com.example.backend_lms.dto.StudentDTO;
+import com.example.backend_lms.dto.TeacherDTO;
 import com.example.backend_lms.dto.UserDTO;
 import com.example.backend_lms.service.StudentService;
 import com.example.backend_lms.service.TeacherService;
@@ -35,6 +37,20 @@ public class UserController {
     public UserDTO me(Principal p){
         String username = p.getName();
         return userService.findByUsername(username);
+    }
+
+    @GetMapping("/student/me")
+    public StudentDTO getStudent(Principal p) throws NotFoundException {
+        String username = p.getName();
+
+        return studentService.findByUserId(userService.findByUsername(username).getId());
+    }
+
+
+    @GetMapping("/teacher/me")
+    public TeacherDTO getTeacher(Principal p) throws NotFoundException {
+        String username = p.getName();
+        return teacherService.findByUserId(userService.findByUsername(username).getId());
     }
 
     @ResponseStatus(HttpStatus.OK)

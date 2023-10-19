@@ -32,25 +32,25 @@ public class CourseController {
     ConversationService conversationService;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/teacher/courseCreate")
+    @PostMapping("/teacher/course")
     public void createCourse(@RequestBody CourseDTO courseDTO) {
         courseService.create(courseDTO);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/teacher/deleteCourse")
-    public void deleteCourse(int course_id) throws NotFoundException {
+    @DeleteMapping("/teacher/course/{course_id}")
+    public void deleteCourse(@PathVariable("course_id") int course_id) throws NotFoundException {
         courseService.delete(course_id);
     }
 
-    @PutMapping("/teacher/updateCourse")
+    @PutMapping("/teacher/course")
     public ResponseEntity<CourseDTO> updateCourse(@RequestBody CourseDTO courseDTO) throws NotFoundException {
         return ResponseEntity.ok(courseService.update(courseDTO));
     }
 
     @GetMapping("/student/getCourseList")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForStudent(
-            @RequestParam("current_page") int current_page,
+            @RequestParam(value = "current_page") int current_page,
             Principal p) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
@@ -59,18 +59,18 @@ public class CourseController {
     }
 
     @GetMapping("/course/search")
-    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam("course_name") String course_name, @RequestParam("current_page") int current_page){
+    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam("current_page") int current_page){
         return ResponseEntity.ok(courseService.searchCourse(course_name, current_page));
     }
 
-    @GetMapping("/teacher/getRequestList")
-    public ResponseEntity<List<CourseEnrollDTO>> getRequestList(@RequestParam("id") int course_id) {
+    @GetMapping("/teacher/getRequestList/{course_id}")
+    public ResponseEntity<List<CourseEnrollDTO>> getRequestList(@PathVariable("course_id") int course_id) {
         return ResponseEntity.ok(courseService.courseEnrollList(course_id));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/student/enrollRequest")
-    public void requestToJoinCourse(@RequestParam("course_id") int course_id, Principal p) throws NotFoundException {
+    @PostMapping("/student/enroll/{course_id}")
+    public void requestToJoinCourse(@PathVariable("course_id") int course_id, Principal p) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
@@ -78,8 +78,8 @@ public class CourseController {
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PostMapping("/teacher/acceptRequest")
-    public void acceptRequest(@RequestParam("request_id") int request_id,
+    @PostMapping("/teacher/acceptRequest/{request_id}")
+    public void acceptRequest(@PathVariable("request_id") int request_id,
             @RequestParam("code") int code) throws NotFoundException {
         // 1 la accept, 2 la deny
         courseService.isAcceptRequest(request_id, code);
@@ -95,7 +95,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCoursePageByTeacher(teacherDTO.getId(), current_page));
     }
 
-    @GetMapping("/getSuggestCourse")
+    @GetMapping("/student/getSuggestCourse")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getSuggest(Principal p,
             @RequestParam("current_page") int current_page) throws NotFoundException {
         String username = p.getName();
@@ -112,14 +112,14 @@ public class CourseController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/teacher/removeStudent")
+    @DeleteMapping("/teacher/removeStudent")
     public void removeStudent(@RequestParam("student_id") int student_id, @RequestParam("course_id") int course_id)
             throws NotFoundException {
         courseService.removeStudent(student_id, course_id);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/student/unEnroll")
+    @DeleteMapping("/student/leave")
     public void unEnroll(Principal p, @RequestParam("course_id") int course_id) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
@@ -135,29 +135,34 @@ public class CourseController {
         return ResponseEntity.ok(notificationService.searchNotiByCourse(course_id, current_page));
     }
 
-    @PostMapping("/teacher/course/notification/create")
+    @PostMapping("/teacher/course/notification")
     @ResponseStatus(HttpStatus.OK)
     public void createNotification(@RequestBody NotificationDTO notificationDTO) {
         notificationService.create(notificationDTO);
     }
 
-    @DeleteMapping("/teacher/course/notification/delete")
+    @DeleteMapping("/teacher/course/notification/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteNotification(@RequestParam("id") int id) throws NotFoundException {
+    public void deleteNotification(@PathVariable("id") int id) throws NotFoundException {
         notificationService.delete(id);
     }
 
     // Conversation
 
     @GetMapping("/course/conversation")
-    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(int course_id, int current_page) {
+    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@RequestParam("course_id") int course_id, @RequestParam("current_page") int current_page) {
         return ResponseEntity.ok(conversationService.getConversation(course_id, current_page));
     }
 
-    @DeleteMapping("/course/conversation")
-    public void deleteConversation(@RequestParam("id") int id, Principal p) throws NotFoundException {
+    @DeleteMapping("/course/conversation/{id}")
+    public void deleteConversation(@PathVariable("id") int id, Principal p) throws NotFoundException {
         UserDTO userDTO = userService.findByUsername(p.getName());
         conversationService.delete(id, userDTO.getId());
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/course/conversation")
+    public void addNewConversation(@RequestBody ConversationDTO conversationDTO){
+        conversationService.create(conversationDTO);
+    }
 }

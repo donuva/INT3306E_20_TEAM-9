@@ -28,7 +28,7 @@ public class TeacherController {
     @PostMapping("/create/teacher")
     public void createTeacher(@ModelAttribute TeacherDTO teacherDTO) throws IOException {
 
-        if (!teacherDTO.getUser().getFile().isEmpty()) {
+        if (teacherDTO.getUser().getFile()!=null) {
             String filename = teacherDTO.getUser().getFile().getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));

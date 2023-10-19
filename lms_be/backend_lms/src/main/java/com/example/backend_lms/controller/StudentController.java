@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-@RestControllerAdvice
+@RestController
 public class StudentController {
     @Value("${upload.folder}")
     String Upload_Folder;
@@ -44,7 +44,7 @@ public class StudentController {
         studentService.create(studentDTO);
     }
 
-    @PutMapping("student/update/")
+    @PutMapping("student/update")
     public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO) throws IOException, NotFoundException {
 
         if (!studentDTO.getUser().getFile().isEmpty()) {
