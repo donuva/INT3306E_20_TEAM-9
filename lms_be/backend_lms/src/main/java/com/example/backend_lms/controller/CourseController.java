@@ -50,8 +50,11 @@ public class CourseController {
 
     @GetMapping("/student/getCourseList")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForStudent(
-            @RequestParam(value = "current_page") int current_page,
+            @RequestParam(value = "current_page", required = false) Integer current_page,
             Principal p) throws NotFoundException {
+        if(current_page==null){
+            current_page=0;
+        }
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
@@ -59,7 +62,10 @@ public class CourseController {
     }
 
     @GetMapping("/course/search")
-    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam("current_page") int current_page){
+    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam("current_page") Integer current_page){
+        if(current_page==null){
+            current_page=0;
+        }
         return ResponseEntity.ok(courseService.searchCourse(course_name, current_page));
     }
 
@@ -87,8 +93,11 @@ public class CourseController {
 
     @GetMapping("/teacher/getCourseList")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForTeacher(
-            @RequestParam("current_page") int current_page,
+            @RequestParam(value = "current_page", required = false) Integer current_page,
             Principal p) throws NotFoundException {
+        if(current_page==null){
+            current_page=0;
+        }
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         TeacherDTO teacherDTO = teacherService.findByUserId(userDTO.getId());
@@ -97,7 +106,10 @@ public class CourseController {
 
     @GetMapping("/student/getSuggestCourse")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getSuggest(Principal p,
-            @RequestParam("current_page") int current_page) throws NotFoundException {
+            @RequestParam("current_page") Integer current_page) throws NotFoundException {
+        if(current_page==null){
+            current_page=0;
+        }
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
@@ -131,7 +143,10 @@ public class CourseController {
     @GetMapping("/course/notification")
     public ResponseEntity<PageDTO<List<NotificationDTO>>> getCourseNotification(
             @RequestParam("course_id") int course_id,
-            @RequestParam("current_page") int current_page) {
+            @RequestParam("current_page") Integer current_page) {
+        if(current_page==null){
+            current_page=0;
+        }
         return ResponseEntity.ok(notificationService.searchNotiByCourse(course_id, current_page));
     }
 
@@ -150,7 +165,10 @@ public class CourseController {
     // Conversation
 
     @GetMapping("/course/conversation")
-    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@RequestParam("course_id") int course_id, @RequestParam("current_page") int current_page) {
+    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@RequestParam("course_id") int course_id, @RequestParam("current_page") Integer current_page) {
+        if(current_page==null){
+            current_page=0;
+        }
         return ResponseEntity.ok(conversationService.getConversation(course_id, current_page));
     }
 

@@ -16,7 +16,5 @@ public class CourseScoreDTO{
 
     private Double GPA;
 
-    private List<ScoreExamDTO> scoreExamDTOS;
-    
     private List<ScoreExerciseDTO> scoreExerciseDTOS;
 }

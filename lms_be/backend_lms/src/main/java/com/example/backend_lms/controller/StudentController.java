@@ -71,7 +71,10 @@ public class StudentController {
     }
 
     @GetMapping("/searchStudent")
-    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") int page){
-        return ResponseEntity.ok(studentService.search(name, page));
+    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") Integer current_page){
+        if(current_page==null){
+            current_page=0;
+        }
+        return ResponseEntity.ok(studentService.search(name, current_page));
     }
 }

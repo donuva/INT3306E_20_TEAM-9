@@ -1,7 +1,6 @@
 package com.example.backend_lms.repo;
 
 import com.example.backend_lms.dto.ScoreExerciseDTO;
-import com.example.backend_lms.entity.ScoreExam;
 import com.example.backend_lms.entity.ScoreExercise;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

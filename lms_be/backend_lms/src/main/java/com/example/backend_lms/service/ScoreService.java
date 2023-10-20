@@ -1,7 +1,6 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.*;
-import com.example.backend_lms.entity.ScoreExam;
 import com.example.backend_lms.entity.ScoreExercise;
 import com.example.backend_lms.entity.Student;
 import com.example.backend_lms.repo.*;
@@ -21,9 +20,6 @@ import java.util.stream.Collectors;
 public class ScoreService {
 
     @Autowired
-    ScoreExamRepo scoreExamRepo;
-
-    @Autowired
     ScoreExerciseRepo scoreExerciseRepo;
 
     @Autowired
@@ -31,9 +27,6 @@ public class ScoreService {
 
     @Autowired
     ExerciseRepo exerciseRepo;
-
-    @Autowired
-    ExamRepo examRepo;
 
     public Student getStudentEnrolledCourse(int course_id, int student_id) {
         List<Student> students = Objects.requireNonNull(courseRepo.findById(course_id).orElse(null)).getStudentList();
@@ -43,11 +36,6 @@ public class ScoreService {
             }
         }
         return null;
-    }
-
-
-    public ScoreExamDTO convertScoreExam(ScoreExam scoreExam) {
-        return new ModelMapper().map(scoreExam, ScoreExamDTO.class);
     }
 
     public ScoreExerciseDTO convertScoreExercise(ScoreExercise scoreExercise) {
@@ -81,18 +69,11 @@ public class ScoreService {
             if (student != null) {
                 courseScoreDTO.setStudentDTO(new ModelMapper().map(student, StudentDTO.class));
                 courseScoreDTO.setCourseDTO(new ModelMapper().map(courseRepo.findById(course_id).orElse(null), CourseDTO.class));
-                List<ScoreExamDTO> scoreExamDTOS = scoreExamRepo.findByStudentAndCourse(course_id, student_id)
-                        .stream().map(this::convertScoreExam).collect(Collectors.toList());
-                courseScoreDTO.setScoreExamDTOS(scoreExamDTOS);
                 List<ScoreExerciseDTO> scoreExerciseDTOS = scoreExerciseRepo.findByStudentAndCourse(course_id, student_id).stream()
                         .map(this::convertScoreExercise).collect(Collectors.toList());
                 courseScoreDTO.setScoreExerciseDTOS(scoreExerciseDTOS);
                 for (ScoreExerciseDTO sExercise : scoreExerciseDTOS) {
                     GPA += sExercise.getGrade();
-                    total += 1;
-                }
-                for (ScoreExamDTO sExam : scoreExamDTOS) {
-                    GPA += sExam.getGrade();
                     total += 1;
                 }
                 courseScoreDTO.setGPA(GPA / total);
@@ -129,34 +110,9 @@ public class ScoreService {
         }
     }
 
-    public PageDTO<List<ScoreExamDTO>> getScoreByExam(int exam_id, int current_page) throws NotFoundException {
-        PageRequest pageRequest = PageRequest.of(current_page, 40);
-        if (examRepo.findById(exam_id).isPresent()) {
-
-            Page<ScoreExam> page = scoreExamRepo.findAllByExamId(exam_id, pageRequest);
-
-            List<ScoreExamDTO> scoreExamDTOS = new ArrayList<>(page.get().map(this::convertScoreExam).toList());
-            scoreExamDTOS.sort((a, b) -> a.getStudent().getUser().getName().compareToIgnoreCase(b.getStudent().getUser().getName()));
-            PageDTO<List<ScoreExamDTO>> pageDTO = new PageDTO<>();
-            pageDTO.setTotalPages(page.getTotalPages());
-            pageDTO.setSize(page.getSize());
-            pageDTO.setTotalElements(page.getTotalElements());
-            pageDTO.setData(scoreExamDTOS);
-            return pageDTO;
-        } else {
-            throw new NotFoundException("Exam_id không hợp lệ");
-        }
-    }
 
     //lay ra diem cua hoc sinh theo exam_id, exercise_id cho hoc sinh va cho giao vien
 
-    public ScoreExamDTO getScoreByExamAndStudent(int exam_id, int student_id) throws NotFoundException {
-        if (scoreExamRepo.findByStudentAndExam(student_id, exam_id).isPresent()) {
-            return convertScoreExam(scoreExamRepo.findByStudentAndExam(student_id, exam_id).orElse(null));
-        } else {
-            throw new NotFoundException("Exam_id hoặc student_id không hợp lệ");
-        }
-    }
 
     //giao vien lay bai tu day ra de cham
     public ScoreExerciseDTO getScoreByExerciseAndStudent(int exercise_id, int student_id) throws NotFoundException {

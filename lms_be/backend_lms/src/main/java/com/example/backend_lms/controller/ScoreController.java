@@ -56,26 +56,15 @@ public class ScoreController {
     //lay list diem theo tung bai, lay tu day ra roi lay theo id de cham tung bai
     @GetMapping("/teacher/getScoreByExercise")
     public ResponseEntity<PageDTO<List<ScoreExerciseDTO>>> getScoreByExercise(@RequestParam("exercise_id") int exercise_id,
-                                                                              @RequestParam("current_page") int current_page) throws NotFoundException {
+                                                                              @RequestParam(value = "current_page", required = false) Integer current_page) throws NotFoundException {
+        if(current_page==null){
+            current_page=0;
+        }
         return ResponseEntity.ok(scoreService.getScoreByExercise(exercise_id, current_page));
-    }
-
-    @GetMapping("/teacher/getScoreByExam")
-    public ResponseEntity<PageDTO<List<ScoreExamDTO>>> getScoreByExam(@RequestParam("exam_id") int exam_id,
-                                                                      @RequestParam("current_page") int current_page) throws NotFoundException {
-        return ResponseEntity.ok(scoreService.getScoreByExam(exam_id, current_page));
     }
 
 
     //lay TUNG BAI cua ban than (dung principle)
-    @GetMapping("/student/getScoreByExam")
-    public ResponseEntity<ScoreExamDTO> getExamScoreByStudent(@RequestParam("exam_id") int exam_id, Principal p) throws NotFoundException {
-        String username = p.getName();
-        UserDTO userDTO = userService.findByUsername(username);
-        StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
-        return ResponseEntity.ok(scoreService.getScoreByExamAndStudent(exam_id, studentDTO.getId()));
-    }
-
     @GetMapping("/student/getExerciseScore/{exercise_id}")
     public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise_id") int exercise_id, Principal p) throws NotFoundException {
         String username = p.getName();
@@ -83,25 +72,6 @@ public class ScoreController {
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
         return ResponseEntity.ok(scoreService.getScoreByExerciseAndStudent(exercise_id, studentDTO.getId()));
     }
-
-
-
-
-
-//    //lay tung bai cho giao vien, giao vien cung lay bai ra de cham tu day
-//    @GetMapping("/teacher/exam/getScoreByStudent")
-//    public ResponseEntity<ScoreExamDTO> getExamScoreByStudent(@RequestParam("exam_id") int exam_id,
-//                                                              @RequestParam("student_id") int student_id) throws NotFoundException {
-//        return ResponseEntity.ok(scoreService.getScoreByExamAndStudent(exam_id, student_id));
-//    }
-//
-//    @GetMapping("/teacher/exercise/getScoreByStudent")
-//    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise_id") int exercise_id,
-//                                                                      @RequestParam("student_id") int student_id) throws NotFoundException {
-//        return ResponseEntity.ok(scoreService.getScoreByExerciseAndStudent(exercise_id, student_id));
-//    }
-
-
 
 
     //lấy bài làm để chấm từ đây, cũng có thể xem điểm của học sinh từ đây

@@ -25,9 +25,6 @@ public class CourseDTO {
     @JsonIncludeProperties({"id", "topic"})
     private List<LessonDTO> lessonList;
 
-    @JsonIncludeProperties({"id", "title"})
-    private List<ExamDTO> examList;
-
     @JsonIncludeProperties({"id","title"})
     private List<ExerciseDTO> exerciseList;
 

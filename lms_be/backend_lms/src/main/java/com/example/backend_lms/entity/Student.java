@@ -22,9 +22,6 @@ public class Student{
     private List<Course> courseList;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    private List<ScoreExam> scoreExamList;
-
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<ScoreExercise> scoreExerciseList;
 
 }

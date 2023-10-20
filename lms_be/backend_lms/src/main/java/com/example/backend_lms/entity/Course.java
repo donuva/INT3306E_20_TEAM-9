@@ -26,8 +26,6 @@ public class Course extends TimeAuditable{
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Lesson> lessonList;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<Exam> examList;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Exercise> exerciseList;

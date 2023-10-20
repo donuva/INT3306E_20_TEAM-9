@@ -84,9 +84,6 @@ public class CourseService {
     public CourseDTO update(CourseDTO courseDTO) throws NotFoundException {
         CourseDTO current_course = convert(courseRepo.findById(courseDTO.getId()).orElse(null));
         if (courseRepo.findById(courseDTO.getId()).isPresent()) {
-            if (courseDTO.getExamList() == null) {
-                courseDTO.setExamList(current_course.getExamList());
-            }
             if (courseDTO.getExerciseList() == null) {
                 courseDTO.setExerciseList(current_course.getExerciseList());
             }

@@ -70,7 +70,10 @@ public class TeacherController {
     }
 
     @GetMapping("/searchTeacher")
-    public ResponseEntity<PageDTO<List<TeacherDTO>>>searchTeacher(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") int current_page){
+    public ResponseEntity<PageDTO<List<TeacherDTO>>>searchTeacher(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") Integer current_page){
+        if(current_page==null){
+            current_page=0;
+        }
         return ResponseEntity.ok(teacherService.search(name, current_page));
     }
 
