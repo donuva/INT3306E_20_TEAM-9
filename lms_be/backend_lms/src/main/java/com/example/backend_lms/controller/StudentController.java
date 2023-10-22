@@ -5,6 +5,7 @@ import com.example.backend_lms.dto.PageDTO;
 import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.dto.TeacherDTO;
 import com.example.backend_lms.service.StudentService;
+import com.example.backend_lms.validator.ValidateRegister;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,9 +28,13 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    ValidateRegister validateRegister;
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/create/student")
     public void createStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        validateRegister.validateEntry(studentDTO.getUser().getUsername(),studentDTO.getUser().getPhone(), studentDTO.getUser().getEmail());
 
         if (file!=null) {
             String filename = file.getOriginalFilename();
@@ -51,6 +56,7 @@ public class StudentController {
     @PutMapping("student/update")
     public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
+        validateRegister.validateEntry(studentDTO.getUser().getUsername(),studentDTO.getUser().getPhone(), studentDTO.getUser().getEmail());
         if (file != null) {
             String filename = file.getOriginalFilename();
 

@@ -2,7 +2,9 @@ package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.UserDTO;
 import com.example.backend_lms.entity.User;
+import com.example.backend_lms.exception.DuplicateKeyException;
 import com.example.backend_lms.repo.UserRepo;
+import com.example.backend_lms.validator.ValidateRegister;
 import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -14,6 +16,7 @@ public class UserService {
 
     @Autowired
     UserRepo userRepo;
+
 
     public UserDTO convert(User user) {
         return new ModelMapper().map(user, UserDTO.class);

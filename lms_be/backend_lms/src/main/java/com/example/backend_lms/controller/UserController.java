@@ -6,6 +6,7 @@ import com.example.backend_lms.dto.UserDTO;
 import com.example.backend_lms.service.StudentService;
 import com.example.backend_lms.service.TeacherService;
 import com.example.backend_lms.service.UserService;
+import com.example.backend_lms.validator.ValidateRegister;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    ValidateRegister validateRegister;
 
     @Value("${upload.folder}")
     String Upload_Folder;
@@ -87,6 +91,7 @@ public class UserController {
 
     @PutMapping("/admin/update")
     public ResponseEntity<UserDTO> updateAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws NotFoundException, IOException {
+        validateRegister.validateEntry(userDTO.getUsername(), userDTO.getPhone(), userDTO.getEmail());
         if(file != null){
             String filename = file.getOriginalFilename();
             assert filename != null;
