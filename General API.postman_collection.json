@@ -1,0 +1,485 @@
+{
+	"info": {
+		"_postman_id": "71dce569-2bc7-4aee-be31-92c910464b88",
+		"name": "General API",
+		"description": "Các API không cần role cụ thể (dùng chung)\n\nTất nhiên cần đăng nhập, chỉ là không phân biệt role",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26550683",
+		"_collection_link": "https://lunar-astronaut-676111.postman.co/workspace/lms~74292d83-84e5-4fb2-a9f4-3f17da58dc39/collection/26550683-71dce569-2bc7-4aee-be31-92c910464b88?action=share&source=collection_link&creator=26550683"
+	},
+	"item": [
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "Get lesson by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/course/lesson/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"lesson",
+								"1"
+							]
+						},
+						"description": "Lấy ra thông tin 1 lesson qua id, id được truyền ở path"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exercise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/exercise/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"exercise",
+								"1"
+							]
+						},
+						"description": "Lấy ra thông tin của 1 exercise, truyền exercise_id vào path"
+					},
+					"response": []
+				},
+				{
+					"name": "Get notification of a course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/course/notification?course_id=1&current_page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"notification"
+							],
+							"query": [
+								{
+									"key": "course_id",
+									"value": "1"
+								},
+								{
+									"key": "current_page",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Lấy ra page các thông báo của 1 course, page đầu tiên là 0"
+					},
+					"response": []
+				},
+				{
+					"name": "Get conversation of a course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/course/conversation?course_id=1&current_page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"conversation"
+							],
+							"query": [
+								{
+									"key": "course_id",
+									"value": "1"
+								},
+								{
+									"key": "current_page",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Lấy ra phần diễn đàn của 1 course, cần truyền vào course_id và trang hiện tại, ban đầu sẽ là 0"
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa 1 conversation theo id, truyền từ path",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/course/conversation/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"conversation",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new conversation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\":{\r\n        \"id\":1\r\n    },\r\n    \"course\":{\r\n        \"id\":1\r\n    },\r\n    \"topic\":\"Bài khó vãi lồn\",\r\n    \"msg\":\"Các cậu thấy bài vỗn lài không\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/course/conversation/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"conversation",
+								"1"
+							]
+						},
+						"description": "Cần truyền vào đủ cả user và course, đó chính là id của người dùng viết và id của course, cái này người dùng ko tự điền, fe xử lý tự thêm vào "
+					},
+					"response": []
+				}
+			],
+			"description": "Folder này liên quan đến course"
+		},
+		{
+			"name": "Find Student By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/searchStudent?name=Huy&current_page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"searchStudent"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Huy"
+						},
+						{
+							"key": "current_page",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Tìm học sinh theo tên (LIKE)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/getStudent/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"getStudent",
+						"1"
+					]
+				},
+				"description": "Id được truyền vào trong url path"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user.name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "user.bio",
+							"value": "Đẹp trai học giỏi",
+							"type": "text"
+						},
+						{
+							"key": "user.birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "user.username",
+							"value": "huy123342",
+							"type": "text"
+						},
+						{
+							"key": "user.password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "user.email",
+							"value": "kjaf@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "user.phone",
+							"value": "0123456789234",
+							"type": "text"
+						},
+						{
+							"key": "user.file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/create/student",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"create",
+						"student"
+					]
+				},
+				"description": "Yêu cầu truyền vào các thông tin như dưới đây, username có check không được trùng, không truyền vào Id, Id tự gen, avatar có thể có hoặc không\n\nVới phần role, không cần hiển thị ô nhập cho người dùng, tự map theo API gọi đến create student hay là teacher\n\nAdmin sẽ được thêm bởi admin khác"
+			},
+			"response": []
+		},
+		{
+			"name": "Create teacher account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user.name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "user.bio",
+							"value": "Đẹp trai học giỏi",
+							"type": "text"
+						},
+						{
+							"key": "user.birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "user.username",
+							"value": "huy1234",
+							"type": "text"
+						},
+						{
+							"key": "user.password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "user.email",
+							"value": "nam@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "user.phone",
+							"value": "012345678910",
+							"type": "text"
+						},
+						{
+							"key": "user.file",
+							"type": "file",
+							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/create/teacher",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"create",
+						"teacher"
+					]
+				},
+				"description": "Đọc lại phần create student trên để biết cách map"
+			},
+			"response": []
+		},
+		{
+			"name": "Get teacher by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/getTeacher/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"getTeacher",
+						"1"
+					]
+				},
+				"description": "Lấy teacher theo ID ở path"
+			},
+			"response": []
+		},
+		{
+			"name": "Find teacher by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/searchTeacher?name=Huy&current_page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"searchTeacher"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Huy"
+						},
+						{
+							"key": "current_page",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Tìm teacher theo tên, truyền vòa current_page 0 là trang đầu tiên\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"me"
+					]
+				},
+				"description": "Cái này dùng để lấy ra thông tin người dùng hiện tại, cần phải đăng nhập\n\ndùng cho người dùng là admin"
+			},
+			"response": []
+		},
+		{
+			"name": "Lấy thông tin người dùng hiện tại (đối với student)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/student/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"student",
+						"me"
+					]
+				},
+				"description": "cần đăng nhập chưa test được"
+			},
+			"response": []
+		},
+		{
+			"name": "Lấy thông tin người dùng hiện tại (đối vối teacher)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/teacher/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"teacher",
+						"me"
+					]
+				},
+				"description": "cần đăng nhập chưa test được"
+			},
+			"response": []
+		}
+	]
+}

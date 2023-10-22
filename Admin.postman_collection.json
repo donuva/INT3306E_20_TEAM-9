@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "7610e878-cd0d-44c1-8028-c60b1e96b964",
+		"name": "Admin",
+		"description": "Các hoạt động dành riêng cho admin\n\nThực tế có thể không cần dùng, admin tạo mới = database cũng được, dự án chưa xong thì làm tốc độ teacher và student, cái này để tạo 1 acc modify dự án thôi, dùng postman làm giao diện cho admin luôn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26550683",
+		"_collection_link": "https://lunar-astronaut-676111.postman.co/workspace/lms~74292d83-84e5-4fb2-a9f4-3f17da58dc39/collection/26550683-7610e878-cd0d-44c1-8028-c60b1e96b964?action=share&source=collection_link&creator=26550683"
+	},
+	"item": [
+		{
+			"name": "Create admin account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "bio",
+							"value": "Đẹp trai học giỏi",
+							"type": "text"
+						},
+						{
+							"key": "birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "huy123",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "emaill",
+							"value": "huy@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "0123456789",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "ADMIN",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/admin/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"admin",
+						"new"
+					]
+				},
+				"description": "Tạo mới admin account"
+			},
+			"response": []
+		},
+		{
+			"name": "Update admin account",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "bio",
+							"value": "Đẹp trai học giỏi",
+							"type": "text"
+						},
+						{
+							"key": "birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "huy123",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "emaill",
+							"value": "huy@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "0123456789",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "ADMIN",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
+						},
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/admin/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"admin",
+						"update"
+					]
+				},
+				"description": "Cái này chả khác gì thêm, khác mỗi cái là thêm id vào, và các trường kể cả không thay đổi vẫn phải nhập lại, để map vào"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete admin account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/admin/delete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"admin",
+						"delete",
+						"1"
+					]
+				},
+				"description": "Xóa admin account, id được truyền vào ở path luôn"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/admin/delete-student/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"admin",
+						"delete-student",
+						"1"
+					]
+				},
+				"description": "ID cần xóa sẽ để trên path"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Teacher account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/admin/delete-teacher/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"admin",
+						"delete-teacher",
+						"1"
+					]
+				},
+				"description": "ID được truyền vào path\r\n"
+			},
+			"response": []
+		}
+	]
+}
