@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "b03958f7-40ab-4d96-8fb3-5a5cf9d59502",
+		"name": "Student",
+		"description": "Các API của student",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26550683",
+		"_collection_link": "https://lunar-astronaut-676111.postman.co/workspace/lms~74292d83-84e5-4fb2-a9f4-3f17da58dc39/collection/26550683-b03958f7-40ab-4d96-8fb3-5a5cf9d59502?action=share&source=collection_link&creator=26550683"
+	},
+	"item": [
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "Exercise - Do",
+					"item": [
+						{
+							"name": "Submit Work",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "msg",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "exercise.id",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "student.id",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/lms/student/exercise/submit",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"student",
+										"exercise",
+										"submit"
+									]
+								},
+								"description": "Cái này là học sinh nộp bài, bắt buộc phải có exercise.id = với id của execise nó đang làm, student.id là id của học sinh -> người dùng không tự điền cái này, fe phải xử lý"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get course score for student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/student/getCourseScore/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"student",
+								"getCourseScore",
+								"1"
+							]
+						},
+						"description": "Lấy bảng điểm của course cho học sinh (cần đăng nhập nên API này chưa test được nhé), course_id truyền vào path"
+					},
+					"response": []
+				},
+				{
+					"name": "Get score from an exercise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/student/getExerciseScore/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"student",
+								"getExerciseScore",
+								"1"
+							]
+						},
+						"description": "Lấy điểm của 1 exercise cho học sinh, đây cũng chính là bài làm của nó, exercise_id được truyền vào từ Path\n\nCần đăng nhập -> chưa test được"
+					},
+					"response": []
+				},
+				{
+					"name": "Get course score of a student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/getCourseScoreByStudent?course_id&student_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"getCourseScoreByStudent"
+							],
+							"query": [
+								{
+									"key": "course_id",
+									"value": null
+								},
+								{
+									"key": "student_id",
+									"value": null
+								}
+							]
+						},
+						"description": "Lấy điểm của 1 học sinh ở 1 course, phải thêm 2 tham số là course_id và student_id"
+					},
+					"response": []
+				},
+				{
+					"name": "Get course list of a student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/student/getCourseList?current_page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"student",
+								"getCourseList"
+							],
+							"query": [
+								{
+									"key": "current_page",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Lấy ra danh sách các môn học của sinh viên, cần xác thực nên chưa test được nhé\n\n_Truyền vào current_page nhé bắt đầu từ 0_"
+					},
+					"response": []
+				},
+				{
+					"name": "Request to join course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/student/enroll/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"student",
+								"enroll",
+								"1"
+							]
+						},
+						"description": "Gửi yêu cầu tham gia vào course, truyền id của course vào path, cần đăng nhập nên chưa test đuọc nhé"
+					},
+					"response": []
+				},
+				{
+					"name": "get suggest courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/student/getSuggestCourse?current_page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"student",
+								"getSuggestCourse"
+							],
+							"query": [
+								{
+									"key": "current_page",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Lấy ra danh sách course gợi ý cho student"
+					},
+					"response": []
+				},
+				{
+					"name": "Get course by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/course/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"1"
+							]
+						},
+						"description": "Lấy ra thông tin 1 course theo id của course, truyền vào từ path, tuy nhiên cần đăng nhập để xác minh -> chưa test được"
+					},
+					"response": []
+				},
+				{
+					"name": "Student leave a course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/student/leave?course_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"student",
+								"leave"
+							],
+							"query": [
+								{
+									"key": "course_id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "tự rời course, cái này cần truyền course_id, cái này cần đăng nhập để test -> chưa test được"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Edit student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "user.id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "user.name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "user.bio",
+							"value": "Đẹp trai học giỏi",
+							"type": "text"
+						},
+						{
+							"key": "user.birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "user.username",
+							"value": "huy123",
+							"type": "text"
+						},
+						{
+							"key": "user.password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "user.emaill",
+							"value": "huy@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "user.phone",
+							"value": "0123456789",
+							"type": "text"
+						},
+						{
+							"key": "user.file",
+							"type": "file",
+							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/student/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"student",
+						"update"
+					]
+				},
+				"description": "cần gọi GET lấy ra thông tin sau đó thực hiện sửa và truyền xuống, phần không thay đổi cũng phải truyền (trừ avatar có thể không truyền)\n\nPhần đổi mật khẩu không làm ở đây, role cũng không cần truyền, tự set"
+			},
+			"response": []
+		}
+	]
+}

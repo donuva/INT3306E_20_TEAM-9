@@ -6,12 +6,14 @@ import com.example.backend_lms.dto.UserDTO;
 import com.example.backend_lms.service.StudentService;
 import com.example.backend_lms.service.TeacherService;
 import com.example.backend_lms.service.UserService;
+import com.example.backend_lms.validator.ValidateRegister;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,9 @@ public class UserController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    ValidateRegister validateRegister;
 
     @Value("${upload.folder}")
     String Upload_Folder;
@@ -66,34 +71,39 @@ public class UserController {
     }
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/admin/new")
-    public void createAdminAccount(@ModelAttribute UserDTO userDTO) throws IOException {
-        if(!userDTO.getFile().isEmpty()){
-            String filename = userDTO.getFile().getOriginalFilename();
+    public void createAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        if(file!=null){
+            String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
             String newFilename ="avatar_admin" + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            userDTO.getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             userDTO.setAva_url(newFilename); //luu file xuong db
+        }else{
+            userDTO.setAva_url(null);
         }
         userService.createAdmin(userDTO);
 
     }
 
     @PutMapping("/admin/update")
-    public ResponseEntity<UserDTO> updateAdminAccount(@ModelAttribute UserDTO userDTO) throws NotFoundException, IOException {
-        if(!userDTO.getFile().isEmpty()){
-            String filename = userDTO.getFile().getOriginalFilename();
+    public ResponseEntity<UserDTO> updateAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws NotFoundException, IOException {
+        validateRegister.validateEntry(userDTO.getUsername(), userDTO.getPhone(), userDTO.getEmail());
+        if(file != null){
+            String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
             String newFilename ="avatar_admin" + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            userDTO.getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             userDTO.setAva_url(newFilename); //luu file xuong db
+        }else{
+            userDTO.setAva_url(null);
         }
 
         return ResponseEntity.ok()

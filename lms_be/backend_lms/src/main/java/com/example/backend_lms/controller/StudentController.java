@@ -5,6 +5,7 @@ import com.example.backend_lms.dto.PageDTO;
 import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.dto.TeacherDTO;
 import com.example.backend_lms.service.StudentService;
+import com.example.backend_lms.validator.ValidateRegister;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,29 +28,37 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    ValidateRegister validateRegister;
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/create/student")
-    public void createStudent(@ModelAttribute StudentDTO studentDTO) throws IOException {
+    public void createStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        validateRegister.validateEntry(studentDTO.getUser().getUsername(),studentDTO.getUser().getPhone(), studentDTO.getUser().getEmail());
 
-        if (!studentDTO.getUser().getFile().isEmpty()) {
-            String filename = studentDTO.getUser().getFile().getOriginalFilename();
+        if (file!=null) {
+            String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
             String newFilename = "avatar_student" + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            studentDTO.getUser().getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             studentDTO.getUser().setAva_url(newFilename); //luu file xuong db
+        }
+        else{
+            studentDTO.getUser().setAva_url(null);
         }
         studentService.create(studentDTO);
     }
 
     @PutMapping("student/update")
-    public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO) throws IOException, NotFoundException {
+    public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
-        if (!studentDTO.getUser().getFile().isEmpty()) {
-            String filename = studentDTO.getUser().getFile().getOriginalFilename();
+        validateRegister.validateEntry(studentDTO.getUser().getUsername(),studentDTO.getUser().getPhone(), studentDTO.getUser().getEmail());
+        if (file != null) {
+            String filename = file.getOriginalFilename();
 
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
@@ -56,7 +66,7 @@ public class StudentController {
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            studentDTO.getUser().getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             studentDTO.getUser().setAva_url(newFilename); //luu file xuong db
         }
 

@@ -14,18 +14,16 @@ public class ValidateRegister {
 
     public void validateEntry(String username, String phone, String email) throws DuplicateKeyException {
         User user = userRepo.findByUsername(username);
-        if(user!=null){
+        if (user != null) {
             throw new DuplicateKeyException("Username đã tồn tại");
-        }else{
-            user = userRepo.findByPhone(phone);
-            if(user!=null){
-                throw new DuplicateKeyException("Số điện thoại đã tồn tại");
-            }else{
-                user = userRepo.findByEmail(email);
-                if(user!=null){
-                    throw new DuplicateKeyException("Email đã tồn tại");
-                }
-            }
+        }
+        user = userRepo.findByPhone(phone);
+        if (user != null) {
+            throw new DuplicateKeyException("Số điện thoại đã tồn tại");
+        }
+        user = userRepo.findByEmail(email);
+        if (user != null) {
+            throw new DuplicateKeyException("Email đã tồn tại");
         }
     }
 }

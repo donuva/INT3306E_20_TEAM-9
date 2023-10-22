@@ -39,7 +39,7 @@ public class LessonService {
     public LessonDTO update(LessonDTO lessonDTO) throws NotFoundException {
         LessonDTO current_lesson = convert(lessonRepo.findById(lessonDTO.getId()).orElse(null));
         if (current_lesson!= null) {
-            if(lessonDTO.getFile()==null){
+            if(lessonDTO.getUrl()==null){
                 lessonDTO.setUrl(current_lesson.getUrl());
             }
             lessonDTO.setCourse(current_lesson.getCourse());

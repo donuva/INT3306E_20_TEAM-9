@@ -38,9 +38,6 @@ public class UserDTO {
 
     private String role;
 
-    @JsonIgnore
-    private MultipartFile file;
-
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date createdDate;

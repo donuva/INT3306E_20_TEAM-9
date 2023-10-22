@@ -19,9 +19,6 @@ public class ScoreExerciseDTO {
 
     private String exercise_url;
 
-    @JsonIgnore
-    private MultipartFile file;
-
     @JsonIncludeProperties("id")
     private ExerciseDTO exercise;
 

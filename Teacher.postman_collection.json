@@ -1,0 +1,794 @@
+{
+	"info": {
+		"_postman_id": "a0b70b4b-a830-416a-b171-e313e9161f4f",
+		"name": "Teacher",
+		"description": "Các API của teacher",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26550683",
+		"_collection_link": "https://lunar-astronaut-676111.postman.co/workspace/lms~74292d83-84e5-4fb2-a9f4-3f17da58dc39/collection/26550683-a0b70b4b-a830-416a-b171-e313e9161f4f?action=share&source=collection_link&creator=26550683"
+	},
+	"item": [
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "CRUD Exercise",
+					"item": [
+						{
+							"name": "Create exercise",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"bài tập buổi 1\",\r\n    \"content\":\"Giải bài 1 2 3 4\",\r\n    \"course\":{\r\n        \"id\":1\r\n    },\r\n    \"deadline\": \"03/10/2023\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/exercise/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"exercise",
+										"create"
+									]
+								},
+								"description": "Giáo viên tạo 1 exercise mới, lưu ý cần truyền course{id} để map đúng course, ví dụ course hiện tại có id=5 thì truyền course{id = 5}\r\nDateline có dạng ngày /tháng/ năm"
+							},
+							"response": []
+						},
+						{
+							"name": "Update an exercise",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"title\":\"bài tập buổi 1\",\r\n    \"content\":\"Giải bài 1 2 3 4\",\r\n    \"course\":{\r\n        \"id\":1\r\n    },\r\n    \"deadline\": \"03/10/2023\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/exercise/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"exercise",
+										"update"
+									]
+								},
+								"description": "sửa 1 exercise, các thông tin không được sửa gồm id và course id, tuy nhiên bắt buộc phải có trong json gửi lên, nếu không sẽ sai, -> không hiển thị cho người dùng xem, hoặc không cho phép sửa"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete an exercise by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/exercise/delete/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"exercise",
+										"delete",
+										"1"
+									]
+								},
+								"description": "xóa 1 exercise, điền id vào path"
+							},
+							"response": []
+						}
+					],
+					"description": "Cái này là tạo sửa xóa exercise"
+				},
+				{
+					"name": "CRUD Lesson",
+					"item": [
+						{
+							"name": "Create Lesson",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "topic",
+											"value": "Bài 2: Phép nhân",
+											"type": "text"
+										},
+										{
+											"key": "content",
+											"value": "Phép nhân dễ lắm ...",
+											"type": "text"
+										},
+										{
+											"key": "course.id",
+											"value": null,
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/course/lesson",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"course",
+										"lesson"
+									]
+								},
+								"description": "Tạo mới 1 lesson, lưu ý cần truyền vào course.id tương ứng với course hiện tại, không nó không map được, file có thể có hoặc không"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a lesson by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/course/lesson/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"course",
+										"lesson",
+										"1"
+									]
+								},
+								"description": "Xóa 1 lesson, id được truyền từ path, ở đây ví dụ là 1\r\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a lesson",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "topic",
+											"value": "Math",
+											"type": "text"
+										},
+										{
+											"key": "content",
+											"value": "Toán hay lắm bạn ơi",
+											"type": "text"
+										},
+										{
+											"key": "course.id",
+											"value": null,
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "id",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/course/lesson",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"course",
+										"lesson"
+									]
+								},
+								"description": "id là id của lesson, không được sửa\r\ncourse id không được sửa, ncl đừng hiện ra id cho người dùng, chỉ dùng để map thôi, cho phép sửa các cái khác"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create a new course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Toán\",\r\n    \"category\": \"Math\",\r\n    \"description\": \"Khóa học này dạy toán\",\r\n    \"teacher\":{\r\n        \"id\":2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/course",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"course"
+							]
+						},
+						"description": "Cần phải truyền teacher {id} chính là id của teacher dạy course nhé\n\nhay chính là teacher đang tạo luôn"
+					},
+					"response": [
+						{
+							"name": "Create a new course",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Toán\",\r\n    \"category\": \"Math\",\r\n    \"description\": \"Khóa học này dạy toán\",\r\n    \"teacher\":{\r\n        \"id\":1\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/lms/teacher/course",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"lms",
+										"teacher",
+										"course"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 20 Oct 2023 00:07:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Delete a course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/course/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"course",
+								"1"
+							]
+						},
+						"description": "Xóa 1 course, id của course được truyền vào từ path"
+					},
+					"response": []
+				},
+				{
+					"name": "Update course",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"name\": \"Toán\",\r\n    \"category\": \"Math\",\r\n    \"description\": \"Khóa học này dạy toán\",\r\n    \"teacher\":{\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/course",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"course"
+							]
+						},
+						"description": "Update 1 course, phải truyền course id vào cho đúng và teacher id đúng, không cho sửa các list về lesson, noti hay conversation -> chỉ sửa phần thôgn tin course thôi, vậy nên đừng hiển thị cho người dùng, chỉ hiển thị phần thông tin course và cho phép sửa lại, phần còn lại giữ y nguyên rồi truyền xuống be"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course Score List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/getCourseScore/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"getCourseScore",
+								"1"
+							]
+						},
+						"description": "Tức là lấy ra bảng điểm của học sinh trong course cho giáo viên, id của course được truyền từ path"
+					},
+					"response": []
+				},
+				{
+					"name": "Get score list of a exercise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/getScoreByExercise?exercise_id&current_page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"getScoreByExercise"
+							],
+							"query": [
+								{
+									"key": "exercise_id",
+									"value": null
+								},
+								{
+									"key": "current_page",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Lấy bảng điểm exercise cho teacher, cần truyền vào exercise_id và chỉ số trang  \ncurrent_page (trang đầu tiên là 0)\n\nNếu cần chấm bài tập, ban đầu list này sẽ chưa có điểm, lấy từ đây ra Id và chấm điểm -> bảng điểm sẽ có tùy chọn sửa/xóa điểm"
+					},
+					"response": []
+				},
+				{
+					"name": "Get work/score of exercise by a student ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/exercise/getWork/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"exercise",
+								"getWork",
+								"1"
+							]
+						},
+						"description": "Lấy bài làm của học sinh từ 1 exercise, cái này là lấy chi tiết, khi hiển thị ra list điểm rồi (khi chưa có điểm thì nó chỉ là list bài nộp chưa điểm), click vào một mục nó sẽ dẫn tới popup hoặc trang khác xem chi tiết bài làm để cho điểm, hoăc nếu có điểm rồi thì sẽ cho xem lại bài làm của học sinh"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Score for a work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grade",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/exercise/addScore/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"exercise",
+								"addScore",
+								"1"
+							]
+						},
+						"description": "Chấm điểm cho bài làm exercise, path truyền vào scoreExerciseId, hay chính là Id bài làm, truyền thêm param điểm grade vào body"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete score of a exercise work",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/exercise/deleteScore/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"exercise",
+								"deleteScore",
+								"1"
+							]
+						},
+						"description": "Xóa điểm đã chấm cho 1 bài làm, path có chứa id của bài làm/điểm"
+					},
+					"response": []
+				},
+				{
+					"name": "Find course by name/get all course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/course/search?course_name=Toán",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"course",
+								"search"
+							],
+							"query": [
+								{
+									"key": "course_name",
+									"value": "Toán"
+								}
+							]
+						},
+						"description": "Cái này là tìm course theo tên, hoặc là lấy ra danh sách tất cả các course nếu như không truyền vào parameter"
+					},
+					"response": []
+				},
+				{
+					"name": "Get request enroll list of a course for teacher",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/getRequestList/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"getRequestList",
+								"1"
+							]
+						},
+						"description": "Lấy ra danh sách yêu cầu tham gia course cho giáo viên\n\nTruyền vào course_id ở path"
+					},
+					"response": []
+				},
+				{
+					"name": "accept/deny request ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/acceptRequest/1?code=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"acceptRequest",
+								"1"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "1"
+								}
+							]
+						},
+						"description": "chấp nhận hoặc từ chối yêu cầu join course, code 1 là đồng ý, 2 là deny"
+					},
+					"response": []
+				},
+				{
+					"name": "Get teaching courses list for teacher",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/getCourseList?current_page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"getCourseList"
+							],
+							"query": [
+								{
+									"key": "current_page",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Lấy ra list các course đang quản lý, cần truyền vào current_page, trang đầu tiên là 0"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove student from a course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/removeStudent?student_id=1&course_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"removeStudent"
+							],
+							"query": [
+								{
+									"key": "student_id",
+									"value": "1"
+								},
+								{
+									"key": "course_id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Xóa học sinh ra khỏi course, cần truyền vào student_id và course_id"
+					},
+					"response": []
+				},
+				{
+					"name": "Xóa thông báo theo id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/course/notification/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"course",
+								"notification",
+								"1"
+							]
+						},
+						"description": "truyền id vào path\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Thêm thông báo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"topic\":\"mai nghỉ nnhé\",\r\n    \"msg\":\"bận nên lớp nghỉ nhé\",\r\n    \"course\":{\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/lms/teacher/course/notification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lms",
+								"teacher",
+								"course",
+								"notification"
+							]
+						},
+						"description": "cần truyền course id là course hiện tại cần thêm tbao"
+					},
+					"response": []
+				}
+			],
+			"description": "Các chức năng liên quan đến course"
+		},
+		{
+			"name": "Update Teacher",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "user.id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "user.name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "user.bio",
+							"value": "Đẹp trai học giỏi",
+							"type": "text"
+						},
+						{
+							"key": "user.birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "user.username",
+							"value": "huy123",
+							"type": "text"
+						},
+						{
+							"key": "user.password",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "user.emaill",
+							"value": "huy@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "user.phone",
+							"value": "0123456789",
+							"type": "text"
+						},
+						{
+							"key": "user.file",
+							"type": "file",
+							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/teacher/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"teacher",
+						"update"
+					]
+				},
+				"description": "Xem lại update student\r\n"
+			},
+			"response": []
+		}
+	]
+}

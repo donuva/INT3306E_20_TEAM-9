@@ -1,5 +1,6 @@
 package com.example.backend_lms.controller;
 
+import com.example.backend_lms.exception.DuplicateKeyException;
 import com.example.backend_lms.exception.ExpiredDateException;
 import com.example.backend_lms.exception.NotAllowedException;
 import javassist.NotFoundException;
@@ -26,5 +27,10 @@ public class ExceptionController{
     @ExceptionHandler({NotAllowedException.class})
     public ResponseEntity<Object> expired(NotAllowedException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler({DuplicateKeyException.class})
+    public ResponseEntity<Object> expired(DuplicateKeyException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
