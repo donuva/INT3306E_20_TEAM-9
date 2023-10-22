@@ -2,7 +2,7 @@ import { Table, Tag, Space } from 'antd';
 //import { BarChart, GridlineSeries, Gridline } from 'reaviz';
 import React from 'react';
 
-const Grade = () => {
+const StudentGrade = () => {
   const data = {
     grades: [
       { id: 1, type: 'Assignment', title: 'Assignment 1', score: 80, maxScore: 100, weight: 0.3, gradedAt: '2023-09-15T10:30:00' },
@@ -83,7 +83,7 @@ const Grade = () => {
   ];
 
   return (
-    <div style={{marginLeft:'180px'}} >
+    <div style={{marginTop:'20px',marginBottom:'20px' }} >
       <Table
         rowKey={(record) => record?.id}
         columns={columns}
@@ -110,4 +110,4 @@ const Grade = () => {
   );
 };
 
-export default Grade;
+export default StudentGrade;

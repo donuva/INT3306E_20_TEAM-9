@@ -1,16 +1,15 @@
 import Header from "../Components/header";
 import Footer from "../Components/footer";
-
 import '../CSS/footer.css';
-import Lecture from "../Components/Lecture";
-function CoursePage() {
+import LectureDetail from "../Components/LectureDetail";
+function CourseDetailPage() {
   return (
     <div className="App" style={{ paddingBottom: '10px' }}>
      <Header/>
-       <Lecture/>
+       <LectureDetail/>
      <Footer/>
     </div>
   );
 }
 
-export default CoursePage;
+export default CourseDetailPage;

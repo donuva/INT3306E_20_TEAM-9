@@ -1,16 +1,17 @@
 import Header from "../Components/header";
 import Footer from "../Components/footer";
-
 import '../CSS/footer.css';
-import Lecture from "../Components/Lecture";
-function CoursePage() {
+import Forum from "../Components/Forum";
+import StudentGrade from "../Components/StudentGrade";
+
+function StudentGradePage() {
   return (
     <div className="App" style={{ paddingBottom: '10px' }}>
      <Header/>
-       <Lecture/>
+     <StudentGrade/>
      <Footer/>
     </div>
   );
 }
 
-export default CoursePage;
+export default StudentGradePage;
