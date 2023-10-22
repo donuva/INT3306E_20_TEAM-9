@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Avatar from 'antd/lib/avatar/avatar';
 import Meta from 'antd/lib/card/Meta';
 import { Form, Input, Card, Button } from 'antd';
-//import './Profile.css'; // Import your CSS file
+import "../CSS/Profile.css"
 
 const Profile = () => {
   return (
