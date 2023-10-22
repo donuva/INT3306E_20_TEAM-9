@@ -13,10 +13,14 @@ import {
   FormTitle
 } from './style'
 
+
+// API Values: 
+
+
 const Login = () => {
   const dispatch = useDispatch()
 
-  const onFinish = (values) => {
+  const onFinish = (values) => {  // save login session to local storage
     if (values.remember) {
       window.localStorage.setItem(
         'eduhub-remember-cred',
