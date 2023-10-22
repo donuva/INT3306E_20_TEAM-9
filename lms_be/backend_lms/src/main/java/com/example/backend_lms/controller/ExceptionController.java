@@ -6,6 +6,7 @@ import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,7 +25,17 @@ public class ExceptionController{
     }
 
     @ExceptionHandler({NotAllowedException.class})
-    public ResponseEntity<Object> expired(NotAllowedException e){
+    public ResponseEntity<Object> notAllow(NotAllowedException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler({AuthenticationException.class})
+    public ResponseEntity<Object> authError(AuthenticationException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> unknown(Exception e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
