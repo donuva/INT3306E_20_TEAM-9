@@ -1,32 +1,21 @@
 import React from 'react'
 import { Button, Dropdown, Menu, Space } from 'antd'
 import { Link, NavLink } from 'react-router-dom'
-import { DownOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { DownOutlined, ArrowLeftOutlined , ReadOutlined, HomeOutlined, FileSearchOutlined } from '@ant-design/icons'
 
 
 const CourseMenu = ({ url, privilege }) => {
   return (
     <Menu>
       <Menu.Item>
-        <Link to={`${url}/announcments`}>Announcments</Link>
+        <Link to={`${url}/resources`}>Resource</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to={`${url}/gradebook`}>GradeBook</Link>
+        <Link to={`${url}/forum`}>Discussions</Link>
       </Menu.Item>
-      <Menu.Item>
-        <Link to={`${url}/discussions`}>Discussions</Link>
-      </Menu.Item>
-      {privilege !== 'student' && (
-        <Menu.Item>
-          <Link to={`${url}/particpants`}>Particpants</Link>
-        </Menu.Item>
-      )}
-
-      {privilege !== 'student' && (
         <Menu.Item>
           <Link to={`${url}/settings`}>Settings</Link>
         </Menu.Item>
-      )}
     </Menu>
   )
 }
@@ -34,6 +23,15 @@ const CourseMenu = ({ url, privilege }) => {
 const CourseNavigation = () => {
   const { privilege } = 1
   const { url } = '/app/'
+
+  const openArticle =()=> {
+
+  }
+
+  const goBack = () => {
+    window.history.back();
+  }
+
   return (
     <>
       <Space>
@@ -41,6 +39,7 @@ const CourseNavigation = () => {
           shape="circle"
           type="secondary"
           icon={<ArrowLeftOutlined />}
+          onClick={goBack}
         ></Button>
         <Dropdown
           overlay={<CourseMenu url={url} privilege={privilege} />}
@@ -51,25 +50,21 @@ const CourseNavigation = () => {
             style={{ backgroundColor: 'orange' }}
           >
             <span style={{ fontWeight: 600, color: 'white' }}>
-              {"courseName"}
+              {"Extentions"}
             </span>{' '}
             <DownOutlined style={{ color: 'white' }} />
           </Button>
         </Dropdown>
       </Space>
-      <NavLink to={`${url}/modules`}>
-        <Button type="text">Modules</Button>
+      <NavLink to="/app/courses">
+        <Button type="text" icon={<HomeOutlined />}>Home</Button>
       </NavLink>
-      <NavLink to={`${url}/lectures`}>
-        <Button type="text">lectures</Button>
+      <NavLink to="/app/courses" >
+        <Button type="text" icon={<ReadOutlined />}>Courses</Button>
       </NavLink>
-      <NavLink to={`${url}/assignments`}>
-        <Button type="text">Assignments</Button>
+      <NavLink to="/app/articles">
+        <Button type="text" icon={<FileSearchOutlined />} onClick={openArticle()}>Articles</Button>
       </NavLink>
-      <NavLink to={`${url}/exams`}>
-        <Button type="text">Exams</Button>
-      </NavLink>
-      
     </>
   )
 }

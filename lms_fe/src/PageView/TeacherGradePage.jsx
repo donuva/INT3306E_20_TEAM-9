@@ -1,16 +1,18 @@
 import Header from "../Components/header";
 import Footer from "../Components/footer";
 import '../CSS/footer.css';
-import Grade from "../Components/Grade";
+import Forum from "../Components/Forum";
+import TeacherGrade from "../Components/TeacherGrade";
 
-function AchievesPage() {
+
+function TeacherGradePage() {
   return (
     <div className="App" style={{ paddingBottom: '10px' }}>
      <Header/>
-       <Grade/>
+     <TeacherGrade/>
      <Footer/>
     </div>
   );
 }
 
-export default AchievesPage;
+export default TeacherGradePage;

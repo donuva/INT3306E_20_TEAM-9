@@ -1,39 +1,41 @@
-// import { useSelector, useDispatch } from 'react-redux'
-import React, { useState } from 'react'
-import Avatar from 'antd/lib/avatar/avatar'
-import Meta from 'antd/lib/card/Meta'
-import { Form, Input, Card, Button } from 'antd'
-//import ImageUploader from 'react-images-upload'
+import React, { useState } from 'react';
+import Avatar from 'antd/lib/avatar/avatar';
+import Meta from 'antd/lib/card/Meta';
+import { Form, Input, Card, Button } from 'antd';
+//import './Profile.css'; // Import your CSS file
+
 const Profile = () => {
-    return (
-        <div className="container">
+  return (
+    <div className="container">
       <div className="card">
         <div className="card-body">
           <div className="avatar">
-            <Meta
-              avatar={<Avatar size="large"/>}
-              title="name"
-            />
+            <Meta avatar={<Avatar size="large" />} title="name" />
           </div>
-          <h5 className="card-title">{'Role: ' + "role"}</h5>
-          <h5 className="card-text">{'@' + "username"}</h5>
+          <h5 className="card-title">{'Role: ' + 'role'}</h5>
+          <h5 className="card-text">{'@' + 'username'}</h5>
           <p className="card-text">
-            "email"
+            'email'
             <br />
-            <span className="phone">"user mobile"</span>
+            <span className="phone">'user mobile'</span>
           </p>
         </div>
         <span>user's Bio</span>
       </div>
       <Card className="Form">
-        <Form size="middle" colon={true} labelAlign="left" layout="vertical">
-          <Form.Item label="Name:">
+        <Form
+          size="middle"
+          colon={true}
+          labelAlign="left"
+          layout="vertical"
+        >
+        <Form.Item label="Name:">
             <Input
               allowClear={true}
               className="input"
               value="name"
-            />
-          </Form.Item>
+            />  
+        </Form.Item>
           <Form.Item label="User Name:">
             <Input
               allowClear={true}
@@ -79,7 +81,7 @@ const Profile = () => {
         </Form>
       </Card>
     </div>
-    )
-}
+  );
+};
 
-export default Profile
+export default Profile;
