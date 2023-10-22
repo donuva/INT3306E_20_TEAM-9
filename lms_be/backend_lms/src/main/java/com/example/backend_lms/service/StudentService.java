@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -33,7 +34,7 @@ public class StudentService {
     @Transactional
     public void create(StudentDTO studentDTO){
         UserDTO user = studentDTO.getUser();
-        //user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setRole("STUDENT");
         studentDTO.setUser(user);
         studentRepo.save(new ModelMapper().map(studentDTO, Student.class));

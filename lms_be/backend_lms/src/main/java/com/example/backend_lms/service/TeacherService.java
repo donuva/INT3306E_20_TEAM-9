@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -30,7 +31,8 @@ public class TeacherService {
     @Transactional
     public void create(TeacherDTO teacherDTO){
         UserDTO user = teacherDTO.getUser();
-        //user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setRole("TEACHER");
         teacherDTO.setUser(user);
         teacherRepo.save(new ModelMapper().map(teacherDTO, Teacher.class));
     }
