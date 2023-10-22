@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,17 +30,20 @@ public class LessonController {
 
     @PostMapping("/teacher/course/lesson")
     @ResponseStatus(HttpStatus.OK)
-    public void createLesson(@ModelAttribute LessonDTO lessonDTO) throws IOException {
-        if (!lessonDTO.getFile().isEmpty()) {
-            String filename = lessonDTO.getFile().getOriginalFilename();
+    public void createLesson(@ModelAttribute LessonDTO lessonDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        if (file!=null) {
+            String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
             String newFilename = "url_lesson" + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            lessonDTO.getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             lessonDTO.setUrl(newFilename); //luu file xuong db
+        }
+        else{
+            lessonDTO.setUrl(null);
         }
         lessonService.create(lessonDTO);
     }
@@ -52,16 +56,16 @@ public class LessonController {
 
     @PutMapping("/teacher/course/lesson")
     @ResponseStatus(HttpStatus.OK)
-    public LessonDTO updateLesson(@ModelAttribute LessonDTO lessonDTO) throws NotFoundException, IOException {
-        if (!lessonDTO.getFile().isEmpty()) {
-            String filename = lessonDTO.getFile().getOriginalFilename();
+    public LessonDTO updateLesson(@ModelAttribute LessonDTO lessonDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws NotFoundException, IOException {
+        if (file!=null) {
+            String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
             String newFilename = "url_lesson" + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            lessonDTO.getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             lessonDTO.setUrl(newFilename); //luu file xuong db
         }
         return lessonService.update(lessonDTO);

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,17 +54,20 @@ public class ExerciseController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/student/exercise/submit")
-    public void submitExercise(@ModelAttribute ScoreExerciseDTO scoreExerciseDTO) throws IOException, ExpiredDateException, NotFoundException {
-        if (!scoreExerciseDTO.getFile().isEmpty()) {
-            String filename = scoreExerciseDTO.getFile().getOriginalFilename();
+    public void submitExercise(@ModelAttribute ScoreExerciseDTO scoreExerciseDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, ExpiredDateException, NotFoundException {
+        if (file!=null) {
+            String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
             String newFilename = "url_exerciseWork" + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
-            scoreExerciseDTO.getFile().transferTo(saveFile);
+            file.transferTo(saveFile);
             scoreExerciseDTO.setExercise_url(newFilename); //luu file xuong db
+        }
+        else{
+            scoreExerciseDTO.setExercise_url(null);
         }
         exerciseService.submitWork(scoreExerciseDTO);
     }

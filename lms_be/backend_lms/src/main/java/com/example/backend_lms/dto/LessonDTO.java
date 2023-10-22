@@ -27,9 +27,6 @@ public class LessonDTO {
     @JsonIncludeProperties("id")
     private CourseDTO course;
 
-    @JsonIgnore
-    private MultipartFile file;
-
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date createdDate;
