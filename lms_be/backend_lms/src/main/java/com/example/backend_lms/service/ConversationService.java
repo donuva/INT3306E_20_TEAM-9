@@ -49,7 +49,7 @@ public class ConversationService {
     }
 
     public PageDTO<List<ConversationDTO>> getConversation(int course_id, int current_page){
-        Sort sortBy = Sort.by("createdDate").descending();
+        Sort sortBy = Sort.by("createdAt").descending();
         PageRequest pageRequest = PageRequest.of(current_page, 15, sortBy);
         Page<Conversation> page = conversationRepo.findAllByCourse(course_id, pageRequest);
 

@@ -231,7 +231,7 @@ public class CourseService {
     }
 
     public PageDTO<List<CourseListDTO>> getSuggestCourse(List<CourseDTO> listCourse, int current_page) {
-        Sort sortBy = Sort.by("createdDate").descending();
+        Sort sortBy = Sort.by("createdAt").descending();
         PageRequest pageRequest = PageRequest.of(current_page, 25, sortBy);
         List<String> categories = listCourse.stream().map(CourseDTO::getCategory).toList();
         Page<Course> page = courseRepo.findByCourseCategory(categories, pageRequest);

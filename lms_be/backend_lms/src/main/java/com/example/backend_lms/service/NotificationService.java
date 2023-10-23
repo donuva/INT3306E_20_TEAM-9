@@ -59,7 +59,7 @@ public class NotificationService {
     }
 
     public PageDTO<List<NotificationDTO>> searchNotiByCourse(int course_id, int current_page){
-        Sort sortBy = Sort.by("createdDate").descending();
+        Sort sortBy = Sort.by("createdAt").descending();
         PageRequest pageRequest = PageRequest.of(current_page, 15, sortBy);
         Page<Notification> page = notificationRepo.findAllByCourse(course_id, pageRequest);
 
@@ -73,7 +73,7 @@ public class NotificationService {
     }
 
     public PageDTO<List<NotificationDTO>> searchNotiByStudent(int student_id, int current_page) throws NotFoundException {
-        Sort sortBy = Sort.by("createdDate").descending();
+        Sort sortBy = Sort.by("createdAt").descending();
         PageRequest pageRequest = PageRequest.of(current_page, 15, sortBy);
         if(studentRepo.findById(student_id).isPresent()) {
             List<Course> courses = Objects.requireNonNull(studentRepo.findById(student_id).orElse(null)).getCourseList();
