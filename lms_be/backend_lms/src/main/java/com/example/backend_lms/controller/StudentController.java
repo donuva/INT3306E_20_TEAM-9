@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class StudentController {
     @Value("${upload.folder}")
     String Upload_Folder;

@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class ExerciseController {
 
     @Autowired
