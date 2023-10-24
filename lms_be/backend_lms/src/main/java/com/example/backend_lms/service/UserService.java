@@ -63,7 +63,7 @@ public class UserService {
         if(user!=null){
             userDTO.setPassword(user.getPassword());
             userRepo.save(new ModelMapper().map(userDTO, User.class));
-            return convert(userRepo.findById(userDTO.getId()).orElse(null));
+            return userDTO;
         }else{
             throw new NotFoundException("Không tìm thấy Id người dùng");
         }

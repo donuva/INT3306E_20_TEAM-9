@@ -41,7 +41,7 @@ public class TeacherService {
         if(teacher!=null){
             teacherDTO.getUser().setPassword(teacher.getUser().getPassword());
             teacherRepo.save(new ModelMapper().map(teacherDTO, Teacher.class));
-            return new ModelMapper().map(teacherRepo.findById(teacherDTO.getId()), TeacherDTO.class);
+            return teacherDTO;
         }else{
             throw new NotFoundException("Không tìm thấy giáo viên");
         }
