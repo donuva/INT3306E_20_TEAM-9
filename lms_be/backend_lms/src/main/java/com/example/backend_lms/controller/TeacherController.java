@@ -56,7 +56,6 @@ public class TeacherController {
 
     @PutMapping("/teacher/update")
     public ResponseEntity<TeacherDTO> updateTeacher(@ModelAttribute TeacherDTO teacherDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
-        validateRegister.validateEntry(teacherDTO.getUser().getUsername(),teacherDTO.getUser().getPhone(), teacherDTO.getUser().getEmail());
 
         if (file!=null) {
             String filename = file.getOriginalFilename();

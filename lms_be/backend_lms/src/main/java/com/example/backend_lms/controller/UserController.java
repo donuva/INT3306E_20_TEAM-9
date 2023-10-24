@@ -74,6 +74,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/admin/new")
     public void createAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        validateRegister.validateEntry(userDTO.getUsername(), userDTO.getPhone(), userDTO.getEmail());
+
         if(file!=null){
             String filename = file.getOriginalFilename();
             assert filename != null;
@@ -93,7 +95,6 @@ public class UserController {
 
     @PutMapping("/admin/update")
     public ResponseEntity<UserDTO> updateAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws NotFoundException, IOException {
-        validateRegister.validateEntry(userDTO.getUsername(), userDTO.getPhone(), userDTO.getEmail());
         if(file != null){
             String filename = file.getOriginalFilename();
             assert filename != null;
