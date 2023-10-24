@@ -55,7 +55,7 @@ public class StudentService {
             studentDTO.getUser().setPassword(student.getUser().getPassword());
             studentDTO.getUser().setRole(student.getUser().getRole());
             studentRepo.save(new ModelMapper().map(studentDTO, Student.class));
-            return new ModelMapper().map(studentRepo.findById(studentDTO.getId()), StudentDTO.class);
+            return studentDTO;
         }else{
             throw new NotFoundException("Không tìm thấy học sinh");
         }
