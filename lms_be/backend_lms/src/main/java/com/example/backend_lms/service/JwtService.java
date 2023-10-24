@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-    @Value("{jwt.secret:123456}")
+    @Value("${jwt.secret:123456}")
     private String secretKey;
 
     public String createToken(String username){
