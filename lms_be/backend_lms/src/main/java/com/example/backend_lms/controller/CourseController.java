@@ -12,6 +12,8 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class CourseController {
     @Autowired
     CourseService courseService;

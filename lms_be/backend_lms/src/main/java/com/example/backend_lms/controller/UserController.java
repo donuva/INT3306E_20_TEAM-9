@@ -21,6 +21,8 @@ import java.security.Principal;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class UserController {
     @Autowired
     UserService userService;
