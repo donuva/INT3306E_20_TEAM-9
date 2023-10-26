@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState, useEffect } from 'react'
 import { Collapse, Badge, Button } from "antd";
 import {
   YoutubeFilled,
@@ -8,6 +9,7 @@ import {
   BarChartOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const customStyle = {
   textAlign: "left",
 };
@@ -21,7 +23,24 @@ const CustomPanel = ({ label, children }) => (
   </div>
 );
 
-const LectureDetail = () => (
+const LectureDetail = () => {
+  const [notificationNumber, setNotificationNumber] = useState(0);
+  const [notification, setNotification] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/lms/course/notification?course_id=4&current_page=0")
+      .then((response) => {
+        setNotificationNumber(response.data.totalElements)
+        setNotification(...notification,response.data.data)
+        console.log("đây là notification")
+        console.log(notification)
+        
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+return (
   <Collapse defaultActiveKey={["1", "2", "3", "4"]} style={customStyle}>
     
         <CustomPanel>
@@ -42,11 +61,13 @@ const LectureDetail = () => (
       key="2"
       header={
         <CustomPanel label="Thông Báo">
-          <Badge count={99} showZero>
+          <Badge count={notification.length} showZero>
             <NotificationOutlined style={{ marginRight: "8px" }} />
           </Badge>
         </CustomPanel>
+        
       }
+      
     />
 
     <Collapse.Panel
@@ -70,5 +91,5 @@ const LectureDetail = () => (
     />
   </Collapse>
 );
-
+    }
 export default LectureDetail;
