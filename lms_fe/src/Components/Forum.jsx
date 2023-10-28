@@ -22,14 +22,16 @@ const Forum = () => {
     axios
       .get("http://localhost:8080/lms/course/conversation?course_id=4&current_page=0")
       .then((response) => {
+        
         setComments(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
         console.log("đây là comment ")
-        console.log(comments) 
+        console.log(comments.course_id) 
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
+  }, []
+  );
   const renderPagination = () => {
     return (
         <nav className="footer">
@@ -116,7 +118,7 @@ const Forum = () => {
             size="small"
             title={
               <span style={{display:"flex", alignContent: "left"}} >
-                <Avatar src={comment.user} / >
+                <Avatar src={comment.user.ava_url} / >
                 <span style={{paddingTop:"10px", paddingLeft:"10px"}}>{' ' + comment.user.username}</span>
                 {/* { && (
                   <Button
