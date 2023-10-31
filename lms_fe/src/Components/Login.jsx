@@ -56,8 +56,34 @@ function Login({ setLoggedIn }) {
             .then((response) => {
                 console.log('Authorization' + `Bearer ${token}`);
                 localStorage.setItem('user', JSON.stringify(response.data));
-                setLoggedIn(true)
-                navigate('/app/course');
+                if (response.data.role === 'TEACHER') {
+                    console.log("TEACHER");
+                    axios.get('http://localhost:8080/lms/teacher/me', {
+                        headers: {
+                            'Authorization': token
+                        }
+                    }).then((response) => {
+                        localStorage.setItem('teacher_id', response.data.id);
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                    setLoggedIn(true)
+                    navigate('/app/course');
+                } else {
+                    console.log("STUDENT");
+                    axios.get('http://localhost:8080/lms/student/me', {
+                        headers: {
+                            'Authorization': token
+                        }
+                    }).then((response) => {
+                        localStorage.setItem('student_id', response.data.id);
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                    setLoggedIn(true)
+                    navigate('/app/course');
+                }
+
 
             })
             .catch((error) => {
