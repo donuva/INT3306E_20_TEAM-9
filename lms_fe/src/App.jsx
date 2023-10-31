@@ -1,5 +1,5 @@
 import './CSS/App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Lecture from './Components/Lecture';
 import LectureDetail from './Components/LectureDetail';
 import Forum from './Components/Forum';
@@ -125,15 +125,15 @@ function App() {
         <AppProvider> {/* Wrap tất cả các thành phần trong AppProvider */}
           <Header />
           <Routes>
-            <Route path="/app/courses" element={<Lecture />} />
-            <Route path="/app/courseDetail" element={<LectureDetail />} />
+            <Route path="/app/courses" element={<Lecture checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courseDetail" element={<LectureDetail checkTokenExpiration={checkTokenExpiration}/>} />
             <Route path="/app/studentGrade" element={<StudentGrade />} />
             <Route path="/app/teacherGrade" element={<TeacherGrade />} />
             <Route path="/app/forum" element={<Forum />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
-            <Route path='/app/profile' element={<Profile checkTokenExpiration={checkTokenExpiration} />} />
-          </Routes>
+            <Route path='/app/profile' element={<Profile setLoggedIn={setLoggedIn} checkTokenExpiration={checkTokenExpiration} />} />
+           </Routes>
           <Footer />
         </AppProvider>
       </Router>

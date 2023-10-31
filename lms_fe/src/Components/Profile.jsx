@@ -6,7 +6,7 @@ import "../CSS/Profile.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router';
 
-export default function Profile({ checkTokenExpiration }) {
+export default function Profile({setLoggedIn, checkTokenExpiration }) {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     id: null,
@@ -29,26 +29,13 @@ export default function Profile({ checkTokenExpiration }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8080/lms/student/me', {
-  //         headers: {
-  //           'Access-Control-Allow-Origin': '*',
-  //           'Content-Type': 'application/json',
+  function handleLogout(navigate, setIsLoggedIn) {
 
-  //         },
-  //       });
-  //       setUserData(response.data);
-  //       //  console.log(userData.phone)
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []); 
-
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    navigate('/login')
+  }
   const [formValues, setFormValues] = useState({
 
     name: '',
@@ -126,7 +113,7 @@ export default function Profile({ checkTokenExpiration }) {
               className="input"
               name="name"
               value={formValues.name || userData.name}
-              onChange={handleFormChange}
+              // onChange={handleFormChange}
             />
           </Form.Item>
           <Form.Item label="User Name:">
@@ -135,7 +122,7 @@ export default function Profile({ checkTokenExpiration }) {
               className="input"
               name="username"
               value={formValues.username || userData.username}
-              onChange={handleFormChange}
+              // onChange={handleFormChange}
             />
           </Form.Item>
           <Form.Item label="Email:">
@@ -144,7 +131,7 @@ export default function Profile({ checkTokenExpiration }) {
               className="input"
               name="email"
               value={formValues.email || userData.email}
-              onChange={handleFormChange}
+              // onChange={handleFormChange}
             />
           </Form.Item>
           <Form.Item label="Mobile:">
@@ -153,30 +140,18 @@ export default function Profile({ checkTokenExpiration }) {
               className="input"
               name="phone"
               value={formValues.phone || userData.phone}
-              onChange={handleFormChange}
+              // onChange={handleFormChange}
             />
           </Form.Item>
 
           <Form.Item label="Photo:">
-            {/* <ImageUploader
-              withIcon={true}
-              buttonText="Choose images"
-              imgExtension={['.jpg', '.png']}
-              maxFileSize={1048576}
-              singleImage={true}
-              label="max size 1MB"
-            />*/}
             <button>Upload!</button>
           </Form.Item>
           <Button onClick={handleSaveChanges}>
             Save Changes
           </Button>
-          <Button
-            className="unsub"
-            type="text"
-            title="re-login to subscribe again!!"
-          >
-            unsubscribe from notifications on all devices
+          <Button onClick={() => handleLogout(navigate, setLoggedIn)}>
+            Sign Out
           </Button>
         </Form>
       </Card>

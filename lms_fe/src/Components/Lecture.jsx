@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import { Button, Card, Col, Row } from "antd";
 import { Link, useSearchParams } from "react-router-dom";
+import { useNavigate } from 'react-router';
 
-const Lecture = () => {
+const Lecture = ({checkTokenExpiration}) => {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    id: null,
+    name: '',
+    birthdate: '',
+    username: '',
+    ava_url: null,
+    bio: '',
+    email: '',
+    phone: '',
+    role: '',
+  });
+  useEffect(() => {
+    if (!checkTokenExpiration()) {
+      alert("You need to re-login")
+
+      navigate('/login');
+    } else {
+      setUserData(JSON.parse(localStorage.getItem('user')));
+    }
+  }, []);
+
   const [searchParams, setSearchParams] = useSearchParams({ page: 1 });
   const page = searchParams.get("page") || 1;
   const x = "Hello world";

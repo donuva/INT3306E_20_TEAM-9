@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Form, Input, Button, notification } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Login({ setLoggedIn }) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+const Login = ({ setLoggedIn }) => {
     const [submit, setSubmit] = useState(false);
     const [loginError, setLoginError] = useState("");
     const navigate = useNavigate();
-    const handleLogin = async () => {
-        const FormData = require("form-data");
 
+    const onFinish = async (values) => {
+        const { username, password } = values;
+
+        const FormData = require("form-data");
         let data = new FormData();
         data.append("username", username);
         data.append("password", password);
@@ -19,27 +21,19 @@ function Login({ setLoggedIn }) {
             method: "post",
             maxBodyLength: Infinity,
             url: "http://localhost:8080/lms/login",
-
             data: data,
         };
 
-        await axios
-            .request(config)
-            .then((response) => {
-
-                localStorage.setItem("jwt", response.data);
-                console.log(localStorage.getItem("jwt"));
-
-                setSubmit(true);
-
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoginError("Login Error!")
-            });
-
-
+        try {
+            const response = await axios.request(config);
+            localStorage.setItem("jwt", response.data);
+            setSubmit(true);
+        } catch (error) {
+            console.error(error);
+            setLoginError("Login Error!");
+        }
     };
+
     useEffect(() => {
         var token = localStorage.getItem('jwt');
         token = 'Bearer ' + token;
@@ -68,7 +62,7 @@ function Login({ setLoggedIn }) {
                         console.log(error);
                     })
                     setLoggedIn(true)
-                    navigate('/app/course');
+                    navigate('/app/courses');
                 } else {
                     console.log("STUDENT");
                     axios.get('http://localhost:8080/lms/student/me', {
@@ -81,7 +75,7 @@ function Login({ setLoggedIn }) {
                         console.log(error);
                     })
                     setLoggedIn(true)
-                    navigate('/app/course');
+                    navigate('/app/courses');
                 }
 
 
@@ -91,32 +85,80 @@ function Login({ setLoggedIn }) {
                 console.log('Authorization' + token);
 
             });
-
-
-    }, [submit])
-
+    }, [submit]);
 
     return (
-        <div className="login-container">
-            <h2>Log In</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Submit</button>
-            {loginError && <p style={{ color: 'red', marginTop: '10px' }} className="error-message">{loginError}</p>}
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "80vh",
+                background: "url('https://png.pngtree.com/thumb_back/fh260/background/20191106/pngtree-back-to-school-rectangular-blackboard-education-book-pen-holder-image_321417.jpg')",
+                backgroundSize: "cover",
+            }}
+        >
+            <div
+                style={{
+                    height:"50%",
+                    width: "40%",
+                    padding: "20px",
+                    borderRadius: "8px",
+                    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                    background: "rgba(255, 255, 255, 0.3)",
+                }}
+            >
+            <h2 style={{ textAlign: "center" }}>Log In</h2>
+            <Form
+                name="normal_login"
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+            >
+                <Form.Item
+                    name="username"
+                    rules={[
+                        { required: true, message: "Please input your Username!" },
+                    ]}
+                >
+                    <Input
+                        prefix={<UserOutlined className="site-form-item-icon" />}
+                        placeholder="Username"
+                    />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                        { required: true, message: "Please input your Password!" },
+                    ]}
+                >
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="Password"
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                        style={{ width: "100%" }}
+                    >
+                        Log in
+                    </Button>
+                </Form.Item>
+                {loginError && (
+                    <p
+                        style={{ color: "red", marginTop: "10px" }}
+                        className="error-message"
+                    >
+                        {loginError}
+                    </p>
+                )}
+            </Form>
         </div>
+    </div>
     );
-}
+};
 
 export default Login;
