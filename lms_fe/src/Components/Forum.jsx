@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, Button, Input } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
+import { Link, useSearchParams } from 'react-router-dom'
+import axios from 'axios'
 // import AllComments from './commentCard'
 // import {
 //   removeDiscussion,
@@ -13,31 +15,55 @@ const Forum = () => {
 
   // const dispatch = useDispatch()
   const [commText, setcommText] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams({ page: 1 });
+  const page = searchParams.get("page") || 1;
   const [comments, setComments] = useState([]);
-  // Tạo mock discussion
-  const discussion = {
-    _id: 1,
-    user: {
-      _id: 1,
-      name: 'John Doe',
-      photo: 'https://example.com/avatar.jpg'
-    },
-    data: 'This is a discussion',
-  }
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/lms/course/conversation?course_id=4&current_page=0")
+      .then((response) => {
+        
+        setComments(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
+        console.log("đây là comment ")
+        console.log(comments.course_id) 
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []
+  );
+  const renderPagination = () => {
+    return (
+        <nav className="footer">
+            <ul className="pagination justify-content-center">
 
-  // Tạo mock user
-  const user = {
-    _id: 1,
-    name: 'John Doe',
-    photo: 'https://example.com/avatar.jpg'
-  }
+                <li className={page == 1 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=1'} >1</Link>
+                </li>
+                <li className={page == 2 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=2'} >2</Link>
+                </li>
+                <li className={page == 3 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=3'} >3</Link>
+                </li>
+                <li className={page == 4 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=4'} >4</Link>
+                </li>
+                <li className={page == 5 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=5'} >5</Link>
+                </li>
+
+            </ul>
+        </nav>
+    )
+
+}
 
   const onPost = () => {
     if (commText !== '') {
       // dispatch(addComment(discussion._id, commText, user))
       const comment = {
-        _id: 1,
-        text: commText,
+        msg: commText,
         user: 'son doe',
       };
       setComments([...comments, comment]);
@@ -57,30 +83,30 @@ const Forum = () => {
         title={
           <div style={{backgroundColor:'orange',textAlign:'center'}}>
             <Meta
-              avatar={<Avatar src={discussion.user.photo} />}
-              title={discussion.user.name}
+              
+              title="đây là disscussion của môn blah blah" 
             />
-            {discussion.user._id === user._id && (
-              <Button
-                disabled={!(discussion.user._id === user._id)}
-                className="deleteButton"
-                onClick={() => {
-                  // dispatch(removeDiscussion(discussion._id))
-                  console.log("deleted")
-                }}
-              >
-                delete
-              </Button>
-            )}
+            {/* {discussion.user._id === user._id && (
+              // <Button
+              //   disabled={!(discussion.user._id === user._id)}
+              //   className="deleteButton"
+              //   onClick={() => {
+              //     // dispatch(removeDiscussion(discussion._id))
+              //     console.log("deleted")
+              //   }}
+              // >
+              //   delete
+              // </Button>
+            )} */}
           </div>
         }
       >
-        <div className="dis" >{discussion.data}</div>
+        
         <Card
           size="small"
           type="inner"
           className="commentcard"
-          title="comments"
+          title="It's Chatting time!"
         >
           {/* <AllComments
             comments={discussion.comments}
@@ -91,9 +117,9 @@ const Forum = () => {
             <Card
             size="small"
             title={
-              <span>
-                <Avatar src={comment.user} />
-                <span>{' ' + comment.user}</span>
+              <span style={{display:"flex", alignContent: "left"}} >
+                <Avatar src={comment.user.ava_url} / >
+                <span style={{paddingTop:"10px", paddingLeft:"10px"}}>{' ' + comment.user.username}</span>
                 {/* { && (
                   <Button
                     disabled={!(comment.user._id === Luser._id)}
@@ -109,9 +135,11 @@ const Forum = () => {
               </span>
             }
           >
-            <div className='commentData'>{comment.text}</div>
+            <div style={{textAlign:"left"}} className='commentData'>{comment.msg}</div>
+            
           </Card>
           ))}
+          {renderPagination()}
         </Card>
         <div className="container">
           <Input
@@ -124,6 +152,7 @@ const Forum = () => {
             className="txt"
           ></Input>
           <Button onClick={onPost}>Add Comment</Button>
+          
         </div>
       </Card>
     </div>

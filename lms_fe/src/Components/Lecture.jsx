@@ -1,8 +1,10 @@
 import React from "react";
 import { Button, Card, Col, Row } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Lecture = () => {
+  const [searchParams, setSearchParams] = useSearchParams({ page: 1 });
+  const page = searchParams.get("page") || 1;
   const x = "Hello world";
   let col = (
     <Col span={8} style={{ marginBottom: "40px" }}>
@@ -48,14 +50,42 @@ const Lecture = () => {
       </Card>
     </Col>
   );
-  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const renderPagination = () => {
+    return (
+        <nav className="footer">
+            <ul className="pagination justify-content-center">
+
+                <li className={page == 1 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=1'} >1</Link>
+                </li>
+                <li className={page == 2 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=2'} >2</Link>
+                </li>
+                <li className={page == 3 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=3'} >3</Link>
+                </li>
+                <li className={page == 4 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=4'} >4</Link>
+                </li>
+                <li className={page == 5 ? "page-item active" : "page-item"}>
+                    <Link className="page-link" to={"/app/courses" + '?page=5'} >5</Link>
+                </li>
+
+            </ul>
+        </nav>
+    )
+
+}
+  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
   return (
     <>
       <h1> Lectures </h1>
       <Link to="/app/courseDetail">
       <Row gutter={16}>{arr.map((i) => col)}</Row>
       </Link>
+      {renderPagination()}
     </>
+    
   );
 };
 export default Lecture;

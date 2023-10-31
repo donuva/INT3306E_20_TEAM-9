@@ -1,5 +1,6 @@
-import React from "react";
-import { Collapse, Badge, Button } from "antd";
+
+import React, { useState, useEffect } from 'react'
+import { Collapse, Badge, Button, Card } from "antd";
 import {
   YoutubeFilled,
   NotificationOutlined,
@@ -8,6 +9,7 @@ import {
   BarChartOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const customStyle = {
   textAlign: "left",
 };
@@ -21,7 +23,24 @@ const CustomPanel = ({ label, children }) => (
   </div>
 );
 
-const LectureDetail = () => (
+const LectureDetail = () => {
+  const [notificationNumber, setNotificationNumber] = useState(0);
+  const [notification, setNotification] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/lms/course/notification?course_id=4&current_page=0")
+      .then((response) => {
+        setNotificationNumber(response.data.totalElements)
+        setNotification(...notification,response.data.data)
+        console.log("đây là notification")
+        console.log(notification)
+        
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+return (
   <Collapse defaultActiveKey={["1", "2", "3", "4"]} style={customStyle}>
     
         <CustomPanel>
@@ -41,14 +60,44 @@ const LectureDetail = () => (
     <Collapse.Panel
       key="2"
       header={
-        <CustomPanel label="Thông Báo">
-          <Badge count={99} showZero>
+        <CustomPanel label="Thông Báo" >
+          
+          <Badge count={notification.length} showZero>
             <NotificationOutlined style={{ marginRight: "8px" }} />
           </Badge>
+          
         </CustomPanel>
+      
       }
-    />
-
+      >
+     {notification.map((notification) =>(
+       <Card
+       size="small"
+       title={
+         <span style={{display:"flex", alignContent: "left"}} >
+           
+           <span style={{paddingTop:"10px", paddingLeft:"10px"}}>{' ' + notification.topic}</span>
+           {/* { && (
+             <Button
+               disabled={!(comment.user._id === Luser._id)}
+               className="deleteButton"
+               onClick={() => {
+                 // dispatch(removeComment(dId, comment))
+                 console.log("lol")
+               }}
+             >
+               delete
+             </Button>
+           )} */}
+         </span>
+       }
+     >
+       <div style={{textAlign:"left"}} className='commentData'>{notification.msg}</div>
+       
+     </Card>
+     ))}
+      </Collapse.Panel>
+    
     <Collapse.Panel
       key="3"
       header={
@@ -70,5 +119,5 @@ const LectureDetail = () => (
     />
   </Collapse>
 );
-
+    }
 export default LectureDetail;
