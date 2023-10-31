@@ -93,6 +93,18 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(username, userEntity.getPassword(), authorities);
     }
 
+    public UserDTO updateUser(UserDTO userDTO) throws NotFoundException {
+        User user = userRepo.findById(userDTO.getId()).orElse(null);
+        if(user!=null){
+            userDTO.setPassword(user.getPassword());
+            userDTO.setRole(user.getRole());
+            userRepo.save(new ModelMapper().map(userDTO, User.class));
+            return userDTO;
+        }else{
+            throw new NotFoundException("Không tìm thấy Id người dùng");
+        }
+    }
+
 
     //TODO quen mat khau
 

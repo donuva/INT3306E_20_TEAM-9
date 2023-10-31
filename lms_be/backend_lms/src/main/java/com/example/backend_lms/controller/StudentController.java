@@ -55,7 +55,7 @@ public class StudentController {
         studentService.create(studentDTO);
     }
 
-    @PutMapping("student/update")
+    @PutMapping("/student/update")
     public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
         if (file != null) {
