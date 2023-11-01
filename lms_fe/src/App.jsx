@@ -14,6 +14,8 @@ import Login from './Components/Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import AddLesson from './Components/addLesson';
+import AddExercise from './Components/addExercise';
 
 
 function App() {
@@ -130,6 +132,8 @@ function App() {
             <Route path="/app/studentGrade" element={<StudentGrade />} />
             <Route path="/app/teacherGrade" element={<TeacherGrade />} />
             <Route path="/app/forum" element={<Forum />} />
+            <Route path="/app/addLesson" element={<AddLesson  checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/addExercise" element={<AddExercise  checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path='/app/profile' element={<Profile setLoggedIn={setLoggedIn} checkTokenExpiration={checkTokenExpiration} />} />
