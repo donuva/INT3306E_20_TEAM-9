@@ -53,28 +53,58 @@ const LectureDetail = ({ checkTokenExpiration }) => {
 
   const [notificationNumber, setNotificationNumber] = useState(0);
   const [notification, setNotification] = useState([]);
+  const [Course_id,setCourse_id]=useState(1)
+  
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8080/lms/course/notification?course_id=4&current_page=0')
+  //     .then((response) => {
+  //       setNotificationNumber(response.data.totalElements);
+  //       setNotification([...notification, ...response.data.data]);
+  //       console.log('đây là notification');
+  //       console.log(notification);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data: ', error);
+  //     });
+  // }, []);
+  
+  const [lectureData, setLectureData] = useState([]);
+  //ĐANG FIX course_id=1 vì bên course chưa làm xong , chưa truyền id được
+
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/lms/course/notification?course_id=4&current_page=0')
-      .then((response) => {
-        setNotificationNumber(response.data.totalElements);
-        setNotification([...notification, ...response.data.data]);
-        console.log('đây là notification');
-        console.log(notification);
-      })
-      .catch((error) => {
-        console.error('Error fetching data: ', error);
-      });
-  }, []);
+      const getCourseById = async () => {
+        try {
+          const config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:8080/lms/course/2',
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+            },
+          };
+    
+          const response = await axios.request(config);
+          // Cập nhật lại state sau khi lưu thành công
+          // setUserData(response.data);
+          console.log(response.data)
+        } catch (error) {
+          console.log(userData.id)
+          console.log(error);
+        }
+      };
+      getCourseById();
+  }, [Course_id]);
 
   const [activePanel, setActivePanel] = useState(null);
-
-  // Fake data for lecture items
-  const lectureData = [
-    { title: 'Lecture 1: Introduction to React', file: 'intro_to_react.pdf' },
-    { title: 'Lecture 2: State and Props', file: 'state_and_props.pdf' },
-    { title: 'Lecture 3: Components and Lifecycle', file: 'components_lifecycle.pdf' },
-  ];
+  
+    
+  // // Fake data for lecture items
+  // const lectureData = [
+  //   { title: 'Lecture 1: Introduction to React', file: 'intro_to_react.pdf' },
+  //   { title: 'Lecture 2: State and Props', file: 'state_and_props.pdf' },
+  //   { title: 'Lecture 3: Components and Lifecycle', file: 'components_lifecycle.pdf' },
+  // ];
 
   const togglePanel = (panelKey) => {
     setActivePanel((prevActivePanel) => (prevActivePanel === panelKey ? null : panelKey));
@@ -136,7 +166,7 @@ const LectureDetail = ({ checkTokenExpiration }) => {
     <CustomPanel label={<><FileTextOutlined style={{ marginRight: '8px' }} /> Bài Giảng</>} addButton={null} isOpen={activePanel === '3'} togglePanel={() => togglePanel('3')} />
   }
 >
-  <Link to="/app/addLecture" style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '120px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
+  <Link to="/app/addLesson" style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '120px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
     <p>Add Bài Giảng</p>
     <FileTextOutlined />
   </Link>
