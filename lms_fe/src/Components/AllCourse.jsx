@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import '../CSS/CourseList.css';
+import styled from 'styled-components';
 
 export default function AllCourse({ checkTokenExpiration }) {
   const navigate = useNavigate();
@@ -44,20 +46,38 @@ export default function AllCourse({ checkTokenExpiration }) {
     return (<h1>Loading...</h1>)
   }
   const handlePageChange = (newPage) => {
-    setSearchParams({ current_page: newPage, course_name: name === null ? null : name });
+    setSearchParams({ current_page: newPage, course_name: name === null ? '' : name });
     navigate(`/app/allCourse?current_page=${newPage}&course_name=${name}`);
   };
+
+
+  function getImage(i) {
+    const img = ['https://img.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph',
+      'https://img.freepik.com/free-vector/abstract-smooth-liquid-banner-presentation-backdrop_1017-42992.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph',
+      'https://img.freepik.com/free-vector/blue-copy-space-digital-background_23-2148821698.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph',
+      'https://img.freepik.com/free-vector/blue-curve-frame-template_53876-114605.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph', 'https://img.freepik.com/premium-photo/organic-asian-japanese-line-wave-pattern-oriental-pattern-traditional-copy-space-with-white-background_1715-3929.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph',
+      'https://img.freepik.com/free-vector/gradient-hexagonal-background_23-2148932756.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph',
+      'https://img.freepik.com/free-photo/blue-abstract-gradient-wave-wallpaper_53876-108364.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph', 'https://img.freepik.com/premium-photo/widescreen-abstract-white-background_926199-24622.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph',
+      'https://img.freepik.com/free-vector/gradient-white-background-with-wavy-lines_79603-2166.jpg?size=626&ext=jpg&ga=GA1.1.1862066008.1698941467&semt=sph']
+
+    return img[i % (img.length)];
+  }
 
   return (
     <div>
       <h1>All Courses</h1>
-      <ul>
+      <div className="course-grid">
         {courses.map((course) => (
-          <li key={course.id}>
-            <Link to={`/app/course/${course.id}`}>{course.name}</Link>
-          </li>
+          <Link to={`/app/course/${course.id}`} key={course.id} className='course-item'>
+            <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px' }} />
+            <div style={{ marginTop: '10px' }}>
+              <h5>{course.name}</h5>
+              <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
+
 
       <div className="pagination">
         {page > 0 && (
@@ -68,7 +88,7 @@ export default function AllCourse({ checkTokenExpiration }) {
             <button
               key={index}
               onClick={() => handlePageChange(index)}
-              className={page === index ? 'active' : ''}
+              className={page == index ? 'pagination-active' : ''}
             >
               {index + 1}
             </button>

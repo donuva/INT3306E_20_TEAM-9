@@ -1,0 +1,33 @@
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 70vw;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.course-item {
+    text-decoration: none;
+    color: black;
+    border: 1px solid grey;
+}
+
+.pagination {
+    margin: 100px 0px;
+    text-align: center;
+    justify-content: center;
+}
+
+.pagination-active {
+    background-color: #2e58d7;
+}
+
+.pagination button {
+    border: 1px solid;
+}
+
+
+.pagination button:hover {
+    background-color: rgb(146, 146, 165);
+}

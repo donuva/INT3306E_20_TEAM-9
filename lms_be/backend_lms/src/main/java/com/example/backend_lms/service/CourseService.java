@@ -125,7 +125,7 @@ public class CourseService {
     public PageDTO<List<CourseListDTO>> getCoursePageByStudent(int student_id, int current_page) throws NotFoundException {
         if (studentRepo.findById(student_id).isPresent()) {
             Sort sortBy = Sort.by("name").ascending();
-            PageRequest pageRequest = PageRequest.of(current_page, 25, sortBy);
+            PageRequest pageRequest = PageRequest.of(current_page, 16, sortBy);
             List<Course> courses = Objects.requireNonNull(studentRepo.findById(student_id).orElse(null)).getCourseList();
             Page<Course> page = courseRepo.findByCourseList(courses.stream().map(Course::getId).collect(Collectors.toList()), pageRequest);
 
@@ -144,7 +144,7 @@ public class CourseService {
     public PageDTO<List<CourseListDTO>> getCoursePageByTeacher(int teacher_id, int current_page) throws NotFoundException {
         if (teacherRepo.findById(teacher_id).isPresent()) {
             Sort sortBy = Sort.by("name").ascending();
-            PageRequest pageRequest = PageRequest.of(current_page, 25, sortBy);
+            PageRequest pageRequest = PageRequest.of(current_page, 16, sortBy);
             List<Course> courses = Objects.requireNonNull(teacherRepo.findById(teacher_id).orElse(null)).getCourseList();
             Page<Course> page = courseRepo.findByCourseList(courses.stream().map(Course::getId).collect(Collectors.toList()), pageRequest);
             List<CourseListDTO> courseDTOS = page.get().map(this::convertListing).collect(Collectors.toList());
@@ -232,7 +232,7 @@ public class CourseService {
 
     public PageDTO<List<CourseListDTO>> getSuggestCourse(List<CourseDTO> listCourse, int current_page) {
         Sort sortBy = Sort.by("createdAt").descending();
-        PageRequest pageRequest = PageRequest.of(current_page, 25, sortBy);
+        PageRequest pageRequest = PageRequest.of(current_page, 16, sortBy);
         List<String> categories = listCourse.stream().map(CourseDTO::getCategory).toList();
         Page<Course> page = courseRepo.findByCourseCategory(categories, pageRequest);
         List<CourseListDTO> courseDTOS = page.get().map(this::convertListing).collect(Collectors.toList());
@@ -246,7 +246,7 @@ public class CourseService {
 
     public PageDTO<List<CourseListDTO>> searchCourse(String course_name, int current_page) {
         Sort sortBy = Sort.by("name").descending();
-        PageRequest pageRequest = PageRequest.of(current_page, 25, sortBy);
+        PageRequest pageRequest = PageRequest.of(current_page, 16, sortBy);
         Page<Course> page;
         if(!StringUtils.hasText(course_name)){
              page = courseRepo.findAll(pageRequest);
