@@ -13,6 +13,13 @@ export default function AllCourse({ checkTokenExpiration }) {
   const [pageInfo, setPageInfo] = useState({});
   const page = searchParams.get('current_page' || null);
   const name = searchParams.get('course_name' || null);
+
+  const [searchText, setSearchText] = useState('');
+
+  const handleSearch = () => {
+    setSearchParams({ course_name: searchText, current_page: 0 });
+  };
+
   useEffect(() => {
     if (!checkTokenExpiration()) {
       alert('You need to re-login');
@@ -66,6 +73,15 @@ export default function AllCourse({ checkTokenExpiration }) {
   return (
     <div>
       <h1>All Courses</h1>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+
+      <button onClick={handleSearch}>Search</button>
+
       <div className="course-grid">
         {courses.map((course) => (
           <Link to={`/app/course/${course.id}`} key={course.id} className='course-item'>
