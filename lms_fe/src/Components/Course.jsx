@@ -3,7 +3,7 @@ import { Button, Card, Col, Row } from "antd";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from 'react-router';
 
-const Lecture = ({checkTokenExpiration}) => {
+const Course = ({ checkTokenExpiration }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     id: null,
@@ -75,40 +75,40 @@ const Lecture = ({checkTokenExpiration}) => {
   );
   const renderPagination = () => {
     return (
-        <nav className="footer">
-            <ul className="pagination justify-content-center">
+      <nav className="footer">
+        <ul className="pagination justify-content-center">
 
-                <li className={page == 1 ? "page-item active" : "page-item"}>
-                    <Link className="page-link" to={"/app/courses" + '?page=1'} >1</Link>
-                </li>
-                <li className={page == 2 ? "page-item active" : "page-item"}>
-                    <Link className="page-link" to={"/app/courses" + '?page=2'} >2</Link>
-                </li>
-                <li className={page == 3 ? "page-item active" : "page-item"}>
-                    <Link className="page-link" to={"/app/courses" + '?page=3'} >3</Link>
-                </li>
-                <li className={page == 4 ? "page-item active" : "page-item"}>
-                    <Link className="page-link" to={"/app/courses" + '?page=4'} >4</Link>
-                </li>
-                <li className={page == 5 ? "page-item active" : "page-item"}>
-                    <Link className="page-link" to={"/app/courses" + '?page=5'} >5</Link>
-                </li>
+          <li className={page == 1 ? "page-item active" : "page-item"}>
+            <Link className="page-link" to={"/app/courses" + '?page=1'} >1</Link>
+          </li>
+          <li className={page == 2 ? "page-item active" : "page-item"}>
+            <Link className="page-link" to={"/app/courses" + '?page=2'} >2</Link>
+          </li>
+          <li className={page == 3 ? "page-item active" : "page-item"}>
+            <Link className="page-link" to={"/app/courses" + '?page=3'} >3</Link>
+          </li>
+          <li className={page == 4 ? "page-item active" : "page-item"}>
+            <Link className="page-link" to={"/app/courses" + '?page=4'} >4</Link>
+          </li>
+          <li className={page == 5 ? "page-item active" : "page-item"}>
+            <Link className="page-link" to={"/app/courses" + '?page=5'} >5</Link>
+          </li>
 
-            </ul>
-        </nav>
+        </ul>
+      </nav>
     )
 
-}
-  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
+  }
+  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   return (
     <>
       <h1> Lectures </h1>
       <Link to="/app/courseDetail">
-      <Row gutter={16}>{arr.map((i) => col)}</Row>
+        <Row gutter={16}>{arr.map((i) => col)}</Row>
       </Link>
       {renderPagination()}
     </>
-    
+
   );
 };
-export default Lecture;
+export default Course;

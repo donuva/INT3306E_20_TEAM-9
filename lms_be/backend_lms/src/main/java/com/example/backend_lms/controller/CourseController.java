@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-
 public class CourseController {
     @Autowired
     CourseService courseService;
@@ -64,7 +63,7 @@ public class CourseController {
     }
 
     @GetMapping("/course/search")
-    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam("current_page") Integer current_page){
+    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam(value = "current_page", required = false) Integer current_page){
         if(current_page==null){
             current_page=0;
         }
