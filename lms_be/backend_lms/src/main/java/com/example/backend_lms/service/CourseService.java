@@ -1,7 +1,13 @@
 package com.example.backend_lms.service;
 
-import com.example.backend_lms.dto.*;
-import com.example.backend_lms.entity.*;
+import com.example.backend_lms.dto.CourseDTO;
+import com.example.backend_lms.dto.CourseEnrollDTO;
+import com.example.backend_lms.dto.CourseListDTO;
+import com.example.backend_lms.dto.PageDTO;
+import com.example.backend_lms.entity.Course;
+import com.example.backend_lms.entity.CourseEnroll;
+import com.example.backend_lms.entity.Student;
+import com.example.backend_lms.entity.Teacher;
 import com.example.backend_lms.repo.*;
 import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
@@ -63,9 +69,10 @@ public class CourseService {
         return new ModelMapper().map(course, CourseDTO.class);
     }
 
-    public CourseEnrollDTO convertCourseEnroll(CourseEnroll courseEnroll){
+    public CourseEnrollDTO convertCourseEnroll(CourseEnroll courseEnroll) {
         return new ModelMapper().map(courseEnroll, CourseEnrollDTO.class);
     }
+
     @Transactional
     public void create(CourseDTO courseDTO) {
         courseRepo.save(new ModelMapper().map(courseDTO, Course.class));
@@ -105,13 +112,8 @@ public class CourseService {
                 } else {
                     throw new RuntimeException("Không có quyền xem khóa học");
                 }
-            } else if (teacherRepo.findByUserId(user_id).isPresent()) {
-                if (checkIsTeacherValid(Objects.requireNonNull(teacherRepo.findByUserId(user_id).orElse(null)).getId(), course_id)) {
-                    return convert(courseRepo.findById(course_id).orElse(null));
-                } else {
-                    throw new RuntimeException("Không có quyền xem khóa học");
-                }
-            } else if (userRepo.findById(user_id).isPresent()) {
+            }
+            if (userRepo.findById(user_id).isPresent()) {
                 return convert(courseRepo.findById(course_id).orElse(null));
             } else {
                 throw new NotFoundException("Id người dùng không hợp lệ");
@@ -182,7 +184,7 @@ public class CourseService {
 
     //giao vien chu dong add hoc sinh vao course
 
-    public void addStudent(int course_id, int student_id){
+    public void addStudent(int course_id, int student_id) {
         Course course = courseRepo.findById(course_id).orElse(null);
         Student student = studentRepo.findById(student_id).orElse(null);
         assert course != null;
@@ -194,7 +196,7 @@ public class CourseService {
     }
 
     //hien ra danh sach yeu cau vao course
-    public List<CourseEnrollDTO> courseEnrollList(int course_id){
+    public List<CourseEnrollDTO> courseEnrollList(int course_id) {
         return courseEnrollRepo.findAllByCourse(course_id).stream().map(this::convertCourseEnroll).collect(Collectors.toList());
     }
 
@@ -202,15 +204,15 @@ public class CourseService {
 
     public void isAcceptRequest(int request_id, int code) throws NotFoundException {
         CourseEnroll courseEnroll = courseEnrollRepo.findById(request_id).orElse(null);
-        if(courseEnroll!=null){
-            if(code == 1) {
+        if (courseEnroll != null) {
+            if (code == 1) {
                 addStudent(courseEnroll.getCourse().getId(), courseEnroll.getStudent().getId());
                 courseEnroll.setStatus(1);
-            }else if(code == 2){
+            } else if (code == 2) {
                 courseEnroll.setStatus(2);
             }
             courseEnrollRepo.save(courseEnroll);
-        }else{
+        } else {
             throw new NotFoundException("Không tìm thấy yêu cầu tham gia");
         }
     }
@@ -220,12 +222,12 @@ public class CourseService {
     public void removeStudent(int student_id, int course_id) throws NotFoundException {
         Course course = courseRepo.findById(course_id).orElse(null);
         Student student = studentRepo.findById(student_id).orElse(null);
-        if(course!=null&&student!=null) {
+        if (course != null && student != null) {
             course.getStudentList().remove(student);
             student.getCourseList().remove(course);
             studentRepo.save(student);
             courseRepo.save(course);
-        }else{
+        } else {
             throw new NotFoundException("Id của khóa học hoặc học sinh không hợp lệ");
         }
     }
@@ -248,10 +250,10 @@ public class CourseService {
         Sort sortBy = Sort.by("name").descending();
         PageRequest pageRequest = PageRequest.of(current_page, 16, sortBy);
         Page<Course> page;
-        if(!StringUtils.hasText(course_name)){
-             page = courseRepo.findAll(pageRequest);
-        }else{
-            page = courseRepo.findCourseByName("%"+course_name+"%", pageRequest);
+        if (!StringUtils.hasText(course_name)) {
+            page = courseRepo.findAll(pageRequest);
+        } else {
+            page = courseRepo.findCourseByName("%" + course_name + "%", pageRequest);
         }
 
         PageDTO<List<CourseListDTO>> pageDTO = new PageDTO<>();
