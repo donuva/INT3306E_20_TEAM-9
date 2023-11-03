@@ -12,7 +12,7 @@ export default function AllCourse({ checkTokenExpiration }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageInfo, setPageInfo] = useState({});
   const page = searchParams.get('current_page' || null);
-  const name = searchParams.get('course_name' || null);
+  const name = searchParams.get('course_name');
 
   const [searchText, setSearchText] = useState('');
 
@@ -49,12 +49,11 @@ export default function AllCourse({ checkTokenExpiration }) {
       .catch((error) => console.error('Error fetching courses:', error));
   }, [page, name]); // Sử dụng page trong dependency array để cập nhật khi page thay đổi
 
-  if (courses === null) {
+  if (courses == null) {
     return (<h1>Loading...</h1>)
   }
   const handlePageChange = (newPage) => {
     setSearchParams({ current_page: newPage, course_name: name === null ? '' : name });
-    navigate(`/app/allCourse?current_page=${newPage}&course_name=${name}`);
   };
 
 
@@ -84,7 +83,7 @@ export default function AllCourse({ checkTokenExpiration }) {
 
       <div className="course-grid">
         {courses.map((course) => (
-          <Link to={`/app/course/${course.id}`} key={course.id} className='course-item'>
+          <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
             <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px' }} />
             <div style={{ marginTop: '10px' }}>
               <h5>{course.name}</h5>
@@ -95,24 +94,32 @@ export default function AllCourse({ checkTokenExpiration }) {
       </div>
 
 
-      <div className="pagination">
-        {page > 0 && (
-          <button onClick={() => handlePageChange(page - 1)}>Previous</button>
-        )}
-        {pageInfo.totalPages &&
-          Array.from({ length: pageInfo.totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageChange(index)}
-              className={page == index ? 'pagination-active' : ''}
-            >
-              {index + 1}
-            </button>
-          ))}
-        {page < pageInfo.totalPages - 1 && (
-          <button onClick={() => handlePageChange(page + 1)}>Next</button>
-        )}
-      </div>
+
+
+      <nav className="footer">
+        {pageInfo.totalPages != 0 &&
+          <ul className="pagination justify-content-center">
+
+            {page > 0 && (
+              <li className='page-item' onClick={() => handlePageChange(page - 1)} ><Link className='page-link' >Previous</Link></li>
+            )}
+            {pageInfo.totalPages &&
+              Array.from({ length: pageInfo.totalPages }, (_, index) => (
+                <li
+                  key={index}
+                  onClick={() => handlePageChange(index)}
+                  className={page === index ? 'page-item active' : 'page-item'}
+                >
+                  <Link className='page-link' >{index + 1}</Link>
+
+
+                </li>
+              ))}
+            {page < pageInfo.totalPages - 1 && (
+              <li onClick={() => handlePageChange(page + 1)} className='page-item' ><Link className='page-link' >Next</Link> </li>
+            )}
+          </ul>}
+      </nav>
 
     </div>
   );

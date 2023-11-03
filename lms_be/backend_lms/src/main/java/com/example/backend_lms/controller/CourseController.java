@@ -144,7 +144,7 @@ public class CourseController {
     @GetMapping("/course/notification")
     public ResponseEntity<PageDTO<List<NotificationDTO>>> getCourseNotification(
             @RequestParam("course_id") int course_id,
-            @RequestParam("current_page") Integer current_page) {
+            @RequestParam(value = "current_page", required = false) Integer current_page) {
         if(current_page==null){
             current_page=0;
         }
@@ -165,8 +165,8 @@ public class CourseController {
 
     // Conversation
 
-    @GetMapping("/course/conversation")
-    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@RequestParam("course_id") int course_id, @RequestParam("current_page") Integer current_page) {
+    @GetMapping("/course/{course_id}/conversation")
+    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@PathVariable("course_id") int course_id, @RequestParam(value = "current_page", required = false) Integer current_page) {
         if(current_page==null){
             current_page=0;
         }

@@ -19,6 +19,7 @@ import AllCourse from './Components/AllCourse';
 import AddExercise from './Components/AddExercise';
 import CourseDetail from './Components/CourseDetail';
 import Course from './Components/Course';
+import CourseEnroll from './Components/CourseEnroll';
 
 
 function App() {
@@ -135,14 +136,14 @@ function App() {
             {/* lấy ra tất cả course của người học/người dạy/ hay chính là home */}
             <Route path="/app/courses" element={<Course checkTokenExpiration={checkTokenExpiration} />} />
             {/* lấy ra course detail theo id */}
-            <Route path="/app/courses/:id" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} />} />
             {/*Lấy ra tất cả course  */}
             <Route path="/app/allCourse" element={<AllCourse checkTokenExpiration={checkTokenExpiration} />} />
 
 
             <Route path="/app/studentGrade" element={<StudentGrade />} />
             <Route path="/app/teacherGrade" element={<TeacherGrade />} />
-            <Route path="/app/forum" element={<Forum />} />
+            <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/addLesson" element={<AddLesson checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
@@ -155,6 +156,7 @@ function App() {
             {/* Hien ra danh sach bai lam cua 1 exercise cho teacher */}
             <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
+            <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} />} />
 
           </Routes>
           <Footer />

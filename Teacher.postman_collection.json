@@ -238,11 +238,21 @@
 				{
 					"name": "Create a new course",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJodXkxMjM0IiwiaWF0IjoxNjk4OTM4MTgwLCJleHAiOjE2OTg5Mzg3ODB9.RgHIVFA51HQ4YmU3e6f5hB8n6cbJDirOT5DBmA_SDtA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Toán\",\r\n    \"category\": \"Math\",\r\n    \"description\": \"Khóa học này dạy toán\",\r\n    \"teacher\":{\r\n        \"id\":2\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"Toán 9\",\r\n    \"category\": \"Literature\",\r\n    \"description\": \"Khóa học này dạy toán\",\r\n    \"teacher\":{\r\n        \"id\":1\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -712,83 +722,6 @@
 				}
 			],
 			"description": "Các chức năng liên quan đến course"
-		},
-		{
-			"name": "Update Teacher",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "id",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "user.id",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "user.name",
-							"value": "Huy",
-							"type": "text"
-						},
-						{
-							"key": "user.bio",
-							"value": "Đẹp trai học giỏi",
-							"type": "text"
-						},
-						{
-							"key": "user.birthdate",
-							"value": "03/08/2003",
-							"type": "text"
-						},
-						{
-							"key": "user.username",
-							"value": "huy123",
-							"type": "text"
-						},
-						{
-							"key": "user.password",
-							"value": "12345",
-							"type": "text"
-						},
-						{
-							"key": "user.emaill",
-							"value": "huy@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "user.phone",
-							"value": "0123456789",
-							"type": "text"
-						},
-						{
-							"key": "user.file",
-							"type": "file",
-							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:8080/lms/teacher/update",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"lms",
-						"teacher",
-						"update"
-					]
-				},
-				"description": "Xem lại update student\r\n"
-			},
-			"response": []
 		}
 	]
 }

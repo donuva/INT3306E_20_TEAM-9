@@ -9,11 +9,13 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const customStyle = {
   textAlign: 'left',
 };
+
+
 
 const CustomPanel = ({ label, children, addButton, isOpen, togglePanel }) => (
   <div className="custom-panel">
@@ -42,6 +44,8 @@ const CourseDetail = ({ checkTokenExpiration }) => {
     phone: '',
     role: '',
   });
+  const { cid } = useParams();
+
   useEffect(() => {
     if (!checkTokenExpiration()) {
       alert('You need to re-login');
@@ -118,7 +122,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
       style={customStyle}
     >
       <CustomPanel isOpen={true} togglePanel={() => { }}>
-        <Link to="/app/forum" style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '80px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
+        <Link to={`/app/courses/${cid}/forum`} style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '80px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
           <p>Diễn Đàn</p>
           <CommentOutlined />
         </Link>
