@@ -12,13 +12,12 @@ import Login from './Components/Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import AddLesson from './Components/AddLesson';
+import AddLesson from './Components/addLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
 import AddExercise from './Components/AddExercise';
 import CourseDetail from './Components/CourseDetail';
-import Course from './Components/Course';
 import CourseEnroll from './Components/CourseEnroll';
 import AddNoti from './Components/AddNoti';
 
