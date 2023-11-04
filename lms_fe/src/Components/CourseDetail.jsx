@@ -45,6 +45,10 @@ const CourseDetail = ({ checkTokenExpiration }) => {
     role: '',
   });
   const { cid } = useParams();
+  const [course, setCourse] = useState({});
+  const [exerciseList, setExerciseList] = useState([]);
+  const [lessonList, setLessonList] = useState([]);
+  const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     if (!checkTokenExpiration()) {
