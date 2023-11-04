@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const customStyle = {
   textAlign: 'left',
@@ -143,7 +143,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           </CustomPanel>
         }
       >
-        <Link to="/app/addNoti" style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '120px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
+        <Link to={`/app/courses/${cid}/addNoti`} style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '120px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
           <p>Add Thông Báo</p>
           <NotificationOutlined />
         </Link>

@@ -20,7 +20,7 @@ import AddExercise from './Components/AddExercise';
 import CourseDetail from './Components/CourseDetail';
 import Course from './Components/Course';
 import CourseEnroll from './Components/CourseEnroll';
-
+import AddNoti from './Components/AddNoti';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -134,7 +134,7 @@ function App() {
             <Route index element={<Navigate to="/app/courses" replace />} />
 
             {/* lấy ra tất cả course của người học/người dạy/ hay chính là home */}
-            <Route path="/app/courses" element={<Course checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses" element={<AllCourse checkTokenExpiration={checkTokenExpiration} />} />
             {/* lấy ra course detail theo id */}
             <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} />} />
             {/*Lấy ra tất cả course  */}
@@ -157,7 +157,7 @@ function App() {
             <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
             <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} />} />
-
+            <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} />} />
           </Routes>
           <Footer />
         </AppProvider>

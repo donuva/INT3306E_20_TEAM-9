@@ -20,7 +20,7 @@ function Forum({ checkTokenExpiration }) {
   const { cid } = useParams();
   const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
-  const [text, setText] = useState();
+  const [text, setText] = useState("");
   const [post, setPost] = useState(false);
 
 
@@ -119,6 +119,7 @@ function Forum({ checkTokenExpiration }) {
         }
       })
         .then((response) => {
+          setText("");
           setPost(!post);
         })
         .catch((error) => {

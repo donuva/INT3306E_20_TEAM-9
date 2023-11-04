@@ -5,10 +5,10 @@ import React from 'react';
 const StudentGrade = () => {
   const data = {
     grades: [
-      { id: 1, type: 'Assignment', title: 'Assignment 1', score: 80, maxScore: 100, weight: 0.3, gradedAt: '2023-09-15T10:30:00' },
-      { id: 2, type: 'Exam', title: 'Midterm Exam', score: 75, maxScore: 100, weight: 0.5, gradedAt: '2023-09-10T14:00:00' },
-      { id: 3, type: 'Assignment', title: 'Assignment 2', score: 90, maxScore: 100, weight: 0.3, gradedAt: '2023-09-20T09:45:00' },
-      { id: 4, type: 'Exam', title: 'Final Exam', score: 85, maxScore: 100, weight: 0.5, gradedAt: '2023-09-25T10:00:00' }
+      { id: 1, typ: 'Assignment', title: 'Assignment 1', score: 80, maxScore: 100, weight: 0.3, gradedAt: '2023-09-15T10:30:00' },
+      { id: 2, typ: 'Exam', title: 'Midterm Exam', score: 75, maxScore: 100, weight: 0.5, gradedAt: '2023-09-10T14:00:00' },
+      { id: 3, typ: 'Assignment', title: 'Assignment 2', score: 90, maxScore: 100, weight: 0.3, gradedAt: '2023-09-20T09:45:00' },
+      { id: 4, typ: 'Exam', title: 'Final Exam', score: 85, maxScore: 100, weight: 0.5, gradedAt: '2023-09-25T10:00:00' }
     ],
     assignmentsScore: 170,
     examsScore: 160,
@@ -19,7 +19,7 @@ const StudentGrade = () => {
   const columns = [
     {
       title: 'Type',
-      dataIndex: 'type',
+      dataIndex: 'typ',
       key: 'type',
       
     },

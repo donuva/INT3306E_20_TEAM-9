@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/BTL_Web.iml" filepath="$PROJECT_DIR$/.idea/BTL_Web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lms_be/backend_lms/backend_lms.iml" filepath="$PROJECT_DIR$/lms_be/backend_lms/backend_lms.iml" />
     </modules>
   </component>
 </project>

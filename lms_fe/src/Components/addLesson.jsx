@@ -40,7 +40,7 @@ const AddLesson = ({checkTokenExpiration}) => {
         maxBodyLength: Infinity,
         url: 'http://localhost:8080/lms/teacher/course/lesson',
         headers: {
-          // ...formData.getHeaders(),
+          'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },
         data: formData,
