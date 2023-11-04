@@ -41,21 +41,7 @@ const CourseNavigation = () => {
           icon={<ArrowLeftOutlined />}
           onClick={goBack}
         ></Button>
-        <Dropdown
-          overlay={<CourseMenu url={url} privilege={privilege} />}
-          placement="bottomCenter"
-        >
-          <Button
-            shape="round"
-            style={{ backgroundColor: 'orange' }}
-          >
-            <span style={{ fontWeight: 600, color: 'white' }}>
-              {"Extentions"}
-            </span>{' '}
-            <DownOutlined style={{ color: 'white' }} />
-          </Button>
-        </Dropdown>
-      </Space>
+      </Space >
       <NavLink to="/app/courses">
         <Button type="text" icon={<HomeOutlined />}>Home</Button>
       </NavLink>

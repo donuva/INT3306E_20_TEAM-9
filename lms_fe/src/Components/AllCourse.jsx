@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
+import NoData from './NoData';
+
 
 export default function AllCourse({ checkTokenExpiration }) {
   const navigate = useNavigate();
@@ -49,8 +51,8 @@ export default function AllCourse({ checkTokenExpiration }) {
       .catch((error) => console.error('Error fetching courses:', error));
   }, [page, name]); // Sử dụng page trong dependency array để cập nhật khi page thay đổi
 
-  if (courses == null) {
-    return (<h1>Loading...</h1>)
+  if (pageInfo.totalElements == 0) {
+    return (<NoData />)
   }
   const handlePageChange = (newPage) => {
     setSearchParams({ current_page: newPage, course_name: name === null ? '' : name });

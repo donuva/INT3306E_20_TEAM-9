@@ -123,12 +123,12 @@ const CourseDetail = ({ checkTokenExpiration }) => {
     >
       <CustomPanel isOpen={true} togglePanel={() => { }}>
         <Link to={`/app/courses/${cid}/forum`} style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '80px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
-          <p>Diễn Đàn</p>
+          <p>Conversation</p>
           <CommentOutlined />
         </Link>
 
         <Link to="/app/studentGrade" style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '80px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
-          <p>Điểm Số</p>
+          <p>Grade</p>
           <BarChartOutlined />
         </Link>
       </CustomPanel>
@@ -144,7 +144,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
         }
       >
         <Link to={`/app/courses/${cid}/addNoti`} style={{ paddingLeft: '4px', display: 'flex', border: '1px solid #000', width: '120px', borderRadius: '8px', backgroundColor: '#F3BE0F' }}>
-          <p>Add Thông Báo</p>
+          <p>Notification</p>
           <NotificationOutlined />
         </Link>
 
