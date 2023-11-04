@@ -12,7 +12,7 @@ import java.util.Date;
 public class ConversationDTO {
     private int id;
 
-    @JsonIncludeProperties({"id","username"})
+    @JsonIncludeProperties({"id","username","ava_url"})
     private UserDTO user;
 
     private String topic;
