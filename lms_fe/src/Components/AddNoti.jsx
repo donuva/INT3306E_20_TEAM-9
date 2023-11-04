@@ -34,6 +34,7 @@ const AddNoti = ({ checkTokenExpiration }) => {
     
           const response = await axios.request(config);
           message.success('Lecture added successfully!');
+          navigate(`/app/courses/${cid}`)
         } catch (error) {
           console.error('Error adding lecture:', error);
           message.error('Failed to add lecture');

@@ -16,12 +16,10 @@ function Forum({ checkTokenExpiration }) {
   // const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") || 0;
-  const [comments, setComments] = useState([]);
+  const [notification, setNotification] = useState([]);
   const { cid } = useParams();
   const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
-  const [text, setText] = useState("");
-  const [post, setPost] = useState(false);
 
 
   useEffect(() => {
@@ -30,23 +28,23 @@ function Forum({ checkTokenExpiration }) {
       navigate('/login');
     }
     axios
-      .get(`http://localhost:8080/lms/course/${cid}/conversation?` + "current_page=" + page, {
+      .get(`http://localhost:8080/lms/course/notification?course_id=${cid}` + "&current_page=" + page, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
       })
       .then((response) => {
 
-        setComments(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
+        setNotification(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
         setPageInfo(response.data);
 
-        console.log("đây là comment ")
-        console.log(comments.course_id)
+        console.log("đây là noti ")
+        console.log(notification)
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, [page, post]
+  }, [page,]
   );
   const renderPagination = () => {
     return (
@@ -83,39 +81,6 @@ function Forum({ checkTokenExpiration }) {
     setSearchParams({ page: newPage });
   };
 
-  const onPost = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-
-    const commentData = JSON.stringify({
-      "user": {
-        "id": user.id
-      },
-      "course": {
-        "id": cid
-      },
-      "msg": text
-    });
-    if (text !== '') {
-      axios.post('http://localhost:8080/lms/course/conversation', commentData, {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
-          'Content-Type': 'application/json'
-        }
-      })
-        .then((response) => {
-          setText("");
-          setPost(!post);
-        })
-        .catch((error) => {
-          console.error("Error posting comment: ", error);
-        })
-    } else alert('cant post empty comment')
-  }
-
-  const onTxtChange = (txt) => {
-    setText(txt.target.value)
-  }
-
   return (
     <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
       <Card
@@ -125,20 +90,9 @@ function Forum({ checkTokenExpiration }) {
           <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
             <Meta
 
-              title="Discussion"
+              title="Notification"
             />
-            {/* {discussion.user._id === user._id && (
-              // <Button
-              //   disabled={!(discussion.user._id === user._id)}
-              //   className="deleteButton"
-              //   onClick={() => {
-              //     // dispatch(removeDiscussion(discussion._id))
-              //     console.log("deleted")
-              //   }}
-              // >
-              //   delete
-              // </Button>
-            )} */}
+
           </div>
         }
       >
@@ -147,53 +101,23 @@ function Forum({ checkTokenExpiration }) {
           size="small"
           type="inner"
           className="commentcard"
-          title="It's Chatting time!"
+          title="It's Notifiying time!"
         >
-          {/* <AllComments
-            comments={discussion.comments}
-            dId={discussion._id}
-            Luser={user}
-          /> */}
-          {comments.map((comment) => (
+          {notification.map((notification) => (
             <Card
               size="small"
               title={
                 <span style={{ display: "flex", alignContent: "left" }} >
-                  <Avatar src={comment.user.ava_url} />
-                  <span style={{ paddingTop: "10px", paddingLeft: "10px" }}>{' ' + comment.user.username}</span>
-                  {/* { && (
-                  <Button
-                    disabled={!(comment.user._id === Luser._id)}
-                    className="deleteButton"
-                    onClick={() => {
-                      // dispatch(removeComment(dId, comment))
-                      console.log("lol")
-                    }}
-                  >
-                    delete
-                  </Button>
-                )} */}
+                  <span style={{ paddingTop: "10px"}}>{' ' + notification.topic}</span>
                 </span>
               }
             >
-              <div style={{ textAlign: "left" }} className='commentData'>{comment.msg}</div>
+              <div style={{ textAlign: "left" }} className='notificationData'>{notification.msg}</div>
 
             </Card>
           ))}
           {renderPagination()}
         </Card>
-        <div className="container">
-          <Input
-            size="large"
-            allowClear={true}
-            bordered={true}
-            placeholder="what you think"
-            onChange={onTxtChange}
-            className="txt"
-          ></Input>
-          <Button style={{ marginTop: '20px' }} onClick={onPost}>Add Comment</Button>
-
-        </div>
       </Card>
     </div>
   )

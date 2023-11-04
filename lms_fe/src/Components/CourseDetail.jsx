@@ -148,7 +148,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           <NotificationOutlined />
         </Link>
 
-        {notification.map((notification) => (
+        {/* {notification.map((notification) => (
           <Card
             size="small"
             title={
@@ -161,7 +161,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
               {notification.msg}
             </div>
           </Card>
-        ))}
+        ))} */}
       </Collapse.Panel>
 
       <Collapse.Panel
