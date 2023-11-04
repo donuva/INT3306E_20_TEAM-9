@@ -49,7 +49,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.update(courseDTO));
     }
 
-    @GetMapping("/student/getCourseList")
+    @GetMapping("/student/courses")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForStudent(
             @RequestParam(value = "current_page", required = false) Integer current_page,
             Principal p) throws NotFoundException {
@@ -92,7 +92,7 @@ public class CourseController {
         courseService.isAcceptRequest(request_id, code);
     }
 
-    @GetMapping("/teacher/getCourseList")
+    @GetMapping("/teacher/courses")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForTeacher(
             @RequestParam(value = "current_page", required = false) Integer current_page,
             Principal p) throws NotFoundException {
