@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
-import { Card, Form, Input, Button } from 'antd';
+import React, { useState,useEffect } from 'react';
+import { Card, Form, Input, Button, message } from 'antd';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 function CreateCourse({ checkTokenExpiration }) {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    id: null,
+    name: '',
+    birthdate: '',
+    username: '',
+    ava_url: null,
+    bio: '',
+    email: '',
+    phone: '',
+    role: '',
+  });
+  useEffect(() => {
+    if (!checkTokenExpiration()) {
+      alert("You need to re-login")
+
+      navigate('/login');
+    } else {
+      // setUserData(JSON.parse(localStorage.getItem('user')));
+    }
+  }, []);
   const [formData, setFormData] = useState({
     name: '',
     category: '',
     description: '',
-    teacher : {id: 1} // Giả sử bạn đã biết id của giáo viên
+    teacher : { id: JSON.parse(localStorage.getItem('teacher_id')) }
   });
 
   const handleInputChange = (e) => {
@@ -17,7 +39,7 @@ function CreateCourse({ checkTokenExpiration }) {
 
   const handleSubmit = () => {
     console.log(formData)
-    axios.post('http://localhost:8080/lms/course', formData, {
+    axios.post('http://localhost:8080/lms/teacher/course', formData, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
         'Content-Type': 'application/json'
@@ -25,11 +47,12 @@ function CreateCourse({ checkTokenExpiration }) {
     })
       .then((response) => {
         // Xử lý kết quả sau khi tạo khóa học thành công
-        console.log("Success")
+        message.success('Lecture added successfully!');
+
       })
       .catch((error) => {
-        alert("dm")
-        console.error("Error creating course: ", error);
+        console.error('Error adding lecture:', error);
+        message.error('Failed to add lecture');
       });
   };
 
