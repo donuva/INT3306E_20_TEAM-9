@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Button, Input } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
+import { Collapse, Badge, Button, Card, List, Menu, Input } from 'antd';
+import {
+  YoutubeFilled,
+  NotificationOutlined,
+  FileTextOutlined,
+  CommentOutlined,
+  BarChartOutlined,
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+  RightOutlined,
+  LeftOutlined,
+} from '@ant-design/icons';
 // import AllComments from './commentCard'
 // import {
 //   removeDiscussion,
@@ -22,7 +38,7 @@ function Forum({ checkTokenExpiration }) {
   const navigate = useNavigate();
   const [text, setText] = useState("");
   const [post, setPost] = useState(false);
-
+  const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     if (!checkTokenExpiration()) {
@@ -132,18 +148,51 @@ function Forum({ checkTokenExpiration }) {
     setText(txt.target.value)
   }
 
-  return (
-    <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
-      <Card
-        hoverable
-        className="customcard"
-        title={
-          <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
-            <Meta
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
-              title="Discussion"
-            />
-            {/* {discussion.user._id === user._id && (
+  return (
+    <div style={{ display: 'flex', height: '1000px' }}>
+      <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
+
+        <Menu
+
+          mode="inline"
+          theme="dark"
+          inlineCollapsed={collapsed}
+        >
+          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
+            {collapsed ? <RightOutlined /> : <LeftOutlined />}
+          </Button>
+          <Menu.Item key="0" icon={<AppstoreOutlined />}>
+            <Link to={`/app/courses/${cid}`}>
+              Course
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="1" icon={<NotificationOutlined />}>
+            <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
+          </Menu.Item>
+          <Menu.Item key="2" icon={<FileTextOutlined />}>
+            <Link to="/app/course/studentGrade">Grade</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<CommentOutlined />}>
+            <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
+          </Menu.Item>
+        </Menu>
+      </div>
+
+      <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
+        <Card
+          hoverable
+          className="customcard"
+          title={
+            <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
+              <Meta
+
+                title="Discussion"
+              />
+              {/* {discussion.user._id === user._id && (
               // <Button
               //   disabled={!(discussion.user._id === user._id)}
               //   className="deleteButton"
@@ -155,29 +204,29 @@ function Forum({ checkTokenExpiration }) {
               //   delete
               // </Button>
             )} */}
-          </div>
-        }
-      >
-
-        <Card
-          size="small"
-          type="inner"
-          className="commentcard"
-          title="It's Chatting time!"
+            </div>
+          }
         >
-          {/* <AllComments
+
+          <Card
+            size="small"
+            type="inner"
+            className="commentcard"
+            title="It's Chatting time!"
+          >
+            {/* <AllComments
             comments={discussion.comments}
             dId={discussion._id}
             Luser={user}
           /> */}
-          {comments.map((comment) => (
-            <Card
-              size="small"
-              title={
-                <span style={{ display: "flex", alignContent: "left" }} >
-                  <Avatar src={comment.user.ava_url} />
-                  <span style={{ paddingTop: "10px", paddingLeft: "10px" }}>{' ' + comment.user.username}</span>
-                  {/* { && (
+            {comments.map((comment) => (
+              <Card
+                size="small"
+                title={
+                  <span style={{ display: "flex", alignContent: "left" }} >
+                    <Avatar src={comment.user.ava_url} />
+                    <span style={{ paddingTop: "10px", paddingLeft: "10px" }}>{' ' + comment.user.username}</span>
+                    {/* { && (
                   <Button
                     disabled={!(comment.user._id === Luser._id)}
                     className="deleteButton"
@@ -189,28 +238,29 @@ function Forum({ checkTokenExpiration }) {
                     delete
                   </Button>
                 )} */}
-                </span>
-              }
-            >
-              <div style={{ textAlign: "left" }} className='commentData'>{comment.msg}</div>
+                  </span>
+                }
+              >
+                <div style={{ textAlign: "left" }} className='commentData'>{comment.msg}</div>
 
-            </Card>
-          ))}
-          {renderPagination()}
+              </Card>
+            ))}
+            {renderPagination()}
+          </Card>
+          <div className="container">
+            <Input
+              size="large"
+              allowClear={true}
+              bordered={true}
+              placeholder="what you think"
+              onChange={onTxtChange}
+              className="txt"
+            ></Input>
+            <Button style={{ marginTop: '20px' }} onClick={onPost}>Add Comment</Button>
+
+          </div>
         </Card>
-        <div className="container">
-          <Input
-            size="large"
-            allowClear={true}
-            bordered={true}
-            placeholder="what you think"
-            onChange={onTxtChange}
-            className="txt"
-          ></Input>
-          <Button style={{ marginTop: '20px' }} onClick={onPost}>Add Comment</Button>
-
-        </div>
-      </Card>
+      </div>
     </div>
   )
 }

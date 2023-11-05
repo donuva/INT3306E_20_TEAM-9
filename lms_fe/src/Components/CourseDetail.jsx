@@ -19,9 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import MenuItem from 'antd/es/menu/MenuItem';
 
-const { SubMenu } = Menu;
 
 const CourseDetail = ({ checkTokenExpiration }) => {
   const navigate = useNavigate();
@@ -83,11 +81,18 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed}
+          defaultSelectedKeys={['0']}
+          defaultOpenKeys={['0']}
         >
           <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
             {collapsed ? <RightOutlined /> : <LeftOutlined />}
           </Button>
-          <Menu.Item key="1" icon={<AppstoreOutlined />}>
+          <Menu.Item key="0" icon={<AppstoreOutlined />}>
+            <Link to={`/app/courses/${cid}`}>
+              Course
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="1" icon={<NotificationOutlined />}>
             <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<FileTextOutlined />}>
