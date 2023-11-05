@@ -12,7 +12,7 @@ import Login from './Components/Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import AddLesson from './Components/AddLesson';
+import AddLesson from './Components/addLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
@@ -159,7 +159,7 @@ function App() {
 
             <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} />} />
             <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} />} />
-            <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
           </Routes>
           <Footer />
         </AppProvider>

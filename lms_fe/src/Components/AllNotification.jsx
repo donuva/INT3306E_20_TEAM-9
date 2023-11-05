@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Button, Input } from 'antd'
-import Meta from 'antd/lib/card/Meta'
+import { Collapse, Badge, Button, Card, List, Menu } from 'antd';
+import {
+  YoutubeFilled,
+  NotificationOutlined,
+  FileTextOutlined,
+  CommentOutlined,
+  BarChartOutlined,
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+  RightOutlined,
+  LeftOutlined,
+} from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
@@ -11,7 +26,7 @@ import axios from 'axios'
 // } from '../../../reducers/discussionReducer'
 // import './../styles.css'
 
-function Notification({ checkTokenExpiration }) {
+function Notification({ checkTokenExpiration, isTeacher }) {
 
   // const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,7 +35,7 @@ function Notification({ checkTokenExpiration }) {
   const { cid } = useParams();
   const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
-
+  const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     if (!checkTokenExpiration()) {
@@ -81,46 +96,83 @@ function Notification({ checkTokenExpiration }) {
     setSearchParams({ page: newPage });
   };
 
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
   return (
-    <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
-      <Card
-        hoverable
-        className="customcard"
-        title={
-          <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
-            <Meta
+    <div style={{ display: 'flex', height: '1000px' }}>
+      <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
 
-              title="Notification"
-            />
+        <Menu
 
-          </div>
-        }
-      >
+          mode="inline"
+          theme="dark"
+          inlineCollapsed={collapsed}
+          defaultSelectedKeys={['1']}
+        >
+          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
+            {collapsed ? <RightOutlined /> : <LeftOutlined />}
+          </Button>
+          <Menu.Item key="0" icon={<AppstoreOutlined />}>
+            <Link to={`/app/courses/${cid}`}>
+              Course
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="1" icon={<NotificationOutlined />}>
+            <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
+          </Menu.Item>
+          <Menu.Item key="2" icon={<FileTextOutlined />}>
+            <Link to="/app/course/studentGrade">Grade</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<CommentOutlined />}>
+            <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
+          </Menu.Item>
+        </Menu>
+      </div>
+      <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
 
         <Card
-          size="small"
-          type="inner"
-          className="commentcard"
-          title="It's Notifiying time!"
-        >
-          {notification.map((notification) => (
-            <Card
-              size="small"
-              title={
-                <span style={{ display: "flex", alignContent: "left" }} >
-                  <span style={{ paddingTop: "10px"}}>{' ' + notification.topic}</span>
-                </span>
-              }
-            >
-              <div style={{ textAlign: "left" }} className='notificationData'>{notification.msg}</div>
+          hoverable
+          className="customcard"
+          title={
+            <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
+              <Meta
 
-            </Card>
-          ))}
-          {renderPagination()}
+                title="Notification"
+              />
+
+            </div>
+          }
+        >
+          <Link to={`/app/courses/${cid}/addNoti`}>
+            <Button style={{ marginBottom: '20px' }}>New Notification</Button>
+          </Link >
+          <Card
+            size="small"
+            type="inner"
+            className="commentcard"
+            title="It's Notifiying time!"
+          >
+            {notification.map((notification) => (
+              <Card
+                size="small"
+                title={
+                  <span style={{ display: "flex", alignContent: "left" }} >
+                    <span style={{ paddingTop: "10px" }}>{' ' + notification.topic}</span>
+                  </span>
+                }
+              >
+                <div style={{ textAlign: "left" }} className='notificationData'>{notification.msg}</div>
+
+              </Card>
+            ))}
+            {renderPagination()}
+          </Card>
         </Card>
-      </Card>
+      </div>
     </div>
   )
+
 }
 
 export default Notification;

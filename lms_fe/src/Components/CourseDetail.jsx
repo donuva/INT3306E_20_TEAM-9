@@ -82,7 +82,6 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           theme="dark"
           inlineCollapsed={collapsed}
           defaultSelectedKeys={['0']}
-          defaultOpenKeys={['0']}
         >
           <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
             {collapsed ? <RightOutlined /> : <LeftOutlined />}
