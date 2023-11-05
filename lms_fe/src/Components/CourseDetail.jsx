@@ -8,11 +8,8 @@ import {
   BarChartOutlined,
   AppstoreOutlined,
   ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
+  BulbOutlined,
+  UserOutlined,
   RightOutlined,
   LeftOutlined,
 } from '@ant-design/icons';
@@ -39,6 +36,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
   const [exerciseList, setExerciseList] = useState([]);
   const [lessonList, setLessonList] = useState([]);
   const [collapsed, setCollapsed] = useState(true);
+  const [teacher, setTeacher] = useState({});
 
   useEffect(() => {
     if (!checkTokenExpiration()) {
@@ -63,6 +61,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
       setCourse(response.data);
       setExerciseList(response.data.exerciseList);
       setLessonList(response.data.lessonList);
+      setTeacher(response.data.teacher.user);
     }).catch((error) => {
       console.log(error);
     });
@@ -103,7 +102,16 @@ const CourseDetail = ({ checkTokenExpiration }) => {
         </Menu>
       </div>
 
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, marginTop: '30px' }}>
+        <h1>{course.name}</h1>
+        <div className='course_info' style={{ margin: '50px 40px', textAlign: 'left' }}>
+
+          <article>
+            <p><UserOutlined /> <strong>Teacher: </strong> {teacher.name} <br />
+              <BulbOutlined /> <strong>Category: </strong> {course.category} <br />
+              <ContainerOutlined /> <strong>Description: </strong>{course.description}</p>
+          </article>
+        </div>
         <List
           header="Exercise List"
           bordered
@@ -119,6 +127,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           header="Lesson List"
           bordered
           dataSource={lessonList}
+          style={{ marginTop: '30px' }}
           renderItem={(item) => (
             <List.Item>
               {item.topic}
@@ -126,7 +135,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           )}
         />
       </div>
-    </div>
+    </div >
   );
 };
 
