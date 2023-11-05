@@ -16,12 +16,13 @@ import AddLesson from './Components/addLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
-import AddExercise from './Components/AddExercise';
+import AddExercise from './Components/addExercise';
 import CourseDetail from './Components/CourseDetail';
 import CourseEnroll from './Components/CourseEnroll';
 import AddNoti from './Components/AddNoti';
 import Course from './Components/Course';
 import AllNotification from './Components/AllNotification';
+import CreateCourse from './Components/CreateCourse';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -140,7 +141,8 @@ function App() {
             <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} />} />
             {/*Lấy ra tất cả course  */}
             <Route path="/app/allCourse" element={<AllCourse checkTokenExpiration={checkTokenExpiration} />} />
-
+            {/* Form tạo course mới */}
+            <Route path="/app/create-course" element={<CreateCourse checkTokenExpiration={checkTokenExpiration} />} />
 
             <Route path="/app/studentGrade" element={<StudentGrade />} />
             <Route path="/app/teacherGrade" element={<TeacherGrade />} />
