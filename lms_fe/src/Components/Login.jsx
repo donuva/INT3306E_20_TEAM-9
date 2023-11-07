@@ -50,6 +50,7 @@ const Login = ({ setLoggedIn }) => {
             .then((response) => {
                 console.log('Authorization' + `Bearer ${token}`);
                 localStorage.setItem('user', JSON.stringify(response.data));
+                console.log(response.data.role);
                 if (response.data.role === 'TEACHER') {
                     console.log("TEACHER");
                     axios.get('http://localhost:8080/lms/teacher/me', {
@@ -100,7 +101,7 @@ const Login = ({ setLoggedIn }) => {
         >
             <div
                 style={{
-                    height:"50%",
+                    height: "50%",
                     width: "40%",
                     padding: "20px",
                     borderRadius: "8px",
@@ -108,56 +109,56 @@ const Login = ({ setLoggedIn }) => {
                     background: "rgba(255, 255, 255, 0.3)",
                 }}
             >
-            <h2 style={{ textAlign: "center" }}>Log In</h2>
-            <Form
-                name="normal_login"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-            >
-                <Form.Item
-                    name="username"
-                    rules={[
-                        { required: true, message: "Please input your Username!" },
-                    ]}
+                <h2 style={{ textAlign: "center" }}>Log In</h2>
+                <Form
+                    name="normal_login"
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
                 >
-                    <Input
-                        prefix={<UserOutlined className="site-form-item-icon" />}
-                        placeholder="Username"
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[
-                        { required: true, message: "Please input your Password!" },
-                    ]}
-                >
-                    <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
-                        placeholder="Password"
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="login-form-button"
-                        style={{ width: "100%" }}
+                    <Form.Item
+                        name="username"
+                        rules={[
+                            { required: true, message: "Please input your Username!" },
+                        ]}
                     >
-                        Log in
-                    </Button>
-                </Form.Item>
-                {loginError && (
-                    <p
-                        style={{ color: "red", marginTop: "10px" }}
-                        className="error-message"
+                        <Input
+                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            placeholder="Username"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                            { required: true, message: "Please input your Password!" },
+                        ]}
                     >
-                        {loginError}
-                    </p>
-                )}
-            </Form>
+                        <Input
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            className="login-form-button"
+                            style={{ width: "100%" }}
+                        >
+                            Log in
+                        </Button>
+                    </Form.Item>
+                    {loginError && (
+                        <p
+                            style={{ color: "red", marginTop: "10px" }}
+                            className="error-message"
+                        >
+                            {loginError}
+                        </p>
+                    )}
+                </Form>
+            </div>
         </div>
-    </div>
     );
 };
 

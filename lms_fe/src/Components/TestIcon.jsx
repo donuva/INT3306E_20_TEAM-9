@@ -3,7 +3,7 @@ import { Dropdown, Avatar, Menu } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 
-const TestIcon = () => {
+const TestIcon = ({ setLoggedIn }) => {
 
   const navigate = useNavigate();
   const clickHandler = () => {
@@ -11,11 +11,12 @@ const TestIcon = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('student_id');
     localStorage.removeItem('teacher_id');
+    setLoggedIn(false);
     navigate('/login');
   }
 
   const menu = (
-    <Menu onClick={clickHandler}>
+    <Menu>
       <Menu.Item key="PROFILE">
         <NavLink to={'/app/profile'}>My Profile</NavLink>
       </Menu.Item>

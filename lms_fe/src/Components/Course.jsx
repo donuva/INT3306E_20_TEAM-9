@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
+import { Button } from 'antd';
 
 export default function Course({ checkTokenExpiration, isTeacher }) {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
       alert('You need to re-login');
       navigate('/login');
     }
-    const role = isTeacher ? 'teacher' : 'student';
+    const role = isTeacher === true ? 'teacher' : 'student';
     const baseUrl = `http://localhost:8080/lms/${role}/courses`;
     const params = {};
     if (page !== null) {
@@ -63,8 +64,13 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
 
   return (
     <div>
-      <h1>Courses List</h1>
+      <h1 style={{ marginTop: '30px', marginBottom: '30px' }}>Courses List</h1>
 
+      {isTeacher === true &&
+        <Link to={'/app/create-course'}>
+          <Button>Create new course</Button>
+        </Link>
+      }
       <div className="course-grid">
         {courses.map((course) => (
           <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>

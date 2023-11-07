@@ -43,7 +43,7 @@ public class ExerciseService {
     @Transactional
     public void create(ExerciseDTO exerciseDTO) throws NotFoundException {
         if(courseRepo.findById(exerciseDTO.getCourse().getId()).isPresent()) {
-            new ModelMapper().map(exerciseDTO, Exercise.class);
+           exerciseRepo.save(new ModelMapper().map(exerciseDTO, Exercise.class));
         }else{
             throw new NotFoundException("Không tìm thấy course");
         }

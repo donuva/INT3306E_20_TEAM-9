@@ -17,14 +17,16 @@ const FlexedDiv = styled.div`
   padding:20px;
 `
 
-const Header = ({ courseNavigation }) => {
+const Header = ({ isLoggedIn, setLoggedIn }) => {
   return (
     <FlexedDiv >
       <Space >
-        <CourseNavigation/>
-       <SearchBox/>
-       <Notification/>
-       <TestIcon/>
+        <CourseNavigation />
+        <SearchBox />
+        <Notification />
+        {isLoggedIn &&
+          <TestIcon setLoggedIn={setLoggedIn} />
+        }
       </Space>
     </FlexedDiv>
   )

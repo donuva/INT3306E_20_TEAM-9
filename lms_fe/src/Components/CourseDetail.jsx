@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Collapse, Badge, Button, Card, List, Menu } from 'antd';
 import {
-  YoutubeFilled,
+  ExperimentOutlined,
   NotificationOutlined,
   FileTextOutlined,
   CommentOutlined,
@@ -12,14 +12,16 @@ import {
   UserOutlined,
   RightOutlined,
   LeftOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const CourseDetail = ({ checkTokenExpiration }) => {
+const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     id: null,
     name: '',
@@ -80,7 +82,7 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed}
-          defaultSelectedKeys={['0']}
+          selectedKeys={['0']}
         >
           <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
             {collapsed ? <RightOutlined /> : <LeftOutlined />}
@@ -93,12 +95,22 @@ const CourseDetail = ({ checkTokenExpiration }) => {
           <Menu.Item key="1" icon={<NotificationOutlined />}>
             <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<FileTextOutlined />}>
+          <Menu.Item key="2" icon={<DashboardOutlined />}>
             <Link to="/app/course/studentGrade">Grade</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<CommentOutlined />}>
             <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
           </Menu.Item>
+          {isTeacher === true &&
+            <Menu.Item key="4" icon={<ExperimentOutlined />}>
+              <Link to={`/app/addExercise/${cid}`}>New Exercise</Link>
+            </Menu.Item>
+          }
+          {isTeacher === true &&
+            <Menu.Item key="5" icon={<FileTextOutlined />}>
+              <Link to={`/app/addLesson/${cid}`}>New Lesson</Link>
+            </Menu.Item>
+          }
         </Menu>
       </div>
 

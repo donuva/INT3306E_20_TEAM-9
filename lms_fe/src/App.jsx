@@ -16,7 +16,7 @@ import AddLesson from './Components/addLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
-import AddExercise from './Components/addExercise';
+import AddExercise from './Components/AddExercise';
 import CourseDetail from './Components/CourseDetail';
 import CourseEnroll from './Components/CourseEnroll';
 import AddNoti from './Components/AddNoti';
@@ -32,6 +32,7 @@ function App() {
 
   useEffect(() => {
     checkTokenExpiration();
+    console.log(isTeacher);
   }, [isLoggedIn])
 
 
@@ -131,14 +132,14 @@ function App() {
     <div className="App">
       <Router>
         <AppProvider> {/* Wrap tất cả các thành phần trong AppProvider */}
-          <Header />
+          <Header isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
           <Routes>
             <Route index element={<Navigate to="/app/courses" replace />} />
 
             {/* lấy ra tất cả course của người học/người dạy/ hay chính là home */}
             <Route path="/app/courses" element={<Course checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* lấy ra course detail theo id */}
-            <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/*Lấy ra tất cả course  */}
             <Route path="/app/allCourse" element={<AllCourse checkTokenExpiration={checkTokenExpiration} />} />
             {/* Form tạo course mới */}
@@ -146,20 +147,20 @@ function App() {
 
             <Route path="/app/studentGrade" element={<StudentGrade />} />
             <Route path="/app/teacherGrade" element={<TeacherGrade />} />
-            <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} />} />
-            <Route path="/app/addLesson" element={<AddLesson checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+            <Route path="/app/addLesson/:cid" element={<AddLesson checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path='/app/profile' element={<Profile setLoggedIn={setLoggedIn} checkTokenExpiration={checkTokenExpiration} />} />
 
 
-            <Route path='/app/addExercise/:cid' element={<AddExercise checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path='/app/addExercise/:cid' element={<AddExercise checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* Neu la teacher, hien thi de bai, va nut xoa, neu co ?student_id hien thi ra bai lam cua hoc sinh, 1 neu la giao vien thi duoc phep cham diem 2 hoc sinh thi duoc phep nop hoac xem lai */}
             <Route path='/app/course/:cid/exercise/:eid' element={<ExerciseDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* Hien ra danh sach bai lam cua 1 exercise cho teacher */}
             <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
-            <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} />} />
             <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
           </Routes>

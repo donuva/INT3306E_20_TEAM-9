@@ -19,6 +19,8 @@ import {
   PieChartOutlined,
   RightOutlined,
   LeftOutlined,
+  DashboardOutlined,
+  ExperimentOutlined,
 } from '@ant-design/icons';
 // import AllComments from './commentCard'
 // import {
@@ -27,7 +29,7 @@ import {
 // } from '../../../reducers/discussionReducer'
 // import './../styles.css'
 
-function Forum({ checkTokenExpiration }) {
+function Forum({ checkTokenExpiration, isTeacher }) {
 
   // const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams();
@@ -162,7 +164,6 @@ function Forum({ checkTokenExpiration }) {
           theme="dark"
           inlineCollapsed={collapsed}
           defaultSelectedKeys={['3']}
-
         >
           <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
             {collapsed ? <RightOutlined /> : <LeftOutlined />}
@@ -175,12 +176,22 @@ function Forum({ checkTokenExpiration }) {
           <Menu.Item key="1" icon={<NotificationOutlined />}>
             <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<FileTextOutlined />}>
+          <Menu.Item key="2" icon={<DashboardOutlined />}>
             <Link to="/app/course/studentGrade">Grade</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<CommentOutlined />}>
             <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
           </Menu.Item>
+          {isTeacher === true &&
+            <Menu.Item key="4" icon={<ExperimentOutlined />}>
+              <Link to={`/app/addExercise/${cid}`}>New Exercise</Link>
+            </Menu.Item>
+          }
+          {isTeacher === true &&
+            <Menu.Item key="5" icon={<FileTextOutlined />}>
+              <Link to={`/app/addLesson/${cid}`}>New Lesson</Link>
+            </Menu.Item>
+          }
         </Menu>
       </div>
 

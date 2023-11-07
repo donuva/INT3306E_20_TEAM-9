@@ -15,6 +15,8 @@ import {
   PieChartOutlined,
   RightOutlined,
   LeftOutlined,
+  ExperimentOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
@@ -121,12 +123,22 @@ function Notification({ checkTokenExpiration, isTeacher }) {
           <Menu.Item key="1" icon={<NotificationOutlined />}>
             <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<FileTextOutlined />}>
+          <Menu.Item key="2" icon={<DashboardOutlined />}>
             <Link to="/app/course/studentGrade">Grade</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<CommentOutlined />}>
             <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
           </Menu.Item>
+          {isTeacher === true &&
+            <Menu.Item key="4" icon={<ExperimentOutlined />}>
+              <Link to={`/app/addExercise/${cid}`}>New Exercise</Link>
+            </Menu.Item>
+          }
+          {isTeacher === true &&
+            <Menu.Item key="5" icon={<FileTextOutlined />}>
+              <Link to={`/app/addLesson/${cid}`}>New Lesson</Link>
+            </Menu.Item>
+          }
         </Menu>
       </div>
       <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
@@ -144,9 +156,11 @@ function Notification({ checkTokenExpiration, isTeacher }) {
             </div>
           }
         >
-          <Link to={`/app/courses/${cid}/addNoti`}>
-            <Button style={{ marginBottom: '20px' }}>New Notification</Button>
-          </Link >
+          {isTeacher &&
+            <Link to={`/app/courses/${cid}/addNoti`}>
+              <Button style={{ marginBottom: '20px' }}>New Notification</Button>
+            </Link >
+          }
           <Card
             size="small"
             type="inner"
