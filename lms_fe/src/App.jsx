@@ -16,13 +16,14 @@ import AddLesson from './Components/addLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
-import AddExercise from './Components/AddExercise';
+import AddExercise from './Components/addExercise';
 import CourseDetail from './Components/CourseDetail';
 import CourseEnroll from './Components/CourseEnroll';
 import AddNoti from './Components/AddNoti';
 import Course from './Components/Course';
 import AllNotification from './Components/AllNotification';
 import CreateCourse from './Components/CreateCourse';
+import Signup from './Components/Signup';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -150,6 +151,7 @@ function App() {
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/addLesson/:cid" element={<AddLesson checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
+            <Route path="/sign-up" element={<Signup/>} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path='/app/profile' element={<Profile setLoggedIn={setLoggedIn} checkTokenExpiration={checkTokenExpiration} />} />
 
