@@ -65,6 +65,9 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
       setLessonList(response.data.lessonList);
       setTeacher(response.data.teacher.user);
     }).catch((error) => {
+      if (error.response.status === 402) {
+        navigate(`/app/courses/preview/${cid}`)
+      }
       console.log(error);
     });
   }, []);

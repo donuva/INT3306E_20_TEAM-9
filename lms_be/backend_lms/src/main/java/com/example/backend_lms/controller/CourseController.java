@@ -184,4 +184,9 @@ public class CourseController {
     public void addNewConversation(@RequestBody ConversationDTO conversationDTO){
         conversationService.create(conversationDTO);
     }
+
+    @GetMapping("/student/course/preview/{cid}")
+    public ResponseEntity<CourseListDTO> getCoursePreview(@PathVariable("cid") int cid) throws NotFoundException {
+        return ResponseEntity.ok(courseService.getCoursePreview(cid));
+    }
 }
