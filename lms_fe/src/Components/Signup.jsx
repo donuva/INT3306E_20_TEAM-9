@@ -1,10 +1,12 @@
 import React from 'react';
 import { Form, Input, Button, DatePicker, message, Card } from 'antd';
 import moment from 'moment';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = ({ type }) => {
   const [form] = Form.useForm();
-
+  const navigate = useNavigate();
   const formatDate = (date) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
@@ -27,26 +29,21 @@ const RegistrationForm = ({ type }) => {
     // Gửi yêu cầu API tại đây
     // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
     const url = type === 'student' ? 'http://localhost:8080/lms/create/student' : 'http://localhost:8080/lms/create/teacher';
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Registration successful:', data);
+    axios.post(url, formData)
+      // .then((response) => {
+      //   if (!response.ok) {
+      //     throw new Error('Network response was not ok');
+      //   }
+      //   return response.json();
+      // })
+      .then(() => {
+        console.log('Registration successful:');
         message.success('Registration successful');
+        navigate('/login')
       })
       .catch((error) => {
-        console.error('Registration failed:', error);
-        message.error('Registration failed');
+        console.error('Registration failed:', error.response.data);
+        message.error('Registration failed: ' + error.response.data);
       });
   };
 
