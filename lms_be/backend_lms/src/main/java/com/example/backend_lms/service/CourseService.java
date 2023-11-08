@@ -243,19 +243,13 @@ public class CourseService {
             }
         }
 
-        public PageDTO<List<CourseListDTO>> getSuggestCourse (List < CourseDTO > listCourse,
-        int current_page){
+        public List<CourseListDTO> getSuggestCourse (List <CourseDTO> listCourse){
             Sort sortBy = Sort.by("createdAt").descending();
-            PageRequest pageRequest = PageRequest.of(current_page, 16, sortBy);
+            PageRequest pageRequest = PageRequest.of(0, 8, sortBy);
             List<String> categories = listCourse.stream().map(CourseDTO::getCategory).toList();
             Page<Course> page = courseRepo.findByCourseCategory(categories, pageRequest);
-            List<CourseListDTO> courseDTOS = page.get().map(this::convertListing).collect(Collectors.toList());
-            PageDTO<List<CourseListDTO>> pageDTO = new PageDTO<>();
-            pageDTO.setTotalPages(page.getTotalPages());
-            pageDTO.setSize(page.getSize());
-            pageDTO.setTotalElements(page.getTotalElements());
-            pageDTO.setData(courseDTOS);
-            return pageDTO;
+
+            return page.get().map(this::convertListing).collect(Collectors.toList());
         }
 
         public PageDTO<List<CourseListDTO>> searchCourse (String course_name,int current_page){

@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
-import { Button } from 'antd';
+import { Button, Carousel } from 'antd';
 
 export default function Course({ checkTokenExpiration, isTeacher }) {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageInfo, setPageInfo] = useState({});
   const page = searchParams.get('current_page' || null);
+  const [suggestCourse, setSuggestCourse] = useState([]);
 
   useEffect(() => {
     if (!checkTokenExpiration()) {
@@ -42,6 +43,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
       .catch((error) => console.error('Error fetching courses:', error));
   }, [page]); // Sử dụng page trong dependency array để cập nhật khi page thay đổi
 
+
   if (pageInfo.totalElements == 0) {
     return (<NoData />)
   }
@@ -61,6 +63,14 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
 
     return img[i % (img.length)];
   }
+
+  const contentStyle = {
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
 
   return (
     <div>
