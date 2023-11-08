@@ -161,7 +161,7 @@ function App() {
             <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
             <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
-            <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
           </Routes>
           <Footer />

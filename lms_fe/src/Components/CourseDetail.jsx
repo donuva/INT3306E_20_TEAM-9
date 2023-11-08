@@ -74,7 +74,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '1000px' }}>
+    <div style={{ display: 'flex', minHeight: '1000px' }}>
       <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
 
         <Menu
