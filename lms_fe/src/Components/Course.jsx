@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
-import { Button, Carousel } from 'antd';
+import { Button, Card, Carousel } from 'antd';
 
 export default function Course({ checkTokenExpiration, isTeacher }) {
   const navigate = useNavigate();
@@ -84,11 +84,13 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
       <div className="course-grid">
         {courses.map((course) => (
           <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
-            <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px' }} />
-            <div style={{ marginTop: '10px' }}>
-              <h5>{course.name}</h5>
-              <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
-            </div>
+            <Card>
+              <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit' }} />
+              <div style={{ marginTop: '10px' }}>
+                <h5>{course.name}</h5>
+                <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
+              </div>
+            </Card>
           </Link>
         ))}
       </div>

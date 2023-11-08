@@ -1,16 +1,18 @@
 .course-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 70vw;
+    gap: 50px;
+    max-width: 65vw;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .course-item {
     text-decoration: none;
     color: black;
-    border: 1px solid grey;
+    border: 0.05px solid grey;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .pagination {
