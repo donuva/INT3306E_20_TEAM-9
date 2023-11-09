@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-
 public class CourseController {
     @Autowired
     CourseService courseService;
@@ -50,7 +49,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.update(courseDTO));
     }
 
-    @GetMapping("/student/getCourseList")
+    @GetMapping("/student/courses")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForStudent(
             @RequestParam(value = "current_page", required = false) Integer current_page,
             Principal p) throws NotFoundException {
@@ -64,7 +63,7 @@ public class CourseController {
     }
 
     @GetMapping("/course/search")
-    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam("current_page") Integer current_page){
+    public ResponseEntity<PageDTO<List<CourseListDTO>>> searchCourse(@RequestParam(value = "course_name", required = false) String course_name, @RequestParam(value = "current_page", required = false) Integer current_page){
         if(current_page==null){
             current_page=0;
         }
@@ -93,7 +92,7 @@ public class CourseController {
         courseService.isAcceptRequest(request_id, code);
     }
 
-    @GetMapping("/teacher/getCourseList")
+    @GetMapping("/teacher/courses")
     public ResponseEntity<PageDTO<List<CourseListDTO>>> getCoursePageForTeacher(
             @RequestParam(value = "current_page", required = false) Integer current_page,
             Principal p) throws NotFoundException {
@@ -107,15 +106,12 @@ public class CourseController {
     }
 
     @GetMapping("/student/getSuggestCourse")
-    public ResponseEntity<PageDTO<List<CourseListDTO>>> getSuggest(Principal p,
-            @RequestParam("current_page") Integer current_page) throws NotFoundException {
-        if(current_page==null){
-            current_page=0;
-        }
+    public ResponseEntity<List<CourseListDTO>> getSuggest(Principal p) throws NotFoundException {
+
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
-        return ResponseEntity.ok(courseService.getSuggestCourse(studentDTO.getCourseList(), current_page));
+        return ResponseEntity.ok(courseService.getSuggestCourse(studentDTO.getCourseList()));
     }
 
     @GetMapping("/course/{id}")
@@ -145,7 +141,7 @@ public class CourseController {
     @GetMapping("/course/notification")
     public ResponseEntity<PageDTO<List<NotificationDTO>>> getCourseNotification(
             @RequestParam("course_id") int course_id,
-            @RequestParam("current_page") Integer current_page) {
+            @RequestParam(value = "current_page", required = false) Integer current_page) {
         if(current_page==null){
             current_page=0;
         }
@@ -166,8 +162,8 @@ public class CourseController {
 
     // Conversation
 
-    @GetMapping("/course/conversation")
-    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@RequestParam("course_id") int course_id, @RequestParam("current_page") Integer current_page) {
+    @GetMapping("/course/{course_id}/conversation")
+    public ResponseEntity<PageDTO<List<ConversationDTO>>> getConversation(@PathVariable("course_id") int course_id, @RequestParam(value = "current_page", required = false) Integer current_page) {
         if(current_page==null){
             current_page=0;
         }
@@ -184,5 +180,10 @@ public class CourseController {
     @PostMapping("/course/conversation")
     public void addNewConversation(@RequestBody ConversationDTO conversationDTO){
         conversationService.create(conversationDTO);
+    }
+
+    @GetMapping("/student/course/preview/{cid}")
+    public ResponseEntity<CourseListDTO> getCoursePreview(@PathVariable("cid") int cid) throws NotFoundException {
+        return ResponseEntity.ok(courseService.getCoursePreview(cid));
     }
 }

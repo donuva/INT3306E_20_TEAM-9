@@ -25,13 +25,11 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepo userRepo;
 
-
     public UserDTO convert(User user) {
         return new ModelMapper().map(user, UserDTO.class);
     }
 
-
-//    TODO CRUD admin, them ma hoa password
+    // TODO CRUD admin, them ma hoa password
 
     @Transactional
     public void createAdmin(UserDTO userDTO) {
@@ -42,9 +40,9 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void deleteAdmin(int id) throws NotFoundException {
-        if(userRepo.findById(id).isPresent()) {
+        if (userRepo.findById(id).isPresent()) {
             userRepo.deleteById(id);
-        }else{
+        } else {
             throw new NotFoundException("User Id không hợp lệ");
         }
     }
@@ -61,18 +59,17 @@ public class UserService implements UserDetailsService {
         }
     }
 
-
     public UserDTO findByUsername(String username) {
         return convert(userRepo.findByUsername(username));
     }
 
     public UserDTO updateAdmin(UserDTO userDTO) throws NotFoundException {
         User user = userRepo.findById(userDTO.getId()).orElse(null);
-        if(user!=null){
+        if (user != null) {
             userDTO.setPassword(user.getPassword());
             userRepo.save(new ModelMapper().map(userDTO, User.class));
             return userDTO;
-        }else{
+        } else {
             throw new NotFoundException("Không tìm thấy Id người dùng");
         }
     }
@@ -93,7 +90,16 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(username, userEntity.getPassword(), authorities);
     }
 
-
-    //TODO quen mat khau
+    public UserDTO updateUser(UserDTO userDTO) throws NotFoundException {
+        User user = userRepo.findById(userDTO.getId()).orElse(null);
+        if (user != null) {
+            userDTO.setPassword(user.getPassword());
+            userDTO.setRole(user.getRole());
+            userRepo.save(new ModelMapper().map(userDTO, User.class));
+            return userDTO;
+        } else {
+            throw new NotFoundException("Không tìm thấy Id người dùng");
+        }
+    }
 
 }

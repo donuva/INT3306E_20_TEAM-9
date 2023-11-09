@@ -113,6 +113,27 @@ public class UserController {
                 .body(userService.updateAdmin(userDTO));
     }
 
+    @PutMapping("/user/update")
+    public ResponseEntity<UserDTO> updateUser(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
+        if(file != null){
+            String filename = file.getOriginalFilename();
+            assert filename != null;
+            String extension = filename.substring(filename.lastIndexOf("."));
+            String newFilename ="avatar" + UUID.randomUUID() + extension;
+
+            File saveFile = new File(Upload_Folder + newFilename);
+
+            file.transferTo(saveFile);
+            userDTO.setAva_url(newFilename); //luu file xuong db
+        }else{
+            userDTO.setAva_url(null);
+        }
+
+        return ResponseEntity.ok()
+                .body(userService.updateUser(userDTO));
+    }
+
+
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/admin/delete/{id}")
     public void deleteAdminAccount(@PathVariable("id") int id) throws NotFoundException {

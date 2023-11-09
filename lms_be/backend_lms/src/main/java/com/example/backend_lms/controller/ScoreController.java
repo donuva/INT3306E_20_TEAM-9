@@ -32,7 +32,7 @@ public class ScoreController {
 
     //hiển thị bang điểm theo course cho giáo viên
     @GetMapping("/teacher/getCourseScore/{id}")
-    public ResponseEntity<List<CourseScoreDTO>> getScoreByCourse(@RequestParam("id") int course_id) throws NotFoundException {
+    public ResponseEntity<List<CourseScoreDTO>> getScoreByCourse(@PathVariable("id") int course_id) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getScoreByCourse(course_id));
     }
 
@@ -52,6 +52,7 @@ public class ScoreController {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
+        System.out.println(studentDTO.getId());
         return ResponseEntity.ok(scoreService.getCourseScoreByStudentAndCourse(course_id, studentDTO.getId()));
     }
 

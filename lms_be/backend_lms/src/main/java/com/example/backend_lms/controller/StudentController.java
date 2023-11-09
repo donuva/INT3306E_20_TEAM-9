@@ -50,12 +50,12 @@ public class StudentController {
             studentDTO.getUser().setAva_url(newFilename); //luu file xuong db
         }
         else{
-            studentDTO.getUser().setAva_url(null);
+            studentDTO.getUser().setAva_url("default_ava.png");
         }
         studentService.create(studentDTO);
     }
 
-    @PutMapping("student/update")
+    @PutMapping("/student/update")
     public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
         if (file != null) {

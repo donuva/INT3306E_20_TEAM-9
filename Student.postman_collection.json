@@ -28,19 +28,20 @@
 											"type": "text"
 										},
 										{
-											"key": "file",
-											"type": "file",
-											"src": []
-										},
-										{
 											"key": "exercise.id",
-											"value": "",
+											"value": "1",
 											"type": "text"
 										},
 										{
 											"key": "student.id",
-											"value": "",
+											"value": "1",
 											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": [],
+											"disabled": true
 										}
 									]
 								},
@@ -272,83 +273,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Edit student",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "id",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "user.id",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "user.name",
-							"value": "Huy",
-							"type": "text"
-						},
-						{
-							"key": "user.bio",
-							"value": "Đẹp trai học giỏi",
-							"type": "text"
-						},
-						{
-							"key": "user.birthdate",
-							"value": "03/08/2003",
-							"type": "text"
-						},
-						{
-							"key": "user.username",
-							"value": "huy123",
-							"type": "text"
-						},
-						{
-							"key": "user.password",
-							"value": "12345",
-							"type": "text"
-						},
-						{
-							"key": "user.emaill",
-							"value": "huy@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "user.phone",
-							"value": "0123456789",
-							"type": "text"
-						},
-						{
-							"key": "user.file",
-							"type": "file",
-							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:8080/lms/student/update",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"lms",
-						"student",
-						"update"
-					]
-				},
-				"description": "cần gọi GET lấy ra thông tin sau đó thực hiện sửa và truyền xuống, phần không thay đổi cũng phải truyền (trừ avatar có thể không truyền)\n\nPhần đổi mật khẩu không làm ở đây, role cũng không cần truyền, tự set"
-			},
-			"response": []
 		}
 	]
 }

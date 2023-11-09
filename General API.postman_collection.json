@@ -94,7 +94,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/lms/course/conversation?course_id=1&current_page=0",
+							"raw": "http://localhost:8080/lms/course/1/conversation?current_page=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -103,13 +103,10 @@
 							"path": [
 								"lms",
 								"course",
+								"1",
 								"conversation"
 							],
 							"query": [
-								{
-									"key": "course_id",
-									"value": "1"
-								},
 								{
 									"key": "current_page",
 									"value": "0"
@@ -145,6 +142,16 @@
 				{
 					"name": "Add new conversation",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJodXkxMjM0IiwiaWF0IjoxNjk4OTk0MjI1LCJleHAiOjE2OTg5OTQ4MjV9.IMCqOkZ_-NlCi4TMXzf4OkGg5OEUHCoMVSe0GZFWQ-I",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -157,7 +164,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/lms/course/conversation/1",
+							"raw": "http://localhost:8080/lms/course/conversation",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -166,8 +173,7 @@
 							"path": [
 								"lms",
 								"course",
-								"conversation",
-								"1"
+								"conversation"
 							]
 						},
 						"description": "Cần truyền vào đủ cả user và course, đó chính là id của người dùng viết và id của course, cái này người dùng ko tự điền, fe xử lý tự thêm vào "
@@ -274,9 +280,10 @@
 							"type": "text"
 						},
 						{
-							"key": "user.file",
+							"key": "file",
 							"type": "file",
-							"src": []
+							"src": [],
+							"disabled": true
 						}
 					]
 				},
@@ -341,9 +348,10 @@
 							"type": "text"
 						},
 						{
-							"key": "user.file",
+							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/huyng/OneDrive/Hình ảnh/Camera Roll/WIN_20220403_21_51_02_Pro.jpg"
+							"src": [],
+							"disabled": true
 						}
 					]
 				},
@@ -478,6 +486,156 @@
 					]
 				},
 				"description": "cần đăng nhập chưa test được"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJodXkxMjM0IiwiaWF0IjoxNjk4OTM5NDk2LCJleHAiOjE2OTg5NDAwOTZ9.hEgf0FoJlLOA-9FLVqtDbXD3c6bB2g9ISCN--Ngfx4M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lms/course/search?current_page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"course",
+						"search"
+					],
+					"query": [
+						{
+							"key": "current_page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJodXkxMjM0IiwiaWF0IjoxNjk4NzQ0MzIzLCJleHAiOjE2OTg3NDQ5MjN9.dYPW1dK4pIflsPbOu1sgKOHlxlpjbZ9IUfP8f1uKdFA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Huy",
+							"type": "text"
+						},
+						{
+							"key": "bio",
+							"value": "Đẹp trai học giỏiasfasdf",
+							"type": "text"
+						},
+						{
+							"key": "birthdate",
+							"value": "03/08/2003",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "huy1234",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "huy@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "012345678910",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/user/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"user",
+						"update"
+					]
+				},
+				"description": "cần gọi GET lấy ra thông tin sau đó thực hiện sửa và truyền xuống, phần không thay đổi cũng phải truyền (trừ avatar có thể không truyền)\n\nPhần đổi mật khẩu không làm ở đây, role cũng không cần truyền, tự set"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "huy1234",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/lms/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lms",
+						"login"
+					]
+				}
 			},
 			"response": []
 		}
