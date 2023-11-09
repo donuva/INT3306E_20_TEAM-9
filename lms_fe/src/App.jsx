@@ -16,7 +16,7 @@ import AddLesson from './Components/AddLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
-import AddExercise from './Components/addExercise';
+import AddExercise from './Components/AddExercise';
 import CourseDetail from './Components/CourseDetail';
 import CourseEnroll from './Components/CourseEnroll';
 import AddNoti from './Components/AddNoti';
@@ -158,7 +158,7 @@ function App() {
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/addLesson" element={<AddLesson checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
-            <Route path="/sign-up" element={<Signup/>} />
+            <Route path="/sign-up" element={<Signup />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path='/app/profile' element={<Profile setLoggedIn={setLoggedIn} checkTokenExpiration={checkTokenExpiration} />} />
 
