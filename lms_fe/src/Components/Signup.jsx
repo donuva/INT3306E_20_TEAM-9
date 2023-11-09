@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Input, Button, DatePicker, message, Card } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, DatePicker, message, Card,Radio } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,16 @@ import { useNavigate } from 'react-router-dom';
 const RegistrationForm = ({ type }) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [userType, setUserType] = useState('student');
+  const onUserTypeChange = (e) => {
+    setUserType(e.target.value);
+  };
+
+  const handleImageUpload = (e) => {
+    const imageFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    };
   const formatDate = (date) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
@@ -28,14 +38,8 @@ const RegistrationForm = ({ type }) => {
     console.log(formData)
     // Gửi yêu cầu API tại đây
     // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
-    const url = type === 'student' ? 'http://localhost:8080/lms/create/student' : 'http://localhost:8080/lms/create/teacher';
+    const url = userType === 'student' ? 'http://localhost:8080/lms/create/student' : 'http://localhost:8080/lms/create/teacher';
     axios.post(url, formData)
-      // .then((response) => {
-      //   if (!response.ok) {
-      //     throw new Error('Network response was not ok');
-      //   }
-      //   return response.json();
-      // })
       .then(() => {
         console.log('Registration successful:');
         message.success('Registration successful');
@@ -48,7 +52,7 @@ const RegistrationForm = ({ type }) => {
   };
 
   return (
-    <Card title={`${type === 'student' ? 'Register Student' : 'Register Teacher'}`} style={{ width: 400, margin: 'auto', marginTop: 50 }}>
+    <Card title={`Register`} style={{ width: 400, margin: 'auto', marginTop: 50 }}>
       <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
         <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please input your name!' }]}>
           <Input placeholder="Enter your name" />
@@ -71,9 +75,18 @@ const RegistrationForm = ({ type }) => {
         <Form.Item name="phone" label="Phone" rules={[{ required: true, message: 'Please input your phone number!' }]}>
           <Input placeholder="Enter your phone number" />
         </Form.Item>
-        <Form.Item>
+        <Form.Item name="userType" label="User Type">
+        <Radio.Group onChange={onUserTypeChange} value={userType} defaultValue={userType}>
+          <Radio value="student">Student</Radio>
+          <Radio value="teacher">Teacher</Radio>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item name="image" label="Image Link">
+          <Input type="file" onChange={handleImageUpload} />
+        </Form.Item>
+      <Form.Item>
           <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-            {type === 'student' ? 'Register Student' : 'Register Teacher'}
+            Register
           </Button>
         </Form.Item>
       </Form>
