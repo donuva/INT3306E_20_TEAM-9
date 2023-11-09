@@ -48,7 +48,7 @@ public class TeacherController {
             file.transferTo(saveFile);
             teacherDTO.getUser().setAva_url(newFilename); //luu file xuong db
         }else{
-            teacherDTO.getUser().setAva_url(null);
+            teacherDTO.getUser().setAva_url("default_ava.png");
         }
         teacherDTO.getUser().setRole("TEACHER");
         teacherService.create(teacherDTO);
