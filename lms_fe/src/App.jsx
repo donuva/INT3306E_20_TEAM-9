@@ -23,6 +23,7 @@ import AddNoti from './Components/AddNoti';
 import Course from './Components/Course';
 import AllNotification from './Components/AllNotification';
 import CreateCourse from './Components/CreateCourse';
+import CoursePreview from './Components/CoursePreview';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -140,6 +141,8 @@ function App() {
             <Route path="/app/courses" element={<Course checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* lấy ra course detail theo id */}
             <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+
+            <Route path='/app/courses/preview/:cid' element={<CoursePreview checkTokenExpiration={checkTokenExpiration} />} />
             {/*Lấy ra tất cả course  */}
             <Route path="/app/allCourse" element={<AllCourse checkTokenExpiration={checkTokenExpiration} />} />
             {/* Form tạo course mới */}

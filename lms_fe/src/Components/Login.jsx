@@ -95,14 +95,16 @@ const Login = ({ setLoggedIn }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 height: "80vh",
-                background: "url('https://png.pngtree.com/thumb_back/fh260/background/20191106/pngtree-back-to-school-rectangular-blackboard-education-book-pen-holder-image_321417.jpg')",
-                backgroundSize: "cover",
+
+                background: "url('https://static.vecteezy.com/system/resources/previews/000/568/517/original/vector-cartoon-illustration-of-school-classroom.jpg')",
+                backgroundSize: '100% 100%'
+
             }}
         >
             <div
                 style={{
                     height: "50%",
-                    width: "40%",
+                    width: "20%",
                     padding: "20px",
                     borderRadius: "8px",
                     boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
@@ -158,7 +160,7 @@ const Login = ({ setLoggedIn }) => {
                     )}
                 </Form>
             </div>
-        </div>
+        </div >
     );
 };
 

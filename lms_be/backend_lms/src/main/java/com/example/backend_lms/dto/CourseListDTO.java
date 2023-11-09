@@ -11,6 +11,8 @@ public class CourseListDTO {
 
     private String description;
 
+    private String category;
+
     @JsonIncludeProperties({"user","id"})
     private TeacherDTO teacher;
 }
