@@ -96,7 +96,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
             <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<DashboardOutlined />}>
-            <Link to="/app/course/studentGrade">Grade</Link>
+            <Link to={`/app/courses/${cid}/teacherGrade`}>Grade</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<CommentOutlined />}>
             <Link to={`/app/courses/${cid}/forum`}>Forum</Link>

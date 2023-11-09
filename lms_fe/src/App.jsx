@@ -12,7 +12,7 @@ import Login from './Components/Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import AddLesson from './Components/addLesson';
+import AddLesson from './Components/AddLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
@@ -145,10 +145,14 @@ function App() {
             {/* Form tạo course mới */}
             <Route path="/app/create-course" element={<CreateCourse checkTokenExpiration={checkTokenExpiration} />} />
 
-            <Route path="/app/studentGrade" element={<StudentGrade />} />
-            <Route path="/app/teacherGrade" element={<TeacherGrade />} />
+            <Route path="/app/courses/:cid/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} />} />
+            {/* <Route path="/app/teacherGrade" element={<TeacherGrade />} /> */}
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/addLesson/:cid" element={<AddLesson checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+            {/* <Route path="/app/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} />} /> */}
+            <Route path="/app/courses/:cid/teacherGrade" element={<TeacherGrade checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/addLesson" element={<AddLesson checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path='/app/profile' element={<Profile setLoggedIn={setLoggedIn} checkTokenExpiration={checkTokenExpiration} />} />
