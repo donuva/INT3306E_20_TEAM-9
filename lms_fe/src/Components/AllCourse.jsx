@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
+import { Card } from 'antd';
 
 
 export default function AllCourse({ checkTokenExpiration }) {
@@ -72,8 +73,8 @@ export default function AllCourse({ checkTokenExpiration }) {
   }
 
   return (
-    <div>
-      <h1>All Courses</h1>
+    <div style={{ marginTop: '30px' }}>
+      <h1 style={{ marginTop: '30px', marginBottom: '30px' }}>All Courses</h1>
       <input
         type="text"
         placeholder="Search..."
@@ -85,13 +86,17 @@ export default function AllCourse({ checkTokenExpiration }) {
 
       <div className="course-grid">
         {courses.map((course) => (
+
           <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
-            <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px' }} />
-            <div style={{ marginTop: '10px' }}>
-              <h5>{course.name}</h5>
-              <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
-            </div>
+            <Card>
+              <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit' }} />
+              <div style={{ marginTop: '10px' }}>
+                <h5>{course.name}</h5>
+                <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
+              </div>
+            </Card>
           </Link>
+
         ))}
       </div>
 

@@ -12,7 +12,7 @@ import Login from './Components/Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import AddLesson from './Components/addLesson';
+import AddLesson from './Components/AddLesson';
 import ExerciseDetail from './Components/ExerciseDetail';
 import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
@@ -24,6 +24,7 @@ import Course from './Components/Course';
 import AllNotification from './Components/AllNotification';
 import CreateCourse from './Components/CreateCourse';
 import Signup from './Components/Signup';
+import CoursePreview from './Components/CoursePreview';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -141,15 +142,21 @@ function App() {
             <Route path="/app/courses" element={<Course checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* lấy ra course detail theo id */}
             <Route path="/app/courses/:cid" element={<CourseDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+
+            <Route path='/app/courses/preview/:cid' element={<CoursePreview checkTokenExpiration={checkTokenExpiration} />} />
             {/*Lấy ra tất cả course  */}
             <Route path="/app/allCourse" element={<AllCourse checkTokenExpiration={checkTokenExpiration} />} />
             {/* Form tạo course mới */}
             <Route path="/app/create-course" element={<CreateCourse checkTokenExpiration={checkTokenExpiration} />} />
 
-            <Route path="/app/studentGrade" element={<StudentGrade />} />
-            <Route path="/app/teacherGrade" element={<TeacherGrade />} />
+            <Route path="/app/courses/:cid/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} />} />
+            {/* <Route path="/app/teacherGrade" element={<TeacherGrade />} /> */}
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/addLesson/:cid" element={<AddLesson checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+            {/* <Route path="/app/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} />} /> */}
+            <Route path="/app/courses/:cid/teacherGrade" element={<TeacherGrade checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/addLesson" element={<AddLesson checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />
             <Route path="/sign-up" element={<Signup/>} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
@@ -163,7 +170,7 @@ function App() {
             <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
             <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
-            <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
           </Routes>
           <Footer />

@@ -65,6 +65,9 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
       setLessonList(response.data.lessonList);
       setTeacher(response.data.teacher.user);
     }).catch((error) => {
+      if (error.response.status === 402) {
+        navigate(`/app/courses/preview/${cid}`)
+      }
       console.log(error);
     });
   }, []);
@@ -74,7 +77,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '1000px' }}>
+    <div style={{ display: 'flex', minHeight: '1000px' }}>
       <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
 
         <Menu
@@ -96,7 +99,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
             <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<DashboardOutlined />}>
-            <Link to="/app/course/studentGrade">Grade</Link>
+            <Link to={`/app/courses/${cid}/teacherGrade`}>Grade</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<CommentOutlined />}>
             <Link to={`/app/courses/${cid}/forum`}>Forum</Link>

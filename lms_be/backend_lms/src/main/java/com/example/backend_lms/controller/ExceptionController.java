@@ -26,7 +26,7 @@ public class ExceptionController{
 
     @ExceptionHandler({NotAllowedException.class})
     public ResponseEntity<Object> notAllow(NotAllowedException e){
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.PAYMENT_REQUIRED);  //402
     }
 
     @ExceptionHandler({AuthenticationException.class})

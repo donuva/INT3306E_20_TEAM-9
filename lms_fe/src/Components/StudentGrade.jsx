@@ -1,94 +1,88 @@
 import { Table, Tag, Space } from 'antd';
 //import { BarChart, GridlineSeries, Gridline } from 'reaviz';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const StudentGrade = () => {
-  const data = {
-    grades: [
-      { id: 1, typ: 'Assignment', title: 'Assignment 1', score: 80, maxScore: 100, weight: 0.3, gradedAt: '2023-09-15T10:30:00' },
-      { id: 2, typ: 'Exam', title: 'Midterm Exam', score: 75, maxScore: 100, weight: 0.5, gradedAt: '2023-09-10T14:00:00' },
-      { id: 3, typ: 'Assignment', title: 'Assignment 2', score: 90, maxScore: 100, weight: 0.3, gradedAt: '2023-09-20T09:45:00' },
-      { id: 4, typ: 'Exam', title: 'Final Exam', score: 85, maxScore: 100, weight: 0.5, gradedAt: '2023-09-25T10:00:00' }
-    ],
-    assignmentsScore: 170,
-    examsScore: 160,
-    totalScore: 330,
-    grade: 'A'
-  };
+const StudentGrade = (checkTokenExpiration) => {
+  const [data,setData] = useState([]);
+  const navigate = useNavigate();
+  const [gpa,SetGpa] = useState([{gpa: 0}]);
+  const { cid } = useParams();
+  useEffect(() => {
+    if (!checkTokenExpiration) {
+      alert('You need to re-login');
+      navigate('/login');
+    }
+    axios
+      .get(`http://localhost:8080/lms/student/getCourseScore/${cid}`, { // vẫn static
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        }
+      })
+      .then((response) => {
+
+        setData(response.data.scoreExerciseDTOS); // Lưu trữ dữ liệu lấy từ API vào state
+        SetGpa([{gpa : response.data.gpa}])
+        console.log('đây là data')
+        console.log(data);
+        console.log(gpa)
+
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  });
 
   const columns = [
     {
       title: 'Type',
-      dataIndex: 'typ',
-      key: 'type',
-      
+      dataIndex: 'msg',
+      key: 'msg',
+      // render: (text) => <span>{text.id}</span>
     },
     {
-      title: 'Name',
-      dataIndex: 'title',
-      key: 'name'
-    },
-    {
-      title: 'Score',
-      dataIndex: 'score',
-      key: 'score',
-      sorter: {
-        compare: (a, b) => a.score - b.score
-      }
-    },
-    {
-      title: 'Max Score',
-      dataIndex: 'maxScore',
-      key: 'maxScore',
-      sorter: {
-        compare: (a, b) => a.maxScore - b.maxScore
-      }
-    },
-    
-    {
-      title: 'Graded At',
-      key: 'gradedAt',
-      sorter: {
-        compare: (a, b) => new Date(a.gradedAt) - new Date(b.gradedAt)
-      },
-      render: (text, record) => (
-        <Space size="middle">
-          {new Date(record.gradedAt).toLocaleString()}
-        </Space>
-      )
+      title: 'grades',
+      dataIndex: 'grade',
+      key: 'grade',
+      // render: (text) => <span>{text.grade}</span>
     }
+    
   ];
 
   const fCol = [
     {
-      title: 'Assignments',
-      dataIndex: 'assignmentsScore',
-      key: 'assignmentsScore'
-    },
-    {
-      title: 'Exams',
-      dataIndex: 'examsScore',
-      key: 'examsScore'
-    },
-    {
-      title: 'Total Score',
-      dataIndex: 'totalScore',
-      key: 'totalScore'
-    },
-    {
-      title: 'Grade',
-      dataIndex: 'grade',
-      key: 'grade'
+      title: 'GPA',
+      dataIndex: 'gpa',
+      key: 'gpa',
+      align: "center"
     }
   ];
+  //   {
+  //     title: 'Exams',
+  //     dataIndex: 'examsScore',
+  //     key: 'examsScore'
+  //   },
+  //   {
+  //     title: 'Total Score',
+  //     dataIndex: 'totalScore',
+  //     key: 'totalScore'
+  //   },
+  //   {
+  //     title: 'Grade',
+  //     dataIndex: 'grade',
+  //     key: 'grade'
+  //   }
+  // ];
 
   return (
     <div style={{marginTop:'20px',marginBottom:'20px' }} >
-      <Table
+      <Table 
         rowKey={(record) => record?.id}
         columns={columns}
-        dataSource={data?.grades}
+        dataSource={data}
         bordered
+        
         title={() => {
           return 'The Student GradeBook';
         }}
@@ -97,8 +91,9 @@ const StudentGrade = () => {
             <Table
               rowKey={() => 'summary'}
               columns={fCol}
-              dataSource={[data]}
+              dataSource={gpa}
               bordered
+              
               title={() => 'The course summary'}
               pagination={false}
             />
