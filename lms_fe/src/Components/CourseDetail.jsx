@@ -17,6 +17,7 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 
 const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
@@ -37,7 +38,6 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const [course, setCourse] = useState({});
   const [exerciseList, setExerciseList] = useState([]);
   const [lessonList, setLessonList] = useState([]);
-  const [collapsed, setCollapsed] = useState(true);
   const [teacher, setTeacher] = useState({});
 
   useEffect(() => {
@@ -72,50 +72,12 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     });
   }, []);
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
+
 
   return (
     <div style={{ display: 'flex', minHeight: '1000px' }}>
-      <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
+      <Sidebar cid={cid} isTeacher={isTeacher} selected={'0'}></Sidebar>
 
-        <Menu
-
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          selectedKeys={['0']}
-        >
-          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
-            {collapsed ? <RightOutlined /> : <LeftOutlined />}
-          </Button>
-          <Menu.Item key="0" icon={<AppstoreOutlined />}>
-            <Link to={`/app/courses/${cid}`}>
-              Course
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="1" icon={<NotificationOutlined />}>
-            <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DashboardOutlined />}>
-            <Link to={`/app/courses/${cid}/teacherGrade`}>Grade</Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<CommentOutlined />}>
-            <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
-          </Menu.Item>
-          {isTeacher === true &&
-            <Menu.Item key="4" icon={<ExperimentOutlined />}>
-              <Link to={`/app/addExercise/${cid}`}>New Exercise</Link>
-            </Menu.Item>
-          }
-          {isTeacher === true &&
-            <Menu.Item key="5" icon={<FileTextOutlined />}>
-              <Link to={`/app/addLesson/${cid}`}>New Lesson</Link>
-            </Menu.Item>
-          }
-        </Menu>
-      </div>
 
       <div style={{ flex: 1, marginTop: '30px' }}>
         <h1>{course.name}</h1>

@@ -21,7 +21,7 @@ import java.security.Principal;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 
 public class UserController {
     @Autowired
@@ -131,6 +131,11 @@ public class UserController {
 
         return ResponseEntity.ok()
                 .body(userService.updateUser(userDTO));
+    }
+
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<UserDTO> findUser(@PathVariable("id")int id) throws NotFoundException {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
 

@@ -18,13 +18,13 @@ import WorkList from './Components/WorkList';
 import AllCourse from './Components/AllCourse';
 import AddExercise from './Components/AddExercise';
 import CourseDetail from './Components/CourseDetail';
-import CourseEnroll from './Components/CourseEnroll';
 import AddNoti from './Components/AddNoti';
 import Course from './Components/Course';
 import AllNotification from './Components/AllNotification';
 import CreateCourse from './Components/CreateCourse';
 import Signup from './Components/Signup';
 import CoursePreview from './Components/CoursePreview';
+import RequestList from './Components/RequestList';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -169,9 +169,9 @@ function App() {
             {/* Hien ra danh sach bai lam cua 1 exercise cho teacher */}
             <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
-            <Route path='/app/courses/:cid/enroll' element={<CourseEnroll checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+            <Route path='/app/courses/:cid/enroll-request' element={<RequestList checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher}></RequestList>} />
           </Routes>
           <Footer />
         </AppProvider>

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Form, Input, Button, message } from 'antd';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
@@ -29,7 +29,7 @@ function CreateCourse({ checkTokenExpiration }) {
     name: '',
     category: '',
     description: '',
-    teacher : { id: JSON.parse(localStorage.getItem('teacher_id')) }
+    teacher: { id: JSON.parse(localStorage.getItem('teacher_id')) }
   });
 
   const handleInputChange = (e) => {
@@ -57,7 +57,8 @@ function CreateCourse({ checkTokenExpiration }) {
   };
 
   return (
-    <div className="container" style={{ marginTop: '20px', marginBottom: '20px' }}>
+
+    <div className="container" style={{ marginTop: '20px', marginBottom: '20px', maxWidth: '40vw' }}>
       <Card title="Create a New Course" hoverable>
         <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item label="Course Name" name="name" rules={[{ required: true, message: 'Please input the course name!' }]}>

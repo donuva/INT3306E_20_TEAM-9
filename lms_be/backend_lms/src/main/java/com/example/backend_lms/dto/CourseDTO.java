@@ -28,7 +28,7 @@ public class CourseDTO {
     @JsonIncludeProperties({"id","title"})
     private List<ExerciseDTO> exerciseList;
 
-    @JsonIgnore
+    @JsonIncludeProperties({"user","id"})
     private List<StudentDTO> studentList;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")

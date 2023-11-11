@@ -1,9 +1,6 @@
 package com.example.backend_lms.service;
 
-import com.example.backend_lms.dto.CourseDTO;
-import com.example.backend_lms.dto.CourseEnrollDTO;
-import com.example.backend_lms.dto.CourseListDTO;
-import com.example.backend_lms.dto.PageDTO;
+import com.example.backend_lms.dto.*;
 import com.example.backend_lms.entity.Course;
 import com.example.backend_lms.entity.CourseEnroll;
 import com.example.backend_lms.entity.Student;
@@ -86,6 +83,11 @@ public class CourseService {
         } else {
             throw new NotFoundException("Không tìm thấy khóa học");
         }
+    }
+
+    public List<StudentDTO> getListStudent(int course_id){
+        CourseDTO courseDTO = convert(courseRepo.findById(course_id).orElse(null));
+        return courseDTO.getStudentList();
     }
 
     @Transactional

@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
   const navigate = useNavigate();
@@ -85,44 +86,8 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
 
   return (
     <div style={{ display: 'flex', minHeight: '1000px' }}>
-      <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
+      <Sidebar cid={cid} isTeacher={isTeacher} selected={'5'}></Sidebar>
 
-        <Menu
-
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          defaultSelectedKeys={['5']}
-        >
-          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
-            {collapsed ? <RightOutlined /> : <LeftOutlined />}
-          </Button>
-          <Menu.Item key="0" icon={<AppstoreOutlined />}>
-            <Link to={`/app/courses/${cid}`}>
-              Course
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="1" icon={<NotificationOutlined />}>
-            <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DashboardOutlined />}>
-            <Link to="/app/course/studentGrade">Grade</Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<CommentOutlined />}>
-            <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
-          </Menu.Item>
-          {isTeacher === true &&
-            <Menu.Item key="4" icon={<ExperimentOutlined />}>
-              <Link to={`/app/addExercise/${cid}`}>New Exercise</Link>
-            </Menu.Item>
-          }
-          {isTeacher === true &&
-            <Menu.Item key="5" icon={<FileTextOutlined />}>
-              <Link to={`/app/addLesson/${cid}`}>New Lesson</Link>
-            </Menu.Item>
-          }
-        </Menu>
-      </div>
       <div style={{ flex: '1', marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '40%' }}>
         <Card title="Add Lesson" style={{ width: 500, boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
           <Form

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 
 public class LessonController {
 

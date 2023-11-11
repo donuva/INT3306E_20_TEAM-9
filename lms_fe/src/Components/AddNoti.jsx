@@ -22,10 +22,10 @@ import {
   ExperimentOutlined,
   DashboardOutlined,
 } from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
+import Sidebar from './Sidebar';
 const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
   const { cid } = useParams();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(true);
   useEffect(() => {
     if (!checkTokenExpiration()) {
       alert('You need to re-login');
@@ -34,9 +34,7 @@ const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
   })
 
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
+
   const onFinish = async (values) => {
     try {
       const formData = new FormData();
@@ -69,44 +67,8 @@ const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
   console.log(cid);
   return (
     <div style={{ display: 'flex', minHeight: '1000px' }}>
-      <div className='sidenav' style={{ width: collapsed ? 80 : 256, backgroundColor: '#001529' }}>
+      <Sidebar cid={cid} isTeacher={isTeacher} selected={'1'}></Sidebar>
 
-        <Menu
-
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          defaultSelectedKeys={['1']}
-        >
-          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
-            {collapsed ? <RightOutlined /> : <LeftOutlined />}
-          </Button>
-          <Menu.Item key="0" icon={<AppstoreOutlined />}>
-            <Link to={`/app/courses/${cid}`}>
-              Course
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="1" icon={<NotificationOutlined />}>
-            <Link to={`/app/courses/${cid}/notifications`}>Notifications</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DashboardOutlined />}>
-            <Link to="/app/course/studentGrade">Grade</Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<CommentOutlined />}>
-            <Link to={`/app/courses/${cid}/forum`}>Forum</Link>
-          </Menu.Item>
-          {isTeacher === true &&
-            <Menu.Item key="4" icon={<ExperimentOutlined />}>
-              <Link to={`/app/addExercise/${cid}`}>New Exercise</Link>
-            </Menu.Item>
-          }
-          {isTeacher === true &&
-            <Menu.Item key="5" icon={<FileTextOutlined />}>
-              <Link to={`/app/addLesson/${cid}`}>New Lesson</Link>
-            </Menu.Item>
-          }
-        </Menu>
-      </div>
       <div style={{ marginTop: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '40%', flex: '1' }}>
         <Card title="Add Notification" style={{ width: 500, boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
           <Form

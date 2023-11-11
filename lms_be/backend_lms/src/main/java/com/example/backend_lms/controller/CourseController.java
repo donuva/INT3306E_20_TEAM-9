@@ -12,7 +12,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class CourseController {
     @Autowired
     CourseService courseService;
@@ -105,6 +105,10 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCoursePageByTeacher(teacherDTO.getId(), current_page));
     }
 
+    @GetMapping("/teacher/courses/{cid}/students")
+    public ResponseEntity<List<StudentDTO>> getListStudent(@PathVariable("cid") Integer course_id){
+        return ResponseEntity.ok(courseService.getListStudent(course_id));
+    }
     @GetMapping("/student/getSuggestCourse")
     public ResponseEntity<List<CourseListDTO>> getSuggest(Principal p) throws NotFoundException {
 
