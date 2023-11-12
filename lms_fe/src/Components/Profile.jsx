@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Avatar from 'antd/lib/avatar/avatar';
 import Meta from 'antd/lib/card/Meta';
-import { Form, Input, Card, Button } from 'antd';
+import { Form, Input, Card, Button,Table } from 'antd';
 import "../CSS/Profile.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router';
+
 
 export default function Profile({setLoggedIn, checkTokenExpiration }) {
   const navigate = useNavigate();
@@ -50,111 +51,80 @@ export default function Profile({setLoggedIn, checkTokenExpiration }) {
       [name]: value,
     });
   };
-  const handleSaveChanges = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('user.id', userData.id);
-      formData.append('user.name', formValues.name || userData.name);
-      formData.append('user.birthdate', formValues.birthdate || userData.birthdate);
-      formData.append('user.username', formValues.username || userData.username);
-      formData.append('ava_url', "")
-      formData.append('user.bio', formValues.bio || userData.bio);
-      formData.append('user.email', formValues.email || userData.email);
-      formData.append('user.phone', formValues.phone || userData.phone);
-
-      const config = {
-        method: 'put',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:8080/lms/user/update',
-        headers: {
-          // ...formData.getHeaders(),
-          'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-        },
-        data: formData,
-      };
-
-      const response = await axios.request(config);
-      // Cập nhật lại state sau khi lưu thành công
-      setUserData(response.data);
-      console.log(response.data)
-    } catch (error) {
-      console.log(userData.id)
-      console.log(error);
-    }
-  };
+  
+  const columns = [
+    {
+      title: 'Field',
+      dataIndex: 'field',
+      key: 'field',
+      width: 150,
+      render: text => <strong>{text}</strong>,
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      key: 'value',
+    },
+  ];
+  
+  const data = [
+    {
+      key: '1',
+      field: 'Name',
+      value: formValues.name || userData.name,
+    },
+    {
+      key: '2',
+      field: 'User Name',
+      value: formValues.username || userData.username,
+    },
+    {
+      key: '3',
+      field: 'Email',
+      value: formValues.email || userData.email,
+    },
+    {
+      key: '4',
+      field: 'Mobile',
+      value: formValues.phone || userData.phone,
+    },
+    {
+      key: '5',
+      field: 'Photo',
+      value: <Button type="primary">Upload!</Button>,
+    },
+  ];
+  
   return (
     <div className="container">
-      <div className="card">
-        <div className="card-body">
-          <div className="avatar">
-            <Meta avatar={<Avatar size="large" />} title={userData ? userData.name : "Loading..."} />
-          </div>
-          <h5 className="card-title">{'Role: ' + (userData ? userData.role : 'Loading...')}</h5>
-          <h5 className="card-text">{'@' + (userData ? userData.username : 'Loading...')}</h5>
-          <p className="card-text">
-            {userData ? userData.email : 'Loading...'}
-            <br />
-            <span className="phone">{userData ? userData.phone : 'Loading...'}</span>
-          </p>
+      <Card style={{ flex: 1, marginRight: '20px' }}>
+        <div className="avatar">
+          <Meta avatar={<Avatar size="large" />} title={userData ? userData.name : "Loading..."} />
         </div>
+        <h5 className="card-title">{'Role: ' + (userData ? userData.role : 'Loading...')}</h5>
+        <h5 className="card-text">{'@' + (userData ? userData.username : 'Loading...')}</h5>
+        <p className="card-text">
+          {userData ? userData.email : 'Loading...'}
+          <br />
+          <span className="phone">{userData ? userData.phone : 'Loading...'}</span>
+        </p>
         <span>{userData ? userData.bio : 'Loading...'}</span>
-      </div>
-      <Card className="Form">
-        <Form
-          size="middle"
-
-          colon={true}
-          labelAlign="left"
-          layout="vertical"
-        >
-          <Form.Item label="Name:">
-            <Input
-              allowClear={true}
-              className="input"
-              name="name"
-              value={formValues.name || userData.name}
-              // onChange={handleFormChange}
-            />
-          </Form.Item>
-          <Form.Item label="User Name:">
-            <Input
-              allowClear={true}
-              className="input"
-              name="username"
-              value={formValues.username || userData.username}
-              // onChange={handleFormChange}
-            />
-          </Form.Item>
-          <Form.Item label="Email:">
-            <Input
-              allowClear={true}
-              className="input"
-              name="email"
-              value={formValues.email || userData.email}
-              // onChange={handleFormChange}
-            />
-          </Form.Item>
-          <Form.Item label="Mobile:">
-            <Input
-              allowClear={true}
-              className="input"
-              name="phone"
-              value={formValues.phone || userData.phone}
-              // onChange={handleFormChange}
-            />
-          </Form.Item>
-
-          <Form.Item label="Photo:">
-            <button>Upload!</button>
-          </Form.Item>
-          <Button onClick={handleSaveChanges}>
-            Save Changes
-          </Button>
-          <Button onClick={() => handleLogout(navigate, setLoggedIn)}>
-            Sign Out
-          </Button>
-        </Form>
       </Card>
+      
+      <div className="table-container">
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          size="middle"
+          bordered
+          footer={() => (
+            <Button type="danger" className="sign-out-btn" onClick={() => handleLogout(navigate, setLoggedIn)}>
+              Sign Out
+            </Button>
+          )}
+        />
+      </div>
     </div>
   );
 };

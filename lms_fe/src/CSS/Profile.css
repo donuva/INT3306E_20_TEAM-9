@@ -1,18 +1,32 @@
-.Form {
-    position: relative;
-    float: right;
-    width: 70%;
-    align-content: flex-end;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.table-container {
+  flex: 1;
+  overflow-x: auto;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
   }
-  .input{
-    width: 70%;
+
+  .table-container {
+    width: 100%;
+    margin-top: 0;
   }
+}
+
   .card {
     padding: 30px;
     border: solid 1px rgba(0, 0, 0, 0.08);
     cursor: pointer;
     text-align: center;
-    background-image: url("https://w7.pngwing.com/pngs/569/779/png-transparent-chart-abstract-background-purple-texture-other.png");
+    background-image: url("https://img.freepik.com/free-photo/green-park-view_1417-1492.jpg");
     width: 24%;
     position: relative;
     float: left;
@@ -43,4 +57,16 @@
     float: right;
     color: brown
   }
-  
+
+.sign-out-btn {
+  background-color: #ff4d4f; 
+  color: #fff; 
+  border-color: #ff4d4f; 
+}
+
+.sign-out-btn:hover,
+.sign-out-btn:focus {
+  background-color: #d9363e; 
+  border-color: #d9363e; 
+}
+ 
