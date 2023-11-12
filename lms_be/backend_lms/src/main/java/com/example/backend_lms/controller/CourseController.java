@@ -126,15 +126,15 @@ public class CourseController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/teacher/removeStudent")
-    public void removeStudent(@RequestParam("student_id") int student_id, @RequestParam("course_id") int course_id)
+    @DeleteMapping("/teacher/courses/{cid}/removeStudent/{sid}")
+    public void removeStudent(@PathVariable("sid") int student_id, @PathVariable("cid") int course_id)
             throws NotFoundException {
         courseService.removeStudent(student_id, course_id);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/student/leave")
-    public void unEnroll(Principal p, @RequestParam("course_id") int course_id) throws NotFoundException {
+    @DeleteMapping("/student/leave/{cid}")
+    public void unEnroll(Principal p, @PathVariable("cid") int course_id) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());

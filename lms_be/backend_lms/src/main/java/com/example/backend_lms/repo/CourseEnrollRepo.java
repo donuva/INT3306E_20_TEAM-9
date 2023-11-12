@@ -12,6 +12,6 @@ public interface CourseEnrollRepo extends JpaRepository<CourseEnroll, Integer> {
     @Query("select c FROM CourseEnroll c where c.student.id = :x and c.course.id = :y")
     Optional<CourseEnroll> findByCourseAndStudent(@Param("x") int student_id, @Param("y") int course_id);
 
-    @Query("SELECT c FROM CourseEnroll c where c.id =:x and c.status=0")
+    @Query("SELECT c FROM CourseEnroll c where c.course.id =:x and c.status=0")
     List<CourseEnroll> findAllByCourse(@Param("x") int course_id);
 }

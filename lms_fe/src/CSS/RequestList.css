@@ -1,0 +1,5 @@
+.accept-button:disabled,
+.deny-button:disabled,
+.remove-button:disabled {
+    opacity: 0.5;
+}

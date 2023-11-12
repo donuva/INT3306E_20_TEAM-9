@@ -201,6 +201,9 @@ public class CourseService {
             Course course = courseRepo.findById(course_id).orElse(null);
             Student student = studentRepo.findById(student_id).orElse(null);
             assert course != null;
+            if(course.getStudentList().contains(student)){
+                return;
+            }
             course.getStudentList().add(student);
             assert student != null;
             student.getCourseList().add(course);
