@@ -98,7 +98,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
         const currentItem = updatedRequests.find(request => request.id === id);
 
-        axios.post(`http://localhost:8080/lms/teacher/acceptRequest/${cid}?code=2`, null, {
+        axios.post(`http://localhost:8080/lms/teacher/acceptRequest/${id}?code=2`, null, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }

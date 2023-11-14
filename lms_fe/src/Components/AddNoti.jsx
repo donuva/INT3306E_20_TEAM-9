@@ -53,11 +53,12 @@ const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
         data: formData,
       };
 
+      message.loading("Processing ...")
       const response = await axios.request(config);
-      message.success('Lecture added successfully!');
+      message.success('Notification created successfully!');
     } catch (error) {
-      console.error('Error adding lecture:', error);
-      message.error('Failed to add lecture');
+      console.error('Error creating notification:', error);
+      message.error('Failed to create notification');
     }
   };
 

@@ -243,6 +243,7 @@ public class CourseService {
                 student.getCourseList().remove(course);
                 studentRepo.save(student);
                 courseRepo.save(course);
+                courseEnrollRepo.deleteByCourseAndStudent(student_id, course_id);
             } else {
                 throw new NotFoundException("Id của khóa học hoặc học sinh không hợp lệ");
             }

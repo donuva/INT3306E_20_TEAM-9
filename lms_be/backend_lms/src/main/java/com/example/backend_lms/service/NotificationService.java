@@ -3,12 +3,16 @@ package com.example.backend_lms.service;
 import com.example.backend_lms.dto.ConversationDTO;
 import com.example.backend_lms.dto.NotificationDTO;
 import com.example.backend_lms.dto.PageDTO;
+import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.entity.Conversation;
 import com.example.backend_lms.entity.Course;
 import com.example.backend_lms.entity.Notification;
+import com.example.backend_lms.entity.Student;
+import com.example.backend_lms.repo.CourseRepo;
 import com.example.backend_lms.repo.NotificationRepo;
 import com.example.backend_lms.repo.StudentRepo;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Email;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +33,32 @@ public class NotificationService {
     @Autowired
     StudentRepo studentRepo;
 
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    CourseRepo courseRepo;
+
     public NotificationDTO convert(Notification notification){
         return new ModelMapper().map(notification, NotificationDTO.class);
     }
 
     @Transactional
-    public void create(NotificationDTO notificationDTO){
-        notificationRepo.save(new ModelMapper().map(notificationDTO, Notification.class));
-        //todo: gui thong bao toi email
+    public void create(NotificationDTO notificationDTO) {
+        Notification notification = notificationRepo.save(new ModelMapper().map(notificationDTO, Notification.class));
+        Course course = courseRepo.findById(notification.getCourse().getId()).orElse(null);
+
+        if (course != null) {
+
+            List<Student> students = course.getStudentList();
+            if (students != null) {
+                for (Student s : students) {
+                    emailService.sendNotiEmail(s.getUser().getEmail(), s.getUser().getName(), course.getName());
+                }
+            }
+        }
     }
+
 
     @Transactional
     public void delete(int id) throws NotFoundException {
