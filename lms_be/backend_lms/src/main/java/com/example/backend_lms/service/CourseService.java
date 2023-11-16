@@ -126,12 +126,24 @@ public class CourseService {
         }
     }
 
-    public CourseListDTO getCoursePreview(int course_id) throws NotFoundException {
-        if (courseRepo.findById(course_id).isPresent()) {
-            return convertListing(courseRepo.findById(course_id).orElse(null));
+    public CoursePreviewDTO getCoursePreview(int course_id, StudentDTO studentDTO) throws NotFoundException {
+        CourseDTO course = new ModelMapper().map(courseRepo.findById(course_id).orElse(null), CourseDTO.class);
+        CoursePreviewDTO coursePreviewDTO = new CoursePreviewDTO();
+        if (course!=null) {
+             coursePreviewDTO.setId(course_id);
+             coursePreviewDTO.setName(course.getName());
+             coursePreviewDTO.setDescription(course.getDescription());
+             coursePreviewDTO.setTeacher(course.getTeacher());
+             CourseEnroll courseEnroll = courseEnrollRepo.findByCourseAndStudent(studentDTO.getId(), course_id).orElse(null);
+             if(courseEnroll!=null){
+                 coursePreviewDTO.setStatus(courseEnroll.getStatus());
+             }else{
+                 coursePreviewDTO.setStatus(-1);
+             }
         }else{
             throw new NotFoundException("Không tìm thấy course");
         }
+        return coursePreviewDTO;
     }
 
 
@@ -184,8 +196,11 @@ public class CourseService {
                         courseEnroll.setStatus(0);
                         courseEnroll.setStudent(studentRepo.findById(student_id).orElse(null));
                         courseEnrollRepo.save(courseEnroll);
-                    } else {
-                        throw new NotFoundException("Đã từng đăng ký, đang đợi phản hồi từ giáo viên");
+                    } else if(Objects.requireNonNull(courseEnrollRepo.findByCourseAndStudent(student_id, course_id).orElse(null)).getStatus() == 2){
+                        CourseEnroll courseEnroll = courseEnrollRepo.findByCourseAndStudent(student_id, course_id).orElse(null);
+                        assert courseEnroll != null;
+                        courseEnroll.setStatus(0);
+                        courseEnrollRepo.save(courseEnroll);
                     }
                 } else {
                     throw new NotFoundException("Id khóa học không hợp lệ");

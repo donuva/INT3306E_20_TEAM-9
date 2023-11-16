@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const CoursePreview = ({ checkTokenExpiration }) => {
     const [course, setCourses] = useState({});
     const [teacher, setTeacher] = useState({});
-    const [status, setStatus] = useState(0);
+    const [status, setStatus] = useState();
     const { cid } = useParams();
     const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const CoursePreview = ({ checkTokenExpiration }) => {
         ).then((response) => {
             setCourses(response.data);
             setTeacher(response.data.teacher.user);
-
+            setStatus(response.data.status);
         })
 
     }, [])
@@ -38,10 +38,9 @@ const CoursePreview = ({ checkTokenExpiration }) => {
             }
         })
             .then((response) => {
-                setStatus(1)
+                setStatus(0)
             })
             .catch((error) => {
-                setStatus(1)
                 console.log(error);
             })
     }
@@ -66,7 +65,9 @@ const CoursePreview = ({ checkTokenExpiration }) => {
                         <div className="course-info">
                             <p><strong>Category:</strong> {course.category}</p>
                             <p><strong>Description:</strong> {course.description}</p>
-                            <Button disabled={status === 1} onClick={onFinish} htmlType='submit' type="primary">{status === 1 ? 'Enrolled' : 'Enroll'}</Button>
+                            <Button disabled={status === 0} onClick={onFinish} htmlType='submit' type="primary">{status === 0 ? 'Enrolled' : 'Enroll'}</Button>
+                            {status === 2 &&
+                                <p style={{ color: 'red' }}>Your last request has been denied, please send other request!</p>}
                         </div>
                     </Card>
                 </Col>

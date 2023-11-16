@@ -187,7 +187,10 @@ public class CourseController {
     }
 
     @GetMapping("/student/course/preview/{cid}")
-    public ResponseEntity<CourseListDTO> getCoursePreview(@PathVariable("cid") int cid) throws NotFoundException {
-        return ResponseEntity.ok(courseService.getCoursePreview(cid));
+    public ResponseEntity<CoursePreviewDTO> getCoursePreview(@PathVariable("cid") int cid, Principal p) throws NotFoundException {
+        String username = p.getName();
+        UserDTO userDTO = userService.findByUsername(username);
+        StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
+        return ResponseEntity.ok(courseService.getCoursePreview(cid, studentDTO));
     }
 }

@@ -52,9 +52,7 @@ export default function AllCourse({ checkTokenExpiration }) {
       .catch((error) => console.error('Error fetching courses:', error));
   }, [page, name]); // Sử dụng page trong dependency array để cập nhật khi page thay đổi
 
-  if (pageInfo.totalElements == 0) {
-    return (<NoData />)
-  }
+
   const handlePageChange = (newPage) => {
     setSearchParams({ current_page: newPage, course_name: name === null ? '' : name });
   };
@@ -82,51 +80,60 @@ export default function AllCourse({ checkTokenExpiration }) {
         onChange={(e) => setSearchText(e.target.value)}
       />
 
+
       <button onClick={handleSearch}>Search</button>
 
-      <div className="course-grid">
-        {courses.map((course) => (
+      {(pageInfo.totalElements == 0) &&
+        <NoData />
+      }
+      {(pageInfo.totalElements != 0) &&
+        <>
+          <div className="course-grid">
+            {courses.map((course) => (
 
-          <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
-            <Card>
-              <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit' }} />
-              <div style={{ marginTop: '10px' }}>
-                <h5>{course.name}</h5>
-                <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
-              </div>
-            </Card>
-          </Link>
+              <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
+                <Card>
+                  <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit' }} />
+                  <div style={{ marginTop: '10px' }}>
+                    <h5>{course.name}</h5>
+                    <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
+                  </div>
+                </Card>
+              </Link>
 
-        ))}
-      </div>
-
-
-
-
-      <nav className="footer">
-        {pageInfo.totalPages != 0 &&
-          <ul className="pagination justify-content-center">
-
-            {page > 0 && (
-              <li className='page-item' onClick={() => handlePageChange(page - 1)} ><Link className='page-link' >Previous</Link></li>
-            )}
-            {pageInfo.totalPages &&
-              Array.from({ length: pageInfo.totalPages }, (_, index) => (
-                <li
-                  key={index}
-                  onClick={() => handlePageChange(index)}
-                  className={page === index ? 'page-item active' : 'page-item'}
-                >
-                  <Link className='page-link' >{index + 1}</Link>
+            ))}
+          </div>
 
 
-                </li>
-              ))}
-            {page < pageInfo.totalPages - 1 && (
-              <li onClick={() => handlePageChange(page + 1)} className='page-item' ><Link className='page-link' >Next</Link> </li>
-            )}
-          </ul>}
-      </nav>
+
+
+
+          <nav className="footer">
+            {pageInfo.totalPages != 0 &&
+              <ul className="pagination justify-content-center">
+
+                {page > 0 && (
+                  <li className='page-item' onClick={() => handlePageChange(page - 1)} ><Link className='page-link' >Previous</Link></li>
+                )}
+                {pageInfo.totalPages &&
+                  Array.from({ length: pageInfo.totalPages }, (_, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handlePageChange(index)}
+                      className={page === index ? 'page-item active' : 'page-item'}
+                    >
+                      <Link className='page-link' >{index + 1}</Link>
+
+
+                    </li>
+                  ))}
+                {page < pageInfo.totalPages - 1 && (
+                  <li onClick={() => handlePageChange(page + 1)} className='page-item' ><Link className='page-link' >Next</Link> </li>
+                )}
+              </ul>}
+          </nav>
+        </>
+      }
 
     </div>
   );
