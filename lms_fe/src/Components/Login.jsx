@@ -149,6 +149,19 @@ const Login = ({ setLoggedIn }) => {
                         >
                             Log in
                         </Button>
+                        
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            // type="primary"
+                            backgroundColor="white"
+                            htmlType="submit"
+                            className="login-form-button"
+                            style={{ width: "100%" }}
+                            onClick={()=> navigate('/sign-up')}
+                        >
+                            Sign up
+                        </Button>
                     </Form.Item>
                     {loginError && (
                         <p
