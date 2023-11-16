@@ -18,6 +18,7 @@ export default function AllCourse({ checkTokenExpiration }) {
   const name = searchParams.get('course_name');
 
   const [searchText, setSearchText] = useState('');
+  const role = (JSON.parse(localStorage.getItem('user'))).role
 
   const handleSearch = () => {
     setSearchParams({ course_name: searchText, current_page: 0 });
@@ -82,6 +83,11 @@ export default function AllCourse({ checkTokenExpiration }) {
 
 
       <button onClick={handleSearch}>Search</button>
+      {role === 'TEACHER' && (
+        <button onClick={() => navigate('/app/create-course')}>
+          Create course
+        </button>
+      )}
 
       {(pageInfo.totalElements == 0) &&
         <NoData />
