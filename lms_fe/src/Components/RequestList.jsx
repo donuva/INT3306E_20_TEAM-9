@@ -151,47 +151,47 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
         });
     }
 
-    const handleInfoClick = (id) => {
-        axios.get(`http://localhost:8080/lms/getUser/${id}`, {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("jwt"),
-            },
-        }).then((response) => {
-            Modal.info({
-                title: 'Student Info',
-                content: (
-                    <div>
-                        <p><strong>Name:</strong> {response.data.name}</p>
-                        <p><strong>Email:</strong> {response.data.email}</p>
-                        <p><strong>Mobile:</strong> {response.data.phone}</p>
-                        <p><strong>BirthDate:</strong> {response.data.birthdate}</p>
-                        <p><strong>Bio:</strong> {response.data.bio}</p>
-                    </div>
-                ),
-                onOk() {
-                    // Đóng Modal khi nhấn OK
-                },
-            });
-        }).catch((error) => {
-            console.log(error);
-            messageApi.open({
-                type: 'error',
-                content: 'Failed to fetch student info',
-                duration: 5,
-            });
-        });
-        }).catch((error) => {
-            console.log(error);
-            messageApi.open({
-                type: 'error',
-                content: 'Deny fail',
-                duration: 5,
-            });
-        });
-        if (currentItem.isButtonClicked) {
-            return;
-        }
-    }
+    // const handleInfoClick = (id) => {
+    //     axios.get(`http://localhost:8080/lms/getUser/${id}`, {
+    //         headers: {
+    //             Authorization: "Bearer " + localStorage.getItem("jwt"),
+    //         },
+    //     }).then((response) => {
+    //         Modal.info({
+    //             title: 'Student Info',
+    //             content: (
+    //                 <div>
+    //                     <p><strong>Name:</strong> {response.data.name}</p>
+    //                     <p><strong>Email:</strong> {response.data.email}</p>
+    //                     <p><strong>Mobile:</strong> {response.data.phone}</p>
+    //                     <p><strong>BirthDate:</strong> {response.data.birthdate}</p>
+    //                     <p><strong>Bio:</strong> {response.data.bio}</p>
+    //                 </div>
+    //             ),
+    //             onOk() {
+    //                 // Đóng Modal khi nhấn OK
+    //             },
+    //         });
+    //     }).catch((error) => {
+    //         console.log(error);
+    //         messageApi.open({
+    //             type: 'error',
+    //             content: 'Failed to fetch student info',
+    //             duration: 5,
+    //         });
+    //     });
+    //     }).catch((error) => {
+    //         console.log(error);
+    //         messageApi.open({
+    //             type: 'error',
+    //             content: 'Deny fail',
+    //             duration: 5,
+    //         });
+    //     });
+    //     if (currentItem.isButtonClicked) {
+    //         return;
+    //     }
+    // }
 
     const handleRemoveStudent = (id) => {
         const updatedStudents = students.map(student => {
@@ -272,7 +272,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                 renderItem={(item) => (
                                     <List.Item actions={[
                                         <Button
-                                            style={{ backgroundColor: 'green', color: 'white', width: '100px' }}
+                                            style={{  backgroundColor: 'green', color: 'white', width: '80px', marginRight: '8px'  }}
                                             className="accept-button"
                                             key="accept"
                                             onClick={() => handleAcceptRequest(item.id)}
@@ -280,12 +280,12 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                         >
                                             Accept
                                         </Button>,
-                                        <Button key="info" onClick={() => handleInfoClick(item.student.user.id)}>
-                                        Info
-                                        </Button>,
+                                        // <Button key="info" onClick={() => handleInfoClick(item.student.user.id)}>
+                                        // Info
+                                        // </Button>,
                                         <Button
                                             className="deny-button"
-                                            style={{ background: '#ff3333', color: 'white', width: '100px', marginRight: '20px' }}
+                                            style={{background: '#ff3333', color: 'white', width: '80px', marginRight: '8px' }}
                                             key="deny"
                                             onClick={() => handleDenyRequest(item.id)}
                                             disabled={item.isButtonClicked}
