@@ -37,7 +37,7 @@ public class LessonController {
             String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
-            String newFilename = "url_lesson" + UUID.randomUUID() + extension;
+            String newFilename = filename + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
@@ -63,8 +63,7 @@ public class LessonController {
             String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
-            String newFilename = "url_lesson" + UUID.randomUUID() + extension;
-
+            String newFilename = filename + UUID.randomUUID() + extension;
             File saveFile = new File(Upload_Folder + newFilename);
 
             file.transferTo(saveFile);
