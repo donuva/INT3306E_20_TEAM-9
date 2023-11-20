@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 
 
 export default function AllCourse({ checkTokenExpiration }) {
@@ -81,13 +81,10 @@ export default function AllCourse({ checkTokenExpiration }) {
         onChange={(e) => setSearchText(e.target.value)}
       />
 
+      <br></br>
+      <Button type='primary' style={{ marginTop: '10px' }} onClick={handleSearch}>Search</Button>
+      <br></br>
 
-      <button onClick={handleSearch}>Search</button>
-      {role === 'TEACHER' && (
-        <button onClick={() => navigate('/app/create-course')}>
-          Create course
-        </button>
-      )}
 
       {(pageInfo.totalElements == 0) &&
         <NoData />

@@ -76,7 +76,6 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        console.log('Authorization' + token);
 
       });
 
@@ -165,9 +164,9 @@ function App() {
 
             <Route path='/app/addExercise/:cid' element={<AddExercise checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* Neu la teacher, hien thi de bai, va nut xoa, neu co ?student_id hien thi ra bai lam cua hoc sinh, 1 neu la giao vien thi duoc phep cham diem 2 hoc sinh thi duoc phep nop hoac xem lai */}
-            <Route path='/app/course/:cid/exercise/:eid' element={<ExerciseDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+            <Route path='/app/courses/:cid/exercise/:eid' element={<ExerciseDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* Hien ra danh sach bai lam cua 1 exercise cho teacher */}
-            <Route path='/app/course/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path='/app/courses/:cid/teacher/exercise/:eid' element={<WorkList checkTokenExpiration={checkTokenExpiration} />} />
 
             <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />

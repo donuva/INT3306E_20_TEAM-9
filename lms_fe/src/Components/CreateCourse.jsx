@@ -58,7 +58,7 @@ function CreateCourse({ checkTokenExpiration }) {
 
   return (
 
-    <div className="container" style={{ marginTop: '20px', marginBottom: '20px', maxWidth: '40vw' }}>
+    <div style={{ marginTop: '20px', marginBottom: '20px', maxWidth: '50vw' }}>
       <Card title="Create a New Course" hoverable>
         <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item label="Course Name" name="name" rules={[{ required: true, message: 'Please input the course name!' }]}>
