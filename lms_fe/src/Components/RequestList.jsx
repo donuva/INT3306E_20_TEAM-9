@@ -243,7 +243,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                 renderItem={(item) => (
                                     <List.Item actions={[
                                         <Button
-                                            style={{ backgroundColor: '#ff3333', color: 'white', marginRight: '30px' }}
+                                            style={{ backgroundColor: '#ff3333', color: 'white' }}
                                             className="remove-button"
                                             key="remove"
                                             onClick={() => {
@@ -253,6 +253,9 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                             disabled={item.isButtonClicked}
                                         >
                                             Remove
+                                        </Button>,
+                                        <Button key="info" type="primary" style={{ width: '80px' }} onClick={() => handleInfoClick(item.user.id)}>
+                                            Info
                                         </Button>
                                     ]}>
                                         <List.Item.Meta
@@ -272,7 +275,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                 renderItem={(item) => (
                                     <List.Item actions={[
                                         <Button
-                                            style={{  backgroundColor: 'green', color: 'white', width: '80px', marginRight: '8px'  }}
+                                            style={{ backgroundColor: 'green', color: 'white', width: '80px' }}
                                             className="accept-button"
                                             key="accept"
                                             onClick={() => handleAcceptRequest(item.id)}
@@ -285,15 +288,15 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                         // </Button>,
                                         <Button
                                             className="deny-button"
-                                            style={{background: '#ff3333', color: 'white', width: '80px', marginRight: '8px' }}
+                                            style={{ background: '#ff3333', color: 'white', width: '80px' }}
                                             key="deny"
                                             onClick={() => handleDenyRequest(item.id)}
                                             disabled={item.isButtonClicked}
                                         >
                                             Deny
                                         </Button>,
-                                        <Button key="info" onClick={() => handleInfoClick(item.student.user.id)}>
-                                        Info
+                                        <Button key="info" type="primary" style={{ width: '80px' }} onClick={() => handleInfoClick(item.student.user.id)}>
+                                            Info
                                         </Button>,
                                     ]}>
                                         <List.Item.Meta
