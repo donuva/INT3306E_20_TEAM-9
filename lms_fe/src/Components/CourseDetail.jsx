@@ -90,9 +90,30 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
       });
     })
   }
-
-
-
+  
+  const handleLessonClick = (lessonId) => {
+    const lessonApiUrl = `http://localhost:8080/lms/course/lesson/${lessonId}`;
+    axios
+      .get(lessonApiUrl, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        },
+      })
+      .then((response) => {
+        console.log(response.data.url)
+        const fullLessonUrl = `http://localhost:3000/storage/${response.data.url}`;
+        window.open(fullLessonUrl, '_blank');
+        const link = document.createElement('a');
+        link.href = fullLessonUrl;
+        link.setAttribute('download', `Lesson_${lessonId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error('Error downloading lesson:', error);
+      });
+  };
   return (
     <>
       {contextHolder}
@@ -120,18 +141,17 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
               </List.Item>
             )}
           />
-
-          <List
-            header="Lesson List"
-            bordered
-            dataSource={lessonList}
-            style={{ marginTop: '30px' }}
-            renderItem={(item) => (
-              <List.Item>
-                {item.topic}
-              </List.Item>
-            )}
-          />
+      <List
+        header="Lesson List"
+        bordered
+        dataSource={lessonList}
+        style={{ marginTop: '30px' }}
+        renderItem={(item) => (
+          <List.Item onClick={() => handleLessonClick(item.id)}>
+            {item.topic}
+          </List.Item>
+        )}
+      />
 
           {isTeacher === false && <Button style={{ background: '#ff3333', color: 'white', marginTop: '50px' }} key="accept" onClick={handleLeave}>
             Leave course
