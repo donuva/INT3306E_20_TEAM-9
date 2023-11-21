@@ -13,7 +13,7 @@ import java.util.Date;
 public class ScoreExerciseDTO {
     private int id;
 
-    private String msg;
+    private String content;
 
     private Double grade;
 

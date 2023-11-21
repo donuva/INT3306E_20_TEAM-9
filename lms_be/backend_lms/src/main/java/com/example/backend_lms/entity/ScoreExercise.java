@@ -12,7 +12,7 @@ public class ScoreExercise extends TimeAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String msg;
+    private String content;
 
     private Double grade;
 

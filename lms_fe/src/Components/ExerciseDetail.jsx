@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Typography, Space, Button, Modal, Form, Input, DatePicker, message } from 'antd';
+import { Card, Typography, Space, Button, Modal, Form, Input, DatePicker, message, Upload } from 'antd';
 import axios from 'axios';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import { InboxOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -14,6 +15,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
+    const [work, setWork] = useState(null);
 
     useEffect(() => {
         if (!checkTokenExpiration()) {
@@ -44,6 +46,34 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                 console.log(error);
             });
     }, []);
+
+    //get ra bài nộp 
+    useEffect(() => {
+        if (isTeacher !== true) {
+            const config = {
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: `http://localhost:8080/lms/student/getExerciseScore/${eid}`,
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+                },
+            };
+
+            axios
+                .request(config)
+                .then((response) => {
+                    setWork(response.data);
+                })
+                .catch((error) => {
+                    if (error.response.status === 402) {
+                        navigate(`/app/courses/preview/${cid}`);
+                    }
+                    console.log(error);
+                });
+        }
+    }, []);
+
+
 
     const showModal = () => {
         const moment = require('moment')
@@ -136,6 +166,80 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
         });
     }
 
+    const submitWork = () => {
+        const moment = require('moment');
+        const outputFormat = "YYYY-MM-DD";
+        const inputFormat = "DD/MM/YYYY";
+        const date = exercise.deadline;
+        const parsedDate = moment(date, inputFormat);
+        const formattedDate = parsedDate.format(outputFormat);
+
+
+
+        Modal.confirm({
+
+            title: 'Submit your work',
+            content: (
+                <Form form={form} layout="vertical">
+                    <Form.Item label="Content" name="content" rules={[{ required: true, message: 'Please input your content!' }]}>
+                        <Input.TextArea />
+                    </Form.Item>
+                    <Form.Item
+                        label="Upload"
+                        name="file"
+                        valuePropName="fileList"
+                        getValueFromEvent={(e) => e && e.fileList}
+                    // Allow only the latest file
+                    >
+                        <Upload.Dragger
+                            beforeUpload={() => false}
+                            maxCount={1} // Limit the number of files to 1
+                        >
+                            <p className="ant-upload-drag-icon">
+                                <InboxOutlined />
+                            </p>
+                            <p className="ant-upload-text" style={{ overflow: 'clip' }}>Click or drag file to this area to upload</p>
+                        </Upload.Dragger>
+                    </Form.Item>
+                </Form>
+            ),
+            onOk: async () => {
+                try {
+                    const values = await form.validateFields();
+
+                    const formData = new FormData();
+                    formData.append('content', values.content);
+                    if (values.file !== undefined) {
+                        formData.append('file', values.file[0].originFileObj);
+                    }
+                    formData.append('exercise.id', eid);
+                    formData.append('student.id', localStorage.getItem('student_id'));
+                    const submitWorkConfig = {
+                        method: 'post',
+                        url: `http://localhost:8080/lms/student/exercise/submit`,
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+                            'Content-Type': 'multipart/form-data',
+                        },
+                        data: formData,
+                    };
+
+                    await axios.request(submitWorkConfig);
+
+                    message.success('Work submitted successfully!');
+                    setIsModalVisible(false);
+                    window.location.reload();
+                } catch (errorInfo) {
+                    console.log('Failed:', errorInfo);
+                }
+            },
+            onCancel: () => {
+                form.resetFields();
+            },
+            width: '50vw'
+        });
+    }
+
     return (
         <>
             {contextHolder}
@@ -172,7 +276,21 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                             </Button>
                         </Space>
                     )}
-                    <div></div>
+
+                    {!isTeacher && work === null &&
+                        <div>
+                            <Button type="primary" onClick={submitWork}>
+                                Submit your work
+                            </Button>
+                        </div>
+                    }
+                    {!isTeacher && work !== null &&
+                        <div>
+                            {work.content}
+                            {work.grade}
+                            {work.updatedAt}
+                        </div>
+                    }
                 </div>
 
                 {/* Edit Exercise Modal */}
@@ -197,7 +315,9 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                         {/* Add more form fields as needed */}
                     </Form>
                 </Modal>
+
             </div>
+
         </>
     );
 };

@@ -69,7 +69,7 @@ public class ScoreController {
 
     //lay TUNG BAI cua ban than (dung principle)
     @GetMapping("/student/getExerciseScore/{exercise_id}")
-    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@RequestParam("exercise_id") int exercise_id, Principal p) throws NotFoundException {
+    public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@PathVariable("exercise_id") int exercise_id, Principal p) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());

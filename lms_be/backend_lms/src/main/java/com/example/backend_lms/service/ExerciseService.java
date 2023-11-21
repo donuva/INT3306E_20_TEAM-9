@@ -90,7 +90,9 @@ public class ExerciseService {
     public void submitWork(ScoreExerciseDTO scoreExercise) throws NotFoundException, ExpiredDateException {
         if (exerciseRepo.findById(scoreExercise.getExercise().getId()).isPresent()
                 && studentRepo.findById(scoreExercise.getExercise().getId()).isPresent()) {
-            if(scoreExercise.getExercise().getDeadline().after(now())) {
+            Exercise exercise = exerciseRepo.findById(scoreExercise.getExercise().getId()).orElse(null);
+            assert exercise != null;
+            if(exercise.getDeadline().after(now())) {
                 scoreExercise.setGrade(null);
                 scoreExerciseRepo.save(new ModelMapper().map(scoreExercise, ScoreExercise.class));
             }else{
