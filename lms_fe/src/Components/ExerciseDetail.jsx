@@ -16,6 +16,8 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
     const [work, setWork] = useState(null);
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+
 
     useEffect(() => {
         if (!checkTokenExpiration()) {
@@ -182,7 +184,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             content: (
                 <Form form={form} layout="vertical">
                     <Form.Item label="Content" name="content" rules={[{ required: true, message: 'Please input your content!' }]}>
-                        <Input.TextArea />
+                        <Input.TextArea required />
                     </Form.Item>
                     <Form.Item
                         label="Upload"
@@ -240,6 +242,76 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
         });
     }
 
+    const deleteWork = async () => {
+        try {
+
+            const config = {
+                method: 'delete',
+                url: `http://localhost:8080/lms/student/exercise/delete/${work.id}`,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+                },
+            };
+
+            await axios.request(config);
+
+            message.success('Deleted successfully!');
+            setWork(null);
+        } catch (errorInfo) {
+            console.log('Failed:', errorInfo);
+        }
+    }
+
+    const showEditModal = () => {
+        const initialValues = {
+            content: work.content, // Set other initial values if needed
+        };
+
+        form.setFieldsValue(initialValues);
+
+        setIsEditModalVisible(true);
+    };
+
+    const handleEditOk = async () => {
+        try {
+            const values = await form.validateFields();
+
+            // Update the editing logic based on your requirements
+            const formData = new FormData();
+            formData.append('content', values.content);
+            if (values.file !== undefined) {
+                formData.append('file', values.file[0].originFileObj);
+            }
+            formData.append('exercise.id', eid);
+            formData.append('student.id', localStorage.getItem('student_id'));
+            formData.append('id', work.id)
+            const submitWorkConfig = {
+                method: 'post',
+                url: `http://localhost:8080/lms/student/exercise/submit`,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+                    'Content-Type': 'multipart/form-data',
+                },
+                data: formData,
+            };
+
+            await axios.request(submitWorkConfig);
+
+            message.success('Work submitted successfully!');
+            setIsEditModalVisible(false);
+            window.location.reload();
+        } catch (errorInfo) {
+            console.log('Failed:', errorInfo);
+        }
+    }
+    const handleEditCancel = () => {
+        setIsEditModalVisible(false);
+    };
+
+    const editWork = () => {
+        showEditModal();
+    };
+
     return (
         <>
             {contextHolder}
@@ -284,11 +356,39 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                             </Button>
                         </div>
                     }
+
                     {!isTeacher && work !== null &&
-                        <div>
+                        <div style={{ marginTop: '10vh' }}>
+                            <hr></hr>
+                            <h4>Review your submitted assignment</h4>
+                            <table style={{ marginBottom: '20px' }}>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Last updated: </strong></td>
+                                        <td style={{ fontStyle: 'italic', paddingLeft: '30px' }}>{work.updatedAt}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Grade: </strong></td>
+                                        <td style={{ fontStyle: 'italic', paddingLeft: '30px' }}>{work.grade}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <h5>Content:</h5>
                             {work.content}
-                            {work.grade}
-                            {work.updatedAt}
+
+                            <Space style={{ marginTop: '5vh', display: 'flex', }}>
+                                <Button style={{ width: '80px' }} type='primary' onClick={editWork}>
+                                    Edit
+                                </Button>
+                                <Button type='primary' style={{ backgroundColor: 'red', color: 'white', width: '80px' }} onClick={deleteWork}>
+                                    Delete
+                                </Button>
+                            </Space>
+
+
                         </div>
                     }
                 </div>
@@ -313,6 +413,36 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                             />
                         </Form.Item>
                         {/* Add more form fields as needed */}
+                    </Form>
+                </Modal>
+
+                <Modal
+                    title="Edit Work"
+                    visible={isEditModalVisible}
+                    onOk={handleEditOk}
+                    onCancel={handleEditCancel}
+                >
+                    <Form form={form} layout="vertical">
+                        {/* Add form fields for editing work */}
+                        <Form.Item label="Content" name="content">
+                            <Input.TextArea required />
+                        </Form.Item>
+                        <Form.Item
+                            label="Upload"
+                            name="file"
+                            valuePropName="fileList"
+                            getValueFromEvent={(e) => e && e.fileList}
+                        >
+                            <Upload.Dragger
+                                beforeUpload={() => false}
+                                maxCount={1}
+                            >
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text" style={{ overflow: 'clip' }}>Click or drag file to this area to upload</p>
+                            </Upload.Dragger>
+                        </Form.Item>
                     </Form>
                 </Modal>
 

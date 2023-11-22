@@ -2,8 +2,12 @@ package com.example.backend_lms.controller;
 
 import com.example.backend_lms.dto.ExerciseDTO;
 import com.example.backend_lms.dto.ScoreExerciseDTO;
+import com.example.backend_lms.entity.Exercise;
+import com.example.backend_lms.entity.ScoreExercise;
 import com.example.backend_lms.exception.ExpiredDateException;
 import com.example.backend_lms.exception.NotAllowedException;
+import com.example.backend_lms.repo.ExerciseRepo;
+import com.example.backend_lms.repo.ScoreExerciseRepo;
 import com.example.backend_lms.service.ExerciseService;
 import com.example.backend_lms.service.ScoreService;
 import javassist.NotFoundException;
@@ -32,6 +36,9 @@ public class ExerciseController {
     @Value("${upload.folder}")
     String Upload_Folder;
 
+    @Autowired
+    ScoreExerciseRepo scoreExerciseRepo;
+
     //CRUD exercise
     @PostMapping("/teacher/exercise/create")
     @ResponseStatus(HttpStatus.OK)
@@ -54,6 +61,11 @@ public class ExerciseController {
         exerciseService.delete(id);
     }
 
+    @DeleteMapping("/student/exercise/delete/{work_id}")
+    public void deleteWork(@PathVariable("work_id") Integer work_id) throws ExpiredDateException, NotFoundException {
+        exerciseService.deleteWork(work_id);
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/student/exercise/submit")
     public void submitExercise(@ModelAttribute ScoreExerciseDTO scoreExerciseDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, ExpiredDateException, NotFoundException {
@@ -61,15 +73,20 @@ public class ExerciseController {
             String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
-            String newFilename = "url_exerciseWork" + UUID.randomUUID() + extension;
+            String newFilename = "url_exerciseWork"+filename + UUID.randomUUID() + extension;
 
             File saveFile = new File(Upload_Folder + newFilename);
 
             file.transferTo(saveFile);
             scoreExerciseDTO.setExercise_url(newFilename); //luu file xuong db
-        }
-        else{
-            scoreExerciseDTO.setExercise_url(null);
+        }  else{
+            if( scoreExerciseDTO.getId()!=null) {
+               ScoreExercise scoreExercise = scoreExerciseRepo.findById(scoreExerciseDTO.getId()).orElse(null);
+                assert scoreExercise != null;
+                scoreExerciseDTO.setExercise_url(scoreExercise.getExercise_url());
+            }else {
+                scoreExerciseDTO.setExercise_url(null);
+            }
         }
         exerciseService.submitWork(scoreExerciseDTO);
     }

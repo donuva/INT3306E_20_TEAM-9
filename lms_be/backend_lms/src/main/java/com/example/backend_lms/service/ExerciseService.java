@@ -126,7 +126,10 @@ public class ExerciseService {
         if (exerciseRepo.findById(scoreExercise.getExercise().getId()).isPresent()
                 && studentRepo.findById(scoreExercise.getExercise().getId()).isPresent()
                 && scoreExerciseRepo.findById(scoreExercise.getId()).isPresent()) {
-            if(scoreExercise.getExercise().getDeadline().after(now())) {
+            Exercise exercise = exerciseRepo.findById(scoreExercise.getExercise().getId()).orElse(null);
+
+            assert exercise != null;
+            if(exercise.getDeadline().after(now())) {
                 scoreExerciseRepo.save(new ModelMapper().map(scoreExercise, ScoreExercise.class));
                 return new ModelMapper().map(scoreExerciseRepo.findById(scoreExercise.getId()), ScoreExerciseDTO.class);
             }else{
