@@ -1,9 +1,9 @@
-.container {
+.Pcontainer {
   display: flex;
   flex-wrap: wrap;
 }
 
-.table-container {
+.Ptable-container {
   flex: 1;
   overflow-x: auto;
   max-width: 100%;
@@ -11,17 +11,17 @@
 }
 
 @media (max-width: 768px) {
-  .container {
+  .Pcontainer {
     flex-direction: column;
   }
 
-  .table-container {
+  .Ptable-container {
     width: 100%;
     margin-top: 0;
   }
 }
 
-  .card {
+  .Pcard {
     padding: 30px;
     border: solid 1px rgba(0, 0, 0, 0.08);
     cursor: pointer;
@@ -34,38 +34,38 @@
     height: 700px;
     overflow: auto;
   }
-  .card:hover {
+  .Pcard:hover {
     box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.08);
   }
-  .card-title {
+  .Pcard-title {
     margin-top: 20px;
   }
-  .card-text {
+  .Pcard-text {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.6);
   }
-  .card-text .fa {
+  .Pcard-text .fa {
     font-size: 26px;
   }
-  .avatar {
+  .Pavatar {
     align-content: center;
     width: fit-content;
   }
   
-  .unsub{
+  .Punsub{
     position: relative;
     float: right;
     color: brown
   }
 
-.sign-out-btn {
+.Psign-out-btn {
   background-color: #ff4d4f; 
   color: #fff; 
   border-color: #ff4d4f; 
 }
 
-.sign-out-btn:hover,
-.sign-out-btn:focus {
+.Psign-out-btn:hover,
+.Psign-out-btn:focus {
   background-color: #d9363e; 
   border-color: #d9363e; 
 }

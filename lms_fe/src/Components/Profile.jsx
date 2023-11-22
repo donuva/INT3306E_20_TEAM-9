@@ -96,22 +96,22 @@ export default function Profile({setLoggedIn, checkTokenExpiration }) {
   ];
   
   return (
-    <div className="container">
+    <div className="Pcontainer">
       <Card style={{ flex: 1, marginRight: '20px' }}>
-        <div className="avatar">
+        <div className="Pavatar">
           <Meta avatar={<Avatar size="large" />} title={userData ? userData.name : "Loading..."} />
         </div>
-        <h5 className="card-title">{'Role: ' + (userData ? userData.role : 'Loading...')}</h5>
-        <h5 className="card-text">{'@' + (userData ? userData.username : 'Loading...')}</h5>
-        <p className="card-text">
+        <h5 className="Pcard-title">{'Role: ' + (userData ? userData.role : 'Loading...')}</h5>
+        <h5 className="Pcard-text">{'@' + (userData ? userData.username : 'Loading...')}</h5>
+        <p className="Pcard-text">
           {userData ? userData.email : 'Loading...'}
           <br />
-          <span className="phone">{userData ? userData.phone : 'Loading...'}</span>
+          <span className="Pphone">{userData ? userData.phone : 'Loading...'}</span>
         </p>
         <span>{userData ? userData.bio : 'Loading...'}</span>
       </Card>
       
-      <div className="table-container">
+      <div className="Ptable-container">
         <Table
           columns={columns}
           dataSource={data}
@@ -119,7 +119,7 @@ export default function Profile({setLoggedIn, checkTokenExpiration }) {
           size="middle"
           bordered
           footer={() => (
-            <Button type="danger" className="sign-out-btn" onClick={() => handleLogout(navigate, setLoggedIn)}>
+            <Button type="danger" className="Psign-out-btn" onClick={() => handleLogout(navigate, setLoggedIn)}>
               Sign Out
             </Button>
           )}
