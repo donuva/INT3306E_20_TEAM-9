@@ -29,7 +29,7 @@ function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   const isTeacher = user && user.role === 'TEACHER' ? true : false;
   const [isLoggedIn, setLoggedIn] = useState(false);
-  localStorage.setItem('storage', '/storage/')
+  localStorage.setItem('storage', '/Storage/')
 
   useEffect(() => {
     checkTokenExpiration();
