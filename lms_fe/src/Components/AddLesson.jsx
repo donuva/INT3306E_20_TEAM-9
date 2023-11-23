@@ -51,8 +51,11 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
       formData.append('topic', values.topic);
       formData.append('content', values.content);
       formData.append('course.id', cid);
-      formData.append('file', values.pdfFile[0].originFileObj);
-
+      //formData.append('file', values.pdfFile[0].originFileObj);
+      if (values.pdfFile && values.pdfFile.length > 0) {
+        formData.append('file', values.pdfFile[0].originFileObj);
+      }
+       
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -118,7 +121,7 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
               name="pdfFile"
               valuePropName="fileList"
               getValueFromEvent={(e) => e && e.fileList}
-              rules={[{ required: true, message: 'Please upload the PDF file!' }]}
+              // rules={[{ required: false, message: 'Upload the PDF file is Optional!' }]}
             >
               <Upload
                 customRequest={customRequest}

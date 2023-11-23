@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Badge, Button, Card, List, Menu, message } from 'antd';
+import { Collapse, Badge, Button, Card, List, Menu, message, Modal } from 'antd'; // Include Modal
 import {
   ExperimentOutlined,
   NotificationOutlined,
@@ -18,7 +18,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
-
 
 const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const navigate = useNavigate();
@@ -40,6 +39,8 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const [exerciseList, setExerciseList] = useState([]);
   const [lessonList, setLessonList] = useState([]);
   const [teacher, setTeacher] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState({});
 
   useEffect(() => {
     if (!checkTokenExpiration()) {
@@ -89,7 +90,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
         duration: 5,
       });
     })
-  }
+  };
   
   const handleLessonClick = (lessonId) => {
     const lessonApiUrl = `http://localhost:8080/lms/course/lesson/${lessonId}`;
@@ -100,31 +101,32 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
         },
       })
       .then((response) => {
-        console.log(response.data.url)
-        const fullLessonUrl = `http://localhost:3000/storage/${response.data.url}`;
-        window.open(fullLessonUrl, '_blank');
-        const link = document.createElement('a');
-        link.href = fullLessonUrl;
-        link.setAttribute('download', `Lesson_${lessonId}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        setSelectedLesson({
+          id: lessonId,
+          topic: response.data.topic,
+          content: response.data.content,
+          url: response.data.url,
+        });
+        setModalVisible(true);
       })
       .catch((error) => {
-        console.error('Error downloading lesson:', error);
+        console.error('Error fetching lesson:', error);
       });
   };
+
+  const handleModalCancel = () => {
+    setModalVisible(false);
+  };
+
   return (
     <>
       {contextHolder}
       <div style={{ display: 'flex', minHeight: '1000px' }}>
         <Sidebar cid={cid} isTeacher={isTeacher} selected={'0'}></Sidebar>
 
-
         <div style={{ flex: 1, marginTop: '30px' }}>
           <h1>{course.name}</h1>
           <div className='course_info' style={{ margin: '50px 40px', textAlign: 'left' }}>
-
             <article>
               <p><UserOutlined /> <strong>Teacher: </strong> {teacher.name} <br />
                 <BulbOutlined /> <strong>Category: </strong> {course.category} <br />
@@ -141,24 +143,54 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
               </List.Item>
             )}
           />
-      <List
-        header="Lesson List"
-        bordered
-        dataSource={lessonList}
-        style={{ marginTop: '30px' }}
-        renderItem={(item) => (
-          <List.Item onClick={() => handleLessonClick(item.id)}>
-            {item.topic}
-          </List.Item>
-        )}
-      />
+          <List
+            header="Lesson List"
+            bordered
+            dataSource={lessonList}
+            style={{ marginTop: '30px' }}
+            renderItem={(item) => (
+              <List.Item onClick={() => handleLessonClick(item.id)}>
+                {item.topic}
+              </List.Item>
+            )}
+          />
 
-          {isTeacher === false && <Button style={{ background: '#ff3333', color: 'white', marginTop: '50px' }} key="accept" onClick={handleLeave}>
-            Leave course
-          </Button>
-          }
+          {isTeacher === false && (
+            <Button style={{ background: '#ff3333', color: 'white', marginTop: '50px' }} key="accept" onClick={handleLeave}>
+              Leave course
+            </Button>
+          )}
+
+          {/* Modal for displaying lesson details */}
+          <Modal
+        title={selectedLesson.topic}
+        visible={modalVisible}
+        onCancel={handleModalCancel}
+        footer={[
+          <Button key="back" onClick={handleModalCancel}>
+            Close
+          </Button>,
+        ]}
+      >
+        <p>
+          <strong>Topic:</strong> {selectedLesson.topic}
+        </p>
+        <p>
+          <strong>Content:</strong> {selectedLesson.content}
+        </p>
+        <p>
+          <strong>File:</strong>{' '}
+          {selectedLesson.url ? (
+            <a href={`http://localhost:3000/storage/${selectedLesson.url}`} target="_blank" rel="noopener noreferrer">
+              Open File
+            </a>
+          ) : (
+            'File not found'
+          )}
+        </p>
+      </Modal>
         </div>
-      </div >
+      </div>
     </>
   );
 };
