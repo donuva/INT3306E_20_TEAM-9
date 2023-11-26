@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Collapse, Badge, Button, Card, List, Menu, message, Modal } from 'antd'; // Include Modal
 import {
   ExperimentOutlined,
@@ -13,11 +13,14 @@ import {
   RightOutlined,
   LeftOutlined,
   DashboardOutlined,
+  FormOutlined,
+  BookOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import { AppContext } from './AppContext';
 
 const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const navigate = useNavigate();
@@ -91,7 +94,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
       });
     })
   };
-  
+
   const handleLessonClick = (lessonId) => {
     const lessonApiUrl = `http://localhost:8080/lms/course/lesson/${lessonId}`;
     axios
@@ -133,28 +136,37 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
                 <ContainerOutlined /> <strong>Description: </strong>{course.description}</p>
             </article>
           </div>
-          <List
-            header="Exercise List"
-            bordered
-            dataSource={exerciseList}
-            renderItem={(item) => (
-              <List.Item>
-                {item.title}
-              </List.Item>
-            )}
-          />
-          <List
-            header="Lesson List"
-            bordered
-            dataSource={lessonList}
-            style={{ marginTop: '30px' }}
-            renderItem={(item) => (
-              <List.Item onClick={() => handleLessonClick(item.id)}>
-                {item.topic}
-              </List.Item>
-            )}
-          />
+          <div style={{ marginLeft: '30px' }}>
+            <hr></hr>
+            <h6>Exercise List</h6>
+            <List
+              bordered
+              dataSource={exerciseList}
+              renderItem={(item) => (
+                <List.Item>
+                  <Link style={{ textDecoration: 'none', color: 'black', fontSize: 'medium' }} to={`/app/courses/${cid}/exercise/${item.id}`}>
+                    <FormOutlined /> <strong>{item.title}</strong>
+                  </Link>
+                </List.Item>
+              )}
+            />
 
+            <hr></hr>
+            <h6>Lesson List</h6>
+            <List
+              bordered
+              dataSource={lessonList}
+              style={{ marginTop: '30px' }}
+              renderItem={(item) => (
+                <List.Item onClick={() => handleLessonClick(item.id)}>
+                  <Link style={{ textAlign: 'left', textDecoration: 'none', color: 'black', fontSize: 'medium' }}>
+                    <BookOutlined /> <strong>{item.topic}</strong>
+                  </Link>
+                </List.Item>
+              )}
+            />
+
+          </div>
           {isTeacher === false && (
             <Button style={{ background: '#ff3333', color: 'white', marginTop: '50px' }} key="accept" onClick={handleLeave}>
               Leave course
@@ -163,32 +175,32 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
 
           {/* Modal for displaying lesson details */}
           <Modal
-        title={selectedLesson.topic}
-        visible={modalVisible}
-        onCancel={handleModalCancel}
-        footer={[
-          <Button key="back" onClick={handleModalCancel}>
-            Close
-          </Button>,
-        ]}
-      >
-        <p>
-          <strong>Topic:</strong> {selectedLesson.topic}
-        </p>
-        <p>
-          <strong>Content:</strong> {selectedLesson.content}
-        </p>
-        <p>
-          <strong>File:</strong>{' '}
-          {selectedLesson.url ? (
-            <a href={`http://localhost:3000/storage/${selectedLesson.url}`} target="_blank" rel="noopener noreferrer">
-              Open File
-            </a>
-          ) : (
-            'File not found'
-          )}
-        </p>
-      </Modal>
+            title={selectedLesson.topic}
+            visible={modalVisible}
+            onCancel={handleModalCancel}
+            footer={[
+              <Button key="back" onClick={handleModalCancel}>
+                Close
+              </Button>,
+            ]}
+          >
+            <p>
+              <strong>Topic:</strong> {selectedLesson.topic}
+            </p>
+            <p>
+              <strong>Content:</strong> {selectedLesson.content}
+            </p>
+            <p>
+              <strong>File:</strong>{' '}
+              {selectedLesson.url ? (
+                <a href={`/storage/${selectedLesson.url}`} target="_blank" rel="noopener noreferrer">
+                  Open File
+                </a>
+              ) : (
+                'File not found'
+              )}
+            </p>
+          </Modal>
         </div>
       </div>
     </>

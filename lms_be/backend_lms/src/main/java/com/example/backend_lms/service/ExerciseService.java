@@ -146,7 +146,10 @@ public class ExerciseService {
     //them, sua diem
     public void addScore(int scoreExercise_id, Double grade) throws NotFoundException {
         if(scoreExerciseRepo.findById(scoreExercise_id).isPresent()){
-            Objects.requireNonNull(scoreExerciseRepo.findById(scoreExercise_id).orElse(null)).setGrade(grade);
+            ScoreExercise scoreExercise = scoreExerciseRepo.findById(scoreExercise_id).orElse(null);
+            assert scoreExercise != null;
+            scoreExercise.setGrade(grade);
+            scoreExerciseRepo.save(scoreExercise);
         }else{
             throw new NotFoundException("Id bài tập không đúng");
         }
@@ -154,7 +157,10 @@ public class ExerciseService {
 
     public void deleteScore(int scoreExercise_id) throws NotFoundException {
         if(scoreExerciseRepo.findById(scoreExercise_id).isPresent()){
-            Objects.requireNonNull(scoreExerciseRepo.findById(scoreExercise_id).orElse(null)).setGrade(null);
+            ScoreExercise scoreExercise = scoreExerciseRepo.findById(scoreExercise_id).orElse(null);
+            assert scoreExercise != null;
+            scoreExercise.setGrade(null);
+            scoreExerciseRepo.save(scoreExercise);
         }else{
             throw new NotFoundException("Id bài tập không đúng");
         }

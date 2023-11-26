@@ -57,8 +57,8 @@ public class ScoreController {
     }
 
     //lay list diem theo tung bai, lay tu day ra roi lay theo id de cham tung bai
-    @GetMapping("/teacher/getScoreByExercise")
-    public ResponseEntity<PageDTO<List<ScoreExerciseDTO>>> getScoreByExercise(@RequestParam("exercise_id") int exercise_id,
+    @GetMapping("/teacher/getScoreByExercise/{exercise_id}")
+    public ResponseEntity<PageDTO<List<ScoreExerciseDTO>>> getScoreByExercise(@PathVariable("exercise_id") int exercise_id,
                                                                               @RequestParam(value = "current_page", required = false) Integer current_page) throws NotFoundException {
         if(current_page==null){
             current_page=0;

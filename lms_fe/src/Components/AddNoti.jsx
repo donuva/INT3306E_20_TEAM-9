@@ -4,24 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import {
-  YoutubeFilled,
-  NotificationOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  BarChartOutlined,
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  RightOutlined,
-  LeftOutlined,
-  ExperimentOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
+import Meta from 'antd/lib/card/Meta'
 import Sidebar from './Sidebar';
 const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
   const { cid } = useParams();

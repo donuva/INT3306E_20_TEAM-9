@@ -134,6 +134,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                     });
             })
             .catch((errorInfo) => {
+
                 console.log('Failed:', errorInfo);
             });
     };
@@ -232,6 +233,13 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                     setIsModalVisible(false);
                     window.location.reload();
                 } catch (errorInfo) {
+                    if (errorInfo.response.status === 406) {
+                        messageApi.open({
+                            type: 'error',
+                            content: errorInfo.response.data,
+                            duration: 5,
+                        });
+                    }
                     console.log('Failed:', errorInfo);
                 }
             },
@@ -258,6 +266,12 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             message.success('Deleted successfully!');
             setWork(null);
         } catch (errorInfo) {
+            messageApi.open({
+                type: 'error',
+                content: errorInfo.response.data,
+                duration: 5,
+            });
+
             console.log('Failed:', errorInfo);
         }
     }
@@ -301,6 +315,13 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             setIsEditModalVisible(false);
             window.location.reload();
         } catch (errorInfo) {
+            if (errorInfo.response.status === 406) {
+                messageApi.open({
+                    type: 'error',
+                    content: errorInfo.response.data,
+                    duration: 5,
+                });
+            }
             console.log('Failed:', errorInfo);
         }
     }
@@ -332,6 +353,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                     <div style={{ marginTop: '40px' }}>
                         <h5>Detail:</h5>
                         <p>{exercise.content}</p>
+
                     </div>
                     {isTeacher === true && (
                         <Space>
@@ -378,7 +400,13 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
 
                             <h5>Content:</h5>
                             {work.content}
-
+                            <div style={{ marginTop: '30px' }}>
+                                <strong>File:</strong>{' '}
+                                {work.exercise_url !== null ? (
+                                    <a href={'/storage/' + `${work.exercise_url}`} target="_blank" rel="noopener noreferrer">
+                                        Open File
+                                    </a>) : ('File not found')}
+                            </div>
                             <Space style={{ marginTop: '5vh', display: 'flex', }}>
                                 <Button style={{ width: '80px' }} type='primary' onClick={editWork}>
                                     Edit

@@ -4,7 +4,6 @@ const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState('');
-
   const updateSearchValue = (value) => {
     setSearchValue(value);
   };

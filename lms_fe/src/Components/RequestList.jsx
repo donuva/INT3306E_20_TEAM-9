@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { List, Card, message, Button, Modal } from "antd";
+import { List, Card, message, Button, Modal, Avatar } from "antd";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 
@@ -130,6 +130,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                 title: 'Student Info',
                 content: (
                     <div>
+                        <Avatar src={'/storage/' + response.data.ava_url}></Avatar>
                         <p><strong>Name:</strong> {response.data.name}</p>
                         <p><strong>Email:</strong> {response.data.email}</p>
                         <p><strong>Mobile:</strong> {response.data.phone}</p>

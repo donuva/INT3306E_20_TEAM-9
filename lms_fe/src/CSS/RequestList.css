@@ -1,5 +1,7 @@
 .accept-button:disabled,
 .deny-button:disabled,
+.add_score-btn:disabled,
+.delete_score-btn:disabled,
 .remove-button:disabled {
     opacity: 0.5;
 }

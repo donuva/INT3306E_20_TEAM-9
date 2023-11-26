@@ -1,11 +1,9 @@
 package com.example.backend_lms.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -22,7 +20,7 @@ public class ScoreExerciseDTO {
     @JsonIncludeProperties("id")
     private ExerciseDTO exercise;
 
-    @JsonIncludeProperties("id")
+    @JsonIncludeProperties({"id","user"})
     private StudentDTO student;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
