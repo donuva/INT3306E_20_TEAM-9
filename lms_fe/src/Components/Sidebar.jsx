@@ -44,7 +44,11 @@ export default function Sidebar({ cid, isTeacher, selected }) {
                 </Menu.Item>
                 {/* sua lai theo teacher hay student thi da link tuong ung */}
                 <Menu.Item key="2" icon={<DashboardOutlined />}>
-                    <Link to="/app/course/studentGrade">Grade</Link>
+                    {isTeacher === true ? (
+                        <Link to={`/app/courses/${cid}/teacherGrade`}>Grade</Link>
+                    ) : (
+                        <Link to={`/app/courses/${cid}/studentGrade`}>Grade</Link>
+                    )}
                 </Menu.Item>
                 <Menu.Item key="3" icon={<CommentOutlined />}>
                     <Link to={`/app/courses/${cid}/forum`}>Forum</Link>

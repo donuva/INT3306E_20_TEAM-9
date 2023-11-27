@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const TeacherGrade = (checkTokenExpiration) => {
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
   const { cid } = useParams();
   useEffect(() => {
@@ -34,8 +34,8 @@ const TeacherGrade = (checkTokenExpiration) => {
       title: 'Student',
       dataIndex: 'studentDTO',
       key: 'studentDTO',
-      render: (text) => <a href='/app/studentGrade'>{text.id}</a> // nên đổi href lại
-      
+      render: (text) => <a href={`/app/courses/${cid}/studentGrade`}>{text.id}</a> // nên đổi href lại
+
     },
     {
       title: 'Điểm tổng',
@@ -50,7 +50,7 @@ const TeacherGrade = (checkTokenExpiration) => {
 
 
   return (
-    <div style={{marginTop:'20px',marginBottom:'20px' }}>
+    <div style={{ marginTop: '20px', marginBottom: '20px' }}>
       <Table
         rowKey={(record) => record?.id}
         columns={columns}

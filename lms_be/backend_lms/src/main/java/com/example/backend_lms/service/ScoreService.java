@@ -73,8 +73,10 @@ public class ScoreService {
                         .map(this::convertScoreExercise).collect(Collectors.toList());
                 courseScoreDTO.setScoreExerciseDTOS(scoreExerciseDTOS);
                 for (ScoreExerciseDTO sExercise : scoreExerciseDTOS) {
-                    GPA += sExercise.getGrade();
-                    total += 1;
+                    if(sExercise.getGrade()!=null) {
+                        GPA += sExercise.getGrade();
+                        total += 1;
+                    }
                 }
                 courseScoreDTO.setGPA(GPA / total);
             } else {
