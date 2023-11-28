@@ -125,8 +125,6 @@ public class UserController {
 
             file.transferTo(saveFile);
             userDTO.setAva_url(newFilename); //luu file xuong db
-        }else{
-            userDTO.setAva_url(null);
         }
 
         return ResponseEntity.ok()

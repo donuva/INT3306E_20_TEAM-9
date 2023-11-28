@@ -18,8 +18,9 @@ export default function AllCourse({ checkTokenExpiration }) {
   const name = searchParams.get('course_name');
 
   const [searchText, setSearchText] = useState('');
-  const role = (JSON.parse(localStorage.getItem('user'))).role
-
+  if (localStorage.getItem('user')) {
+    const role = (JSON.parse(localStorage.getItem('user'))).role
+  }
   const handleSearch = () => {
     setSearchParams({ course_name: searchText, current_page: 0 });
   };
@@ -29,6 +30,8 @@ export default function AllCourse({ checkTokenExpiration }) {
       alert('You need to re-login');
       navigate('/login');
     }
+  }, [])
+  useEffect(() => {
     const baseUrl = 'http://localhost:8080/lms/course/search';
     const params = {};
     if (page !== null) {

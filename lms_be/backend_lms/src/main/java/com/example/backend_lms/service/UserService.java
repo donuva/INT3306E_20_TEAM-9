@@ -93,6 +93,9 @@ public class UserService implements UserDetailsService {
     public UserDTO updateUser(UserDTO userDTO) throws NotFoundException {
         User user = userRepo.findById(userDTO.getId()).orElse(null);
         if (user != null) {
+            if(userDTO.getAva_url()==null){
+                userDTO.setAva_url(user.getAva_url());
+            }
             userDTO.setPassword(user.getPassword());
             userDTO.setRole(user.getRole());
             userRepo.save(new ModelMapper().map(userDTO, User.class));
