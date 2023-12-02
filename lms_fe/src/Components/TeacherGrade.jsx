@@ -86,7 +86,7 @@ const TeacherGrade = (checkTokenExpiration) => {
         pagination={false}
       />
       <Modal
-          title="Edit Profile"
+          title="Điểm chi tiết"
           visible={isModalVisible}
           onCancel={handleCancel}
           footer={null}
@@ -96,7 +96,6 @@ const TeacherGrade = (checkTokenExpiration) => {
         columns={modalcolumns}
         dataSource={modalData}
         bordered
-        title={() => 'The Instructor GradeBook'}
         pagination={false}
       />
         </Modal>
