@@ -35,6 +35,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         axios.request(config)
             .then((response) => {
                 setList(response.data.data);
+                setPageInfo(response.data);
                 // Initialize score inputs state with an object for each item
                 const initialScoreInputs = response.data.data.reduce((acc, item) => {
                     acc[item.id] = { visible: false, value: '' };
@@ -108,12 +109,11 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
     const renderPagination = () => {
         return (
             <nav className="footer">
-                {pageInfo.totalPages !== 0 &&
+                {pageInfo.totalPages != 0 &&
                     <ul className="pagination justify-content-center">
+
                         {page > 0 && (
-                            <li className='page-item' onClick={() => handlePageChange(page - 1)}>
-                                <Link className='page-link'>Previous</Link>
-                            </li>
+                            <li className='page-item' onClick={() => handlePageChange(page - 1)} ><Link style={{}} className='page-link' >Previous</Link></li>
                         )}
                         {pageInfo.totalPages &&
                             Array.from({ length: pageInfo.totalPages }, (_, index) => (
@@ -122,18 +122,20 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
                                     key={index}
                                     className={page === index ? 'page-item active' : 'page-item'}
                                 >
-                                    <Link className='page-link'>{index + 1}</Link>
+                                    <Link className='page-link' >{index + 1}</Link>
+
+
                                 </li>
                             ))}
                         {page < pageInfo.totalPages - 1 && (
-                            <li onClick={() => handlePageChange(page + 1)} className='page-item'>
-                                <Link className='page-link'>Next</Link>
-                            </li>
+                            <li onClick={() => handlePageChange(page + 1)} className='page-item' ><Link className='page-link' >Next</Link> </li>
                         )}
+
                     </ul>}
             </nav>
-        );
-    };
+        )
+
+    }
 
     const handleDetailClick = (id) => {
         let config = {
@@ -197,7 +199,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
                 <Sidebar cid={cid} isTeacher={isTeacher} selected={'0'}></Sidebar>
                 <div style={{ marginTop: '20px', marginBottom: '20px', flex: '1' }} >
                     <Card style={{ marginLeft: '30px', marginTop: '30px', marginRight: '30px' }}>
-                        <List style={{ minHeight: '1000px' }}
+                        <List style={{ minHeight: '500px' }}
                             dataSource={list}
                             renderItem={(item) => (
                                 <List.Item actions={[
@@ -229,8 +231,17 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
                                     </Button>
                                 ]}>
                                     <div style={{ display: 'flex' }}>
-                                        <Avatar style={{ marginTop: '5px' }} src={'/storage/' + item.student.user.ava_url} />
+                                        <Avatar style={{
+                                            marginTop: '5px',
+                                            xs: 24,
+                                            sm: 32,
+                                            md: 40,
+                                            lg: 64,
+                                            xl: 80,
+                                            xxl: 100,
+                                        }} src={'/storage/' + item.student.user.ava_url} />
                                         <p style={{ textAlign: 'left', marginLeft: '20px', width: '20vw', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+
                                             <strong>Name: </strong>{item.student.user.name}<br />
                                             <strong>Email: </strong>{item.student.user.email}
                                         </p>

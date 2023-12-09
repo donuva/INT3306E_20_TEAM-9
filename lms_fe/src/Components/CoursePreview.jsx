@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, message, Row, Col } from 'antd';
+import { Card, Button, message, Row, Col, Avatar } from 'antd';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -46,12 +46,20 @@ const CoursePreview = ({ checkTokenExpiration }) => {
     }
 
     return (
-        <Card title={course.name}>
+        <Card style={{ minHeight: '1000px' }}>
+            <h1>{course.name}</h1>
             <Row gutter={16}>
                 <Col span={8}>
                     <Card>
                         <div className="teacher-info">
-                            <img src={teacher.ava_url} alt={teacher.name} />
+                            <Avatar size={{
+                                xs: 24,
+                                sm: 32,
+                                md: 40,
+                                lg: 64,
+                                xl: 80,
+                                xxl: 100,
+                            }} src={"/storage/" + teacher.ava_url} alt={teacher.name} />
                             <h2>Teacher: {teacher.name}</h2>
                             <p><strong>Bio:</strong> {teacher.bio}</p>
                             <p><strong>Birthdate:</strong> {teacher.birthdate}</p>

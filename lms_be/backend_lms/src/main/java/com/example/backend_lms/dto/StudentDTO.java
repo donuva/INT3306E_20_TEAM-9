@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class StudentDTO {
     private int id;
-
+    @JsonIncludeProperties({"id","name","ava_url"})
     private UserDTO user;
 
     @JsonIncludeProperties({"id","name"})

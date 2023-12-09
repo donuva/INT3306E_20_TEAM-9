@@ -7,6 +7,8 @@ import { InboxOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
+
+
 const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
     const navigate = useNavigate();
     const { cid } = useParams();
@@ -17,7 +19,8 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [work, setWork] = useState(null);
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-
+    const now = new Date();
+    const [deadline, setDeadline] = useState(null);
 
     useEffect(() => {
         if (!checkTokenExpiration()) {
@@ -25,6 +28,8 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             navigate('/login');
         }
     }, []);
+
+
 
     useEffect(() => {
         const config = {
@@ -40,6 +45,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             .request(config)
             .then((response) => {
                 setExercise(response.data);
+                setDeadline(response.data.deadline);
             })
             .catch((error) => {
                 if (error.response.status === 402) {
@@ -74,6 +80,9 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                 });
         }
     }, []);
+
+
+
 
 
 
@@ -378,6 +387,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                             </Button>
                         </div>
                     }
+
 
                     {!isTeacher && work !== null &&
                         <div style={{ marginTop: '10vh' }}>

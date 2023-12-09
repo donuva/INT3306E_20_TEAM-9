@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal } from 'antd';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 
-const TeacherGrade = (checkTokenExpiration) => {
+const TeacherGrade = ({ checkTokenExpiration, isTeacher }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const { cid } = useParams();
@@ -16,17 +17,19 @@ const TeacherGrade = (checkTokenExpiration) => {
   const handleEdit = (id) => {
     const scoreExerciseDTOS = data.find((dataItem) => dataItem.studentDTO.id === id);
     setModalData(scoreExerciseDTOS.scoreExerciseDTOS);
-    console.log("đây là điểm hs id " + id);  
+    console.log("đây là điểm hs id " + id);
     console.log(modalData);
     setIsModalVisible(true);
   };
   useEffect(() => {
-    if (!checkTokenExpiration) {
+    if (!checkTokenExpiration()) {
       alert('You need to re-login');
       navigate('/login');
     }
+  }, []);
+  useEffect(() => {
     axios
-      .get(`http://localhost:8080/lms/teacher/getCourseScore/${cid}`, {  
+      .get(`http://localhost:8080/lms/teacher/getCourseScore/${cid}`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
@@ -40,19 +43,21 @@ const TeacherGrade = (checkTokenExpiration) => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  },[]);
+  }, []);
   const columns = [
     {
       title: 'Student',
       dataIndex: 'studentDTO',
       key: 'studentDTO',
-      render: (text) => <a onClick={() => handleEdit(text.id)}>{text.id}</a> // nên đổi href lại
+      align: 'center',
+      render: (text) => <a onClick={() => { handleEdit(text.id) }}>{text.user.name}</a>, // nên đổi href lại
 
     },
     {
-      title: 'Điểm tổng',
+      title: 'GPA',
       dataIndex: 'gpa',
       key: 'gpa',
+      align: 'center',
       sorter: {
         compare: (a, b) => a.gpa - b.gpa
       }
@@ -61,44 +66,51 @@ const TeacherGrade = (checkTokenExpiration) => {
   ];
   const modalcolumns = [
     {
-      title: 'Type',
-      dataIndex: 'exercise_url',
-      key: 'exercise_url',
-      // render: (text) => <span>{text.id}</span>
+      title: 'Exercise',
+      dataIndex: 'exercise',
+      key: 'exercise',
+      align: 'center',
+      render: (exercise) => <span>{exercise.title}</span>
     },
     {
       title: 'grades',
       dataIndex: 'grade',
       key: 'grade',
+      align: 'center'
       // render: (text) => <span>{text.grade}</span>
     }
-    
+
   ];
 
   return (
-    <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-      <Table
-        rowKey={(record) => record?.id}
-        columns={columns}
-        dataSource={data}
-        bordered
-        title={() => 'The Instructor GradeBook'}
-        pagination={false}
-      />
-      <Modal
-          title="Điểm chi tiết"
+    <div style={{ display: 'flex', minHeight: '1000px' }}>
+
+      <Sidebar cid={cid} isTeacher={isTeacher} selected={'2'}></Sidebar>
+
+      <div style={{ marginTop: '', marginBottom: '20px', flex: '1' }}>
+        <Table
+          rowKey={(record) => record?.id}
+          columns={columns}
+          dataSource={data}
+          bordered
+          pagination={false}
+
+        />
+        <Modal
+          title="Score Detail"
           visible={isModalVisible}
           onCancel={handleCancel}
           footer={null}
         >
           <Table
-        rowKey={(record) => record?.id}
-        columns={modalcolumns}
-        dataSource={modalData}
-        bordered
-        pagination={false}
-      />
+            rowKey={(record) => record?.id}
+            columns={modalcolumns}
+            dataSource={modalData}
+            bordered
+            pagination={false}
+          />
         </Modal>
+      </div>
     </div>
   );
 };

@@ -145,12 +145,12 @@ function App() {
             {/* Form tạo course mới */}
             <Route path="/app/create-course" element={<CreateCourse checkTokenExpiration={checkTokenExpiration} />} />
 
-            <Route path="/app/courses/:cid/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* <Route path="/app/teacherGrade" element={<TeacherGrade />} /> */}
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/addLesson/:cid" element={<AddLesson checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* <Route path="/app/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} />} /> */}
-            <Route path="/app/courses/:cid/teacherGrade" element={<TeacherGrade checkTokenExpiration={checkTokenExpiration} />} />
+            <Route path="/app/courses/:cid/teacherGrade" element={<TeacherGrade checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/addLesson" element={<AddLesson checkTokenExpiration={checkTokenExpiration} />} />
             <Route path="/app/listofResult" element={<ListofResult data={"nu"} />} />

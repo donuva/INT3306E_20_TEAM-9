@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
-import { Button, Card } from 'antd';
+import { Button, Card, Input } from 'antd';
 
 
 export default function AllCourse({ checkTokenExpiration }) {
@@ -77,7 +77,8 @@ export default function AllCourse({ checkTokenExpiration }) {
   return (
     <div style={{ marginTop: '30px' }}>
       <h1 style={{ marginTop: '30px', marginBottom: '30px' }}>All Courses</h1>
-      <input
+      <Input
+        style={{ width: '15vw' }}
         type="text"
         placeholder="Search..."
         value={searchText}

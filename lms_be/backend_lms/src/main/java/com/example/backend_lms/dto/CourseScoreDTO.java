@@ -11,7 +11,7 @@ public class CourseScoreDTO{
     @JsonIncludeProperties({"name","id"})
     private CourseDTO courseDTO;
 
-    @JsonIncludeProperties({"name","id"})
+    @JsonIncludeProperties({"user","id"})
     private StudentDTO studentDTO;
 
     private Double GPA;

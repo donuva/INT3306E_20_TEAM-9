@@ -17,7 +17,7 @@ public class ScoreExerciseDTO {
 
     private String exercise_url;
 
-    @JsonIncludeProperties("id")
+    @JsonIncludeProperties({"id","title"})
     private ExerciseDTO exercise;
 
     @JsonIncludeProperties({"id","user"})

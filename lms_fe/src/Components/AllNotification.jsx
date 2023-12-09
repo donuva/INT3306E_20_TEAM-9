@@ -1,23 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Collapse, Badge, Button, Card, List, Menu } from 'antd';
-import {
-  YoutubeFilled,
-  NotificationOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  BarChartOutlined,
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  RightOutlined,
-  LeftOutlined,
-  ExperimentOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
+import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
@@ -109,7 +92,7 @@ function Notification({ checkTokenExpiration, isTeacher }) {
           hoverable
           className="customcard"
           title={
-            <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
               <Meta
 
                 title="Notification"
@@ -124,18 +107,23 @@ function Notification({ checkTokenExpiration, isTeacher }) {
             </Link >
           }
           <Card
-            size="small"
-            type="inner"
+
             className="commentcard"
-            title="It's Notifiying time!"
           >
             {notification.map((notification) => (
               <Card
                 size="small"
+                style={{ marginBottom: '15px' }}
+
                 title={
-                  <span style={{ display: "flex", alignContent: "left" }} >
-                    <span style={{ paddingTop: "10px" }}>{' ' + notification.topic}</span>
-                  </span>
+                  <div style={{ display: 'flex' }}>
+                    <span style={{ alignContent: "left" }} >
+                      <span style={{ paddingTop: "10px" }}>{' ' + notification.topic}</span>
+                    </span>
+                    <span style={{ textAlign: "right", flex: '1', fontWeight: '400', fontStyle: 'italic' }}>
+                      {notification.createdAt}
+                    </span>
+                  </div>
                 }
               >
                 <div style={{ textAlign: "left" }} className='notificationData'>{notification.msg}</div>

@@ -23,6 +23,7 @@ import {
   ExperimentOutlined,
 } from '@ant-design/icons';
 import Sidebar from './Sidebar'
+import TextArea from 'antd/es/input/TextArea'
 // import AllComments from './commentCard'
 // import {
 //   removeDiscussion,
@@ -91,22 +92,6 @@ function Forum({ checkTokenExpiration, isTeacher }) {
               <li onClick={() => handlePageChange(page + 1)} className='page-item' ><Link className='page-link' >Next</Link> </li>
             )}
 
-            {/* <li className={page == 1 ? "page-item active" : "page-item"}>
-              <Link className="page-link" to={"/app/courses" + '?page=1'} >1</Link>
-            </li>
-            <li className={page == 2 ? "page-item active" : "page-item"}>
-              <Link className="page-link" to={"/app/courses" + '?page=2'} >2</Link>
-            </li>
-            <li className={page == 3 ? "page-item active" : "page-item"}>
-              <Link className="page-link" to={"/app/courses" + '?page=3'} >3</Link>
-            </li>
-            <li className={page == 4 ? "page-item active" : "page-item"}>
-              <Link className="page-link" to={"/app/courses" + '?page=4'} >4</Link>
-            </li>
-            <li className={page == 5 ? "page-item active" : "page-item"}>
-              <Link className="page-link" to={"/app/courses" + '?page=5'} >5</Link>
-            </li> */}
-
           </ul>}
       </nav>
     )
@@ -162,7 +147,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
           hoverable
           className="customcard"
           title={
-            <div style={{ backgroundColor: 'orange', textAlign: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
               <Meta
 
                 title="Discussion"
@@ -187,7 +172,6 @@ function Forum({ checkTokenExpiration, isTeacher }) {
             size="small"
             type="inner"
             className="commentcard"
-            title="It's Chatting time!"
           >
             {/* <AllComments
             comments={discussion.comments}
@@ -196,10 +180,12 @@ function Forum({ checkTokenExpiration, isTeacher }) {
           /> */}
             {comments.map((comment) => (
               <Card
+                style={{ marginBottom: '15px' }}
+
                 size="small"
                 title={
                   <span style={{ display: "flex", alignContent: "left" }} >
-                    <Avatar src={comment.user.ava_url} />
+                    <Avatar src={"/storage/" + comment.user.ava_url} />
                     <span style={{ paddingTop: "10px", paddingLeft: "10px" }}>{' ' + comment.user.username}</span>
                     {/* { && (
                   <Button
@@ -221,16 +207,17 @@ function Forum({ checkTokenExpiration, isTeacher }) {
               </Card>
             ))}
             {renderPagination()}
+
           </Card>
-          <div className="container">
-            <Input
+          <div className="" style={{ marginTop: '20px' }}>
+            <TextArea
               size="large"
               allowClear={true}
               bordered={true}
-              placeholder="what you think"
+              placeholder="Write your thought here..."
               onChange={onTxtChange}
               className="txt"
-            ></Input>
+            ></TextArea>
             <Button style={{ marginTop: '20px' }} onClick={onPost}>Add Comment</Button>
 
           </div>
