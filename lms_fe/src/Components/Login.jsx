@@ -20,7 +20,7 @@ const Login = ({ setLoggedIn }) => {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "http://localhost:8080/lms/login",
+            url: "http://localhost:8080/login",
             data: data,
         };
 
@@ -40,7 +40,7 @@ const Login = ({ setLoggedIn }) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/lms/me',
+            url: 'http://localhost:8080/me',
             headers: {
                 'Authorization': token,
             }
@@ -53,7 +53,7 @@ const Login = ({ setLoggedIn }) => {
                 console.log(response.data.role);
                 if (response.data.role === 'TEACHER') {
                     console.log("TEACHER");
-                    axios.get('http://localhost:8080/lms/teacher/me', {
+                    axios.get('http://localhost:8080/teacher/me', {
                         headers: {
                             'Authorization': token
                         }
@@ -66,7 +66,7 @@ const Login = ({ setLoggedIn }) => {
                     navigate('/app/courses');
                 } else {
                     console.log("STUDENT");
-                    axios.get('http://localhost:8080/lms/student/me', {
+                    axios.get('http://localhost:8080/student/me', {
                         headers: {
                             'Authorization': token
                         }
@@ -149,7 +149,7 @@ const Login = ({ setLoggedIn }) => {
                         >
                             Log in
                         </Button>
-                        
+
                     </Form.Item>
                     <Form.Item>
                         <Button
@@ -158,7 +158,7 @@ const Login = ({ setLoggedIn }) => {
                             htmlType="submit"
                             className="login-form-button"
                             style={{ width: "100%" }}
-                            onClick={()=> navigate('/sign-up')}
+                            onClick={() => navigate('/sign-up')}
                         >
                             Sign up
                         </Button>

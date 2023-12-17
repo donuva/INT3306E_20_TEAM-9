@@ -20,7 +20,7 @@ const onSearch = async (name) => {
     const config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/lms/searchStudent?name='+name+'&current_page=0',
+      url: 'http://localhost:8080/searchStudent?name=' + name + '&current_page=0',
       headers: {
         // ...formData.getHeaders(),
       },
@@ -57,13 +57,13 @@ const SearchBox = () => {
         onChange={handleInputChange}
         value={Inval}
       />
-      
-        <Link to="/app/listofResult">
-        <Button type="primary" onClick={() => updateSearchValue(Inval)}>     
-            Search
-          </Button>
-        </Link>
-        {/* {searchValue} */}
+
+      <Link to="/app/listofResult">
+        <Button type="primary" onClick={() => updateSearchValue(Inval)}>
+          Search
+        </Button>
+      </Link>
+      {/* {searchValue} */}
     </Space>
   );
 };

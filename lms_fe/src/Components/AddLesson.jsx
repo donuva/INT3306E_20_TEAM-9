@@ -55,11 +55,11 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
       if (values.pdfFile && values.pdfFile.length > 0) {
         formData.append('file', values.pdfFile[0].originFileObj);
       }
-       
+
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/lms/teacher/course/lesson',
+        url: 'http://localhost:8080/teacher/course/lesson',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },
@@ -121,7 +121,7 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
               name="pdfFile"
               valuePropName="fileList"
               getValueFromEvent={(e) => e && e.fileList}
-              // rules={[{ required: false, message: 'Upload the PDF file is Optional!' }]}
+            // rules={[{ required: false, message: 'Upload the PDF file is Optional!' }]}
             >
               <Upload
                 customRequest={customRequest}

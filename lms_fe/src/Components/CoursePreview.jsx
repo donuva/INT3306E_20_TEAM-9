@@ -18,7 +18,7 @@ const CoursePreview = ({ checkTokenExpiration }) => {
             alert('You need to re-login');
             navigate('/login');
         }
-        axios.get(`http://localhost:8080/lms/student/course/preview/${cid}`, {
+        axios.get(`http://localhost:8080/student/course/preview/${cid}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -32,7 +32,7 @@ const CoursePreview = ({ checkTokenExpiration }) => {
     }, [])
 
     const onFinish = () => {
-        axios.post(`http://localhost:8080/lms/student/enroll/${cid}`, null, {
+        axios.post(`http://localhost:8080/student/enroll/${cid}`, null, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }

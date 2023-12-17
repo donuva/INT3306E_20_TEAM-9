@@ -14,7 +14,7 @@ export default function AllCourse({ checkTokenExpiration }) {
   const [courses, setCourses] = useState([]); // State để lưu danh sách khóa học
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageInfo, setPageInfo] = useState({});
-  const page = searchParams.get('current_page' || null);
+  const page = searchParams.get('current_page') || 0;
   const name = searchParams.get('course_name');
 
   const [searchText, setSearchText] = useState('');
@@ -32,7 +32,7 @@ export default function AllCourse({ checkTokenExpiration }) {
     }
   }, [])
   useEffect(() => {
-    const baseUrl = 'http://localhost:8080/lms/course/search';
+    const baseUrl = 'http://localhost:8080/course/search';
     const params = {};
     if (page !== null) {
       params.current_page = page;
@@ -127,7 +127,7 @@ export default function AllCourse({ checkTokenExpiration }) {
                     <li
                       key={index}
                       onClick={() => handlePageChange(index)}
-                      className={page === index ? 'page-item active' : 'page-item'}
+                      className={page == index ? 'page-item active' : 'page-item'}
                     >
                       <Link className='page-link' >{index + 1}</Link>
 

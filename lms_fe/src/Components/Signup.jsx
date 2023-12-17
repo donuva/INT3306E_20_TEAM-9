@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, message, Card,Radio } from 'antd';
+import { Form, Input, Button, DatePicker, message, Card, Radio } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ const RegistrationForm = ({ type }) => {
     const imageFile = e.target.files[0];
     const formData = new FormData();
     formData.append('file', imageFile);
-    };
+  };
   const formatDate = (date) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
@@ -38,7 +38,7 @@ const RegistrationForm = ({ type }) => {
     console.log(formData)
     // Gửi yêu cầu API tại đây
     // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
-    const url = userType === 'student' ? 'http://localhost:8080/lms/create/student' : 'http://localhost:8080/lms/create/teacher';
+    const url = userType === 'student' ? 'http://localhost:8080/create/student' : 'http://localhost:8080/create/teacher';
     axios.post(url, formData)
       .then(() => {
         console.log('Registration successful:');
@@ -76,15 +76,15 @@ const RegistrationForm = ({ type }) => {
           <Input placeholder="Enter your phone number" />
         </Form.Item>
         <Form.Item name="userType" label="User Type">
-        <Radio.Group onChange={onUserTypeChange} value={userType} defaultValue={userType}>
-          <Radio value="student">Student</Radio>
-          <Radio value="teacher">Teacher</Radio>
-        </Radio.Group>
-      </Form.Item>
-      <Form.Item name="image" label="Image Link">
+          <Radio.Group onChange={onUserTypeChange} value={userType} defaultValue={userType}>
+            <Radio value="student">Student</Radio>
+            <Radio value="teacher">Teacher</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item name="image" label="Image Link">
           <Input type="file" onChange={handleImageUpload} />
         </Form.Item>
-      <Form.Item>
+        <Form.Item>
           <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
             Register
           </Button>

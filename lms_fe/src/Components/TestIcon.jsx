@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dropdown, Avatar, Menu } from 'antd'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 
 const TestIcon = ({ setLoggedIn }) => {
+
 
   const navigate = useNavigate();
   const clickHandler = () => {
@@ -32,8 +33,8 @@ const TestIcon = ({ setLoggedIn }) => {
       placement="topRight"
       arrow
     >
-      <Avatar src={'https://www.bing.com/th?id=OIP.WtYTJGHZ3_-_r2vkTdPEpgHaGG&w=150&h=123&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2'}
-        style={{ cursor: 'pointer', marginRight: '10px' }}></Avatar>
+      <Avatar src={'/storage/' + (JSON.parse(localStorage.getItem('user'))).ava_url}
+        style={{ cursor: 'pointer', marginLeft: '10px', }}></Avatar>
     </Dropdown>
   )
 }

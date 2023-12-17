@@ -26,7 +26,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/lms/teacher/getScoreByExercise/${eid}?current_page=${page}`,
+            url: `http://localhost:8080/teacher/getScoreByExercise/${eid}?current_page=${page}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -83,7 +83,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/lms/teacher/exercise/addScore/${id}`,
+            url: `http://localhost:8080/teacher/exercise/addScore/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             },
@@ -141,7 +141,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/lms/teacher/exercise/getWork/${id}`,
+            url: `http://localhost:8080/teacher/exercise/getWork/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -176,7 +176,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'delete',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/lms/teacher/exercise/deleteScore/${id}`,
+            url: `http://localhost:8080/teacher/exercise/deleteScore/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             },

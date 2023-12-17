@@ -25,6 +25,7 @@ import CreateCourse from './Components/CreateCourse';
 import Signup from './Components/Signup';
 import CoursePreview from './Components/CoursePreview';
 import RequestList from './Components/RequestList';
+import Articles from './Components/Articles';
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   const isTeacher = user && user.role === 'TEACHER' ? true : false;
@@ -58,7 +59,7 @@ function App() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/lms/me',
+      url: 'http://localhost:8080/me',
       headers: {
         'Authorization': token,
       }
@@ -109,7 +110,7 @@ function App() {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/lms/renewJwt',
+      url: 'http://localhost:8080/renewJwt',
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -145,6 +146,7 @@ function App() {
             {/* Form tạo course mới */}
             <Route path="/app/create-course" element={<CreateCourse checkTokenExpiration={checkTokenExpiration} />} />
 
+
             <Route path="/app/courses/:cid/studentGrade" element={<StudentGrade checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             {/* <Route path="/app/teacherGrade" element={<TeacherGrade />} /> */}
             <Route path="/app/courses/:cid/forum" element={<Forum checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
@@ -168,6 +170,8 @@ function App() {
             <Route path='/app/courses/:cid/addNoti' element={<AddNoti checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/notifications' element={<AllNotification checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
             <Route path='/app/courses/:cid/enroll-request' element={<RequestList checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher}></RequestList>} />
+
+            <Route path="/app/articles" element={<Articles />} />
           </Routes>
           <Footer />
         </AppProvider>

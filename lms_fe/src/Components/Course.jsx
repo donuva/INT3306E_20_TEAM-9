@@ -13,7 +13,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
   const [courses, setCourses] = useState([]); // State để lưu danh sách khóa học
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageInfo, setPageInfo] = useState({});
-  const page = searchParams.get('current_page' || null);
+  const page = searchParams.get('current_page') || 0;
   const [suggestCourse, setSuggestCourse] = useState([]);
 
   useEffect(() => {
@@ -21,8 +21,11 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
       alert('You need to re-login');
       navigate('/login');
     }
+  }, [])
+
+  useEffect(() => {
     const role = isTeacher === true ? 'teacher' : 'student';
-    const baseUrl = `http://localhost:8080/lms/${role}/courses`;
+    const baseUrl = `http://localhost:8080/${role}/courses`;
     const params = {};
     if (page !== null) {
       params.current_page = page;
@@ -78,7 +81,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
 
       {isTeacher === true &&
         <Link to={'/app/create-course'}>
-          <Button>Create new course</Button>
+          <Button type='primary'>Create new course</Button>
         </Link>
       }
       <div className="course-grid">
@@ -110,7 +113,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
                 <li
                   key={index}
                   onClick={() => handlePageChange(index)}
-                  className={page === index ? 'page-item active' : 'page-item'}
+                  className={page == index ? 'page-item active' : 'page-item'}
                 >
                   <Link className='page-link' >{index + 1}</Link>
 

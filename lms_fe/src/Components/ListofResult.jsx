@@ -13,13 +13,13 @@ const ListofResult = () => {
       const config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/lms/searchStudent?name='+name+'&current_page=0',
+        url: 'http://localhost:8080/searchStudent?name=' + name + '&current_page=0',
         headers: {
           // ...formData.getHeaders(),
         },
         // data: formData,
       };
-  
+
       const response = await axios.request(config);
       // console.log(response.data.data)
       setStudents(response.data.data);
@@ -29,7 +29,7 @@ const ListofResult = () => {
   }
 
   useEffect(() => {
-  onSearch(searchValue);  
+    onSearch(searchValue);
   }, [searchValue]);
 
   return (

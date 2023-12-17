@@ -69,7 +69,7 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
       formData.append('bio', values.bio);
 
       // Make the API request using axios
-      const response = await axios.put('http://localhost:8080/lms/user/update', formData, {
+      const response = await axios.put('http://localhost:8080/user/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')

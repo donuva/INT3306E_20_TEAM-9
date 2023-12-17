@@ -39,7 +39,7 @@ function CreateCourse({ checkTokenExpiration }) {
 
   const handleSubmit = () => {
     console.log(formData)
-    axios.post('http://localhost:8080/lms/teacher/course', formData, {
+    axios.post('http://localhost:8080/teacher/course', formData, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
         'Content-Type': 'application/json'

@@ -28,7 +28,7 @@ const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/lms/teacher/course/notification',
+        url: 'http://localhost:8080/teacher/course/notification',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')

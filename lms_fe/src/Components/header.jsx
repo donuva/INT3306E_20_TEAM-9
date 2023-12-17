@@ -11,8 +11,7 @@ const FlexedDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 60px;
-  background: #fff;
-  border: 1px solid orange;
+  background: whitesmoke;
   width: calc(100% );
   padding:20px;
 `
@@ -22,8 +21,6 @@ const Header = ({ isLoggedIn, setLoggedIn }) => {
     <FlexedDiv >
       <Space >
         <CourseNavigation />
-        <SearchBox />
-        <Notification />
         {isLoggedIn &&
           <TestIcon setLoggedIn={setLoggedIn} />
         }

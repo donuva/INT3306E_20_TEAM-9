@@ -33,3 +33,5 @@ build/
 .vscode/
 avatar**
 myapp.log**
+
+build
