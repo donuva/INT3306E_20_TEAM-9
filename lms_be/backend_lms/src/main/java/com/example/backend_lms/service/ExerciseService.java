@@ -12,15 +12,19 @@ import com.example.backend_lms.repo.ScoreExerciseRepo;
 import com.example.backend_lms.repo.StudentRepo;
 import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
+import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.util.DateUtil.now;
+
 
 @Service
 public class ExerciseService {
@@ -36,6 +40,9 @@ public class ExerciseService {
 
     @Autowired
     ScoreExerciseRepo scoreExerciseRepo;
+
+    @Autowired
+    ScoreService scoreService;
     public ExerciseDTO convert(Exercise exercise){
         return new ModelMapper().map(exercise, ExerciseDTO.class);
     }
@@ -163,6 +170,21 @@ public class ExerciseService {
             scoreExerciseRepo.save(scoreExercise);
         }else{
             throw new NotFoundException("Id bài tập không đúng");
+        }
+    }
+
+    public void checkSubmit(){
+        Calendar monthDeadline = Calendar.getInstance();
+        Calendar currentMonth =Calendar.getInstance();
+        currentMonth.setTime(now());
+        int month = currentMonth.get(Calendar.MONTH);
+        List<Exercise> exercises = exerciseRepo.findAll();
+        for(Exercise exercise : exercises){
+            monthDeadline.setTime(exercise.getDeadline());
+            if(monthDeadline.get(Calendar.MONTH) == month){
+                scoreService.assignNotSubmitGrade(exercise);
+            }
+
         }
     }
 

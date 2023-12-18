@@ -1,6 +1,7 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.*;
+import com.example.backend_lms.entity.Exercise;
 import com.example.backend_lms.entity.ScoreExercise;
 import com.example.backend_lms.entity.Student;
 import com.example.backend_lms.repo.*;
@@ -131,6 +132,22 @@ public class ScoreService {
             return convertScoreExercise(scoreExercise);
         } else {
             throw new NotFoundException("Id bài làm không hợp lệ");
+        }
+    }
+
+    public void assignNotSubmitGrade(Exercise exercise) {
+        int exercise_id = exercise.getId();
+        int course_id = exercise.getCourse().getId();
+        List<Student> students = Objects.requireNonNull(courseRepo.findById(course_id).orElse(null)).getStudentList();
+        for(Student student : students){
+            if(scoreExerciseRepo.findByStudentAndExercise(student.getId(), exercise_id).isEmpty()){
+                ScoreExerciseDTO scoreExerciseDTO = new ScoreExerciseDTO();
+                scoreExerciseDTO.setStudent(new ModelMapper().map(student, StudentDTO.class));
+                scoreExerciseDTO.setGrade((double) 0);
+                scoreExerciseDTO.setContent("Didn't submit assignment!!!");
+                scoreExerciseRepo.save(new ModelMapper().map(scoreExerciseDTO, ScoreExercise.class));
+
+            }
         }
     }
 }
