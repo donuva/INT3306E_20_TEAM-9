@@ -6,6 +6,7 @@ import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
 import { Button, Card, Input } from 'antd';
+import Meta from 'antd/lib/card/Meta';
 
 
 export default function AllCourse({ checkTokenExpiration }) {
@@ -99,13 +100,22 @@ export default function AllCourse({ checkTokenExpiration }) {
             {courses.map((course) => (
 
               <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
-                <Card>
-                  <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit' }} />
+                {/* <Card>
+                  <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit', width: '100%' }} />
                   <div style={{ marginTop: '10px' }}>
                     <h5>{course.name}</h5>
                     <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
                   </div>
+                </Card> */}
+
+                <Card
+                  hoverable
+
+                  cover={<img height='200px' alt="example" src={getImage(course.id)} />}
+                >
+                  <Meta style={{ width: '100%' }} title={course.name} description={course.teacher.user.name} />
                 </Card>
+
               </Link>
 
             ))}
@@ -142,6 +152,6 @@ export default function AllCourse({ checkTokenExpiration }) {
         </>
       }
 
-    </div>
+    </div >
   );
 }

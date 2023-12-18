@@ -35,3 +35,4 @@ avatar**
 myapp.log**
 
 build
+**/src/main/**/static/

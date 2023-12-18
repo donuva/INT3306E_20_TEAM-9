@@ -42,7 +42,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT", "ADMIN")
                 .requestMatchers("/api/teacher/**").hasAnyAuthority("TEACHER", "ADMIN")
                 .requestMatchers("/api/create/**","/api/login").permitAll()
-                .requestMatchers("/api/**").authenticated())
+                .requestMatchers("/api/**").authenticated()
+                                .requestMatchers("/**").permitAll()
+                )
+
                 .httpBasic(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

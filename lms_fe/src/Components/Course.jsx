@@ -6,6 +6,7 @@ import '../CSS/CourseList.css';
 import styled from 'styled-components';
 import NoData from './NoData';
 import { Button, Card, Carousel } from 'antd';
+import Meta from 'antd/lib/card/Meta';
 
 export default function Course({ checkTokenExpiration, isTeacher }) {
   const navigate = useNavigate();
@@ -87,12 +88,12 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
       <div className="course-grid">
         {courses.map((course) => (
           <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
-            <Card>
-              <div style={{ backgroundImage: `url(${getImage(course.id)})`, height: '200px', objectFit: 'fit' }} />
-              <div style={{ marginTop: '10px' }}>
-                <h5>{course.name}</h5>
-                <p><strong>Teacher: </strong>  {course.teacher.user.name}</p>
-              </div>
+            <Card
+              hoverable
+
+              cover={<img height='200px' alt="example" src={getImage(course.id)} />}
+            >
+              <Meta style={{ width: '100%' }} title={course.name} description={course.teacher.user.name} />
             </Card>
           </Link>
         ))}

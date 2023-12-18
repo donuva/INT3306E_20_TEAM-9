@@ -122,7 +122,9 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
 
       <div style={{ width: '60vw', margin: 'auto', marginTop: '30px', display: 'flex', height: '1000px' }}>
         <Card hoverable bordered style={{ width: '15vw', margin: 'auto', marginLeft: '10vw', marginTop: '5vh', height: '30vh' }} >
-          <Meta style={{ display: 'block' }}
+          <Meta style={{
+            display: 'block'
+          }}
             avatar={<Avatar size={{
               xs: 24,
               sm: 32,
@@ -133,6 +135,7 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
             }} shape='square' src={'/storage/' + userData.ava_url} />}
             title={userData.name}
             description={userData.bio}
+
           />
 
         </Card>
