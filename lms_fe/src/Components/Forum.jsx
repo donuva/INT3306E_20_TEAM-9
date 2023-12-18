@@ -49,7 +49,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
       navigate('/login');
     }
     axios
-      .get(`http://localhost:8080/course/${cid}/conversation?` + "current_page=" + page, {
+      .get(`http://localhost:8080/api/course/${cid}/conversation?` + "current_page=" + page, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
@@ -115,7 +115,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
       "msg": text
     });
     if (text !== '') {
-      axios.post('http://localhost:8080/course/conversation', commentData, {
+      axios.post('http://localhost:8080/api/course/conversation', commentData, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
           'Content-Type': 'application/json'

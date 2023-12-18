@@ -32,7 +32,7 @@ public class TeacherController {
     ValidateRegister validateRegister;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/create/teacher")
+    @PostMapping("/api/create/teacher")
     public void createTeacher(@ModelAttribute TeacherDTO teacherDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
         validateRegister.validateEntry(teacherDTO.getUser().getUsername(),teacherDTO.getUser().getPhone(), teacherDTO.getUser().getEmail());
@@ -54,7 +54,7 @@ public class TeacherController {
         teacherService.create(teacherDTO);
     }
 
-    @PutMapping("/teacher/update")
+    @PutMapping("/api/teacher/update")
     public ResponseEntity<TeacherDTO> updateTeacher(@ModelAttribute TeacherDTO teacherDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
         if (file!=null) {
@@ -75,12 +75,12 @@ public class TeacherController {
 
 
 
-    @GetMapping("/getTeacher/{id}")
+    @GetMapping("/api/getTeacher/{id}")
     public ResponseEntity<TeacherDTO> findTeacher(@PathVariable("id")int id) throws NotFoundException {
         return ResponseEntity.ok(teacherService.findById(id));
     }
 
-    @GetMapping("/searchTeacher")
+    @GetMapping("/api/searchTeacher")
     public ResponseEntity<PageDTO<List<TeacherDTO>>>searchTeacher(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") Integer current_page){
         if(current_page==null){
             current_page=0;

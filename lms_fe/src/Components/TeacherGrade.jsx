@@ -29,7 +29,7 @@ const TeacherGrade = ({ checkTokenExpiration, isTeacher }) => {
   }, []);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/teacher/getCourseScore/${cid}`, {
+      .get(`http://localhost:8080/api/teacher/getCourseScore/${cid}`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }

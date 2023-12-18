@@ -32,7 +32,7 @@ export default function AllCourse({ checkTokenExpiration }) {
     }
   }, [])
   useEffect(() => {
-    const baseUrl = 'http://localhost:8080/course/search';
+    const baseUrl = 'http://localhost:8080/api/course/search';
     const params = {};
     if (page !== null) {
       params.current_page = page;

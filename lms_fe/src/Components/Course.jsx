@@ -25,7 +25,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
 
   useEffect(() => {
     const role = isTeacher === true ? 'teacher' : 'student';
-    const baseUrl = `http://localhost:8080/${role}/courses`;
+    const baseUrl = `http://localhost:8080/api/${role}/courses`;
     const params = {};
     if (page !== null) {
       params.current_page = page;

@@ -31,13 +31,13 @@ public class ScoreController {
     ExerciseService exerciseService;
 
     //hiển thị bang điểm theo course cho giáo viên
-    @GetMapping("/teacher/getCourseScore/{id}")
+    @GetMapping("/api/teacher/getCourseScore/{id}")
     public ResponseEntity<List<CourseScoreDTO>> getScoreByCourse(@PathVariable("id") int course_id) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getScoreByCourse(course_id));
     }
 
     //hien thi bang diem theo course cua tung hoc sinh cho giao vien
-    @GetMapping("/teacher/getCourseScoreByStudent")
+    @GetMapping("/api/teacher/getCourseScoreByStudent")
     public ResponseEntity<CourseScoreDTO> getCourseScoreByStudentAndCourse(@RequestParam("course_id")  int course_id,
                                                                            @RequestParam("student_id") int student_id) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getCourseScoreByStudentAndCourse(course_id,
@@ -46,7 +46,7 @@ public class ScoreController {
 
 
     // hiển thị điểm theo course cho học sinh
-    @GetMapping("/student/getCourseScore/{course_id}")
+    @GetMapping("/api/student/getCourseScore/{course_id}")
     public ResponseEntity<CourseScoreDTO> getCourseScoreByStudentAndCourse(@PathVariable("course_id") int course_id,
                                                                            Principal p) throws NotFoundException {
         String username = p.getName();
@@ -57,7 +57,7 @@ public class ScoreController {
     }
 
     //lay list diem theo tung bai, lay tu day ra roi lay theo id de cham tung bai
-    @GetMapping("/teacher/getScoreByExercise/{exercise_id}")
+    @GetMapping("/api/teacher/getScoreByExercise/{exercise_id}")
     public ResponseEntity<PageDTO<List<ScoreExerciseDTO>>> getScoreByExercise(@PathVariable("exercise_id") int exercise_id,
                                                                               @RequestParam(value = "current_page", required = false) Integer current_page) throws NotFoundException {
         if(current_page==null){
@@ -68,7 +68,7 @@ public class ScoreController {
 
 
     //lay TUNG BAI cua ban than (dung principle)
-    @GetMapping("/student/getExerciseScore/{exercise_id}")
+    @GetMapping("/api/student/getExerciseScore/{exercise_id}")
     public ResponseEntity<ScoreExerciseDTO> getExerciseScoreByStudent(@PathVariable("exercise_id") int exercise_id, Principal p) throws NotFoundException {
         String username = p.getName();
         UserDTO userDTO = userService.findByUsername(username);
@@ -78,18 +78,18 @@ public class ScoreController {
 
 
     //lấy bài làm để chấm từ đây, cũng có thể xem điểm của học sinh từ đây
-    @GetMapping("/teacher/exercise/getWork/{scoreExerciseId}")
+    @GetMapping("/api/teacher/exercise/getWork/{scoreExerciseId}")
     public ResponseEntity<ScoreExerciseDTO> getExerciseWork(@PathVariable("scoreExerciseId") int scoreExerciseId) throws NotFoundException {
         return ResponseEntity.ok(scoreService.getScoreExerciseById(scoreExerciseId));
     }
 
-    @PostMapping("/teacher/exercise/addScore/{scoreExerciseId}")
+    @PostMapping("/api/teacher/exercise/addScore/{scoreExerciseId}")
     public void addScore(@PathVariable("scoreExerciseId") int scoreExerciseId,
                          @RequestParam("grade") Double grade) throws NotFoundException {
         exerciseService.addScore(scoreExerciseId, grade);
     }
 
-    @DeleteMapping("/teacher/exercise/deleteScore/{scoreExerciseId}")
+    @DeleteMapping("/api/teacher/exercise/deleteScore/{scoreExerciseId}")
     public void deleteScore(@PathVariable("scoreExerciseId") int scoreExerciseId) throws NotFoundException {
         exerciseService.deleteScore(scoreExerciseId);
     }

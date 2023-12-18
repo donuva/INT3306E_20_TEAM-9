@@ -38,7 +38,7 @@ const RegistrationForm = ({ type }) => {
     console.log(formData)
     // Gửi yêu cầu API tại đây
     // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
-    const url = userType === 'student' ? 'http://localhost:8080/create/student' : 'http://localhost:8080/create/teacher';
+    const url = userType === 'student' ? 'http://localhost:8080/api/create/student' : 'http://localhost:8080/api/create/teacher';
     axios.post(url, formData)
       .then(() => {
         console.log('Registration successful:');

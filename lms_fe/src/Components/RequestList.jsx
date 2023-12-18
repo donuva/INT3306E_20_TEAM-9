@@ -23,7 +23,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/teacher/getRequestList/${cid}`, {
+            .get(`http://localhost:8080/api/teacher/getRequestList/${cid}`, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("jwt"),
                 },
@@ -38,7 +38,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/teacher/courses/${cid}/students`, {
+            .get(`http://localhost:8080/api/teacher/courses/${cid}/students`, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("jwt"),
                 },
@@ -63,7 +63,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
         const currentItem = updatedRequests.find(request => request.id === id);
 
-        axios.post(`http://localhost:8080/teacher/acceptRequest/${id}?code=1`, null, {
+        axios.post(`http://localhost:8080/api/teacher/acceptRequest/${id}?code=1`, null, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -98,7 +98,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
         const currentItem = updatedRequests.find(request => request.id === id);
 
-        axios.post(`http://localhost:8080/teacher/acceptRequest/${id}?code=2`, null, {
+        axios.post(`http://localhost:8080/api/teacher/acceptRequest/${id}?code=2`, null, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -121,7 +121,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
     }
 
     const handleInfoClick = (id) => {
-        axios.get(`http://localhost:8080/getUser/${id}`, {
+        axios.get(`http://localhost:8080/api/getUser/${id}`, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("jwt"),
             },
@@ -153,7 +153,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
     }
 
     // const handleInfoClick = (id) => {
-    //     axios.get(`http://localhost:8080/getUser/${id}`, {
+    //     axios.get(`http://localhost:8080/api/getUser/${id}`, {
     //         headers: {
     //             Authorization: "Bearer " + localStorage.getItem("jwt"),
     //         },
@@ -207,7 +207,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
         const currentStudent = updatedStudents.find(student => student.id === id);
 
 
-        axios.delete(`http://localhost:8080/teacher/courses/${cid}/removeStudent/${id}`, {
+        axios.delete(`http://localhost:8080/api/teacher/courses/${cid}/removeStudent/${id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }

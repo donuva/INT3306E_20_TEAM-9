@@ -34,7 +34,7 @@ public class StudentController {
     ValidateRegister validateRegister;
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/create/student")
+    @PostMapping("/api/create/student")
     public void createStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         validateRegister.validateEntry(studentDTO.getUser().getUsername(),studentDTO.getUser().getPhone(), studentDTO.getUser().getEmail());
 
@@ -55,7 +55,7 @@ public class StudentController {
         studentService.create(studentDTO);
     }
 
-    @PutMapping("/student/update")
+    @PutMapping("/api/student/update")
     public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
         if (file != null) {
@@ -76,12 +76,12 @@ public class StudentController {
 
 
 
-    @GetMapping("/getStudent/{id}")
+    @GetMapping("/api/getStudent/{id}")
     public ResponseEntity<StudentDTO> findStudent(@PathVariable("id")int id) throws NotFoundException {
         return ResponseEntity.ok(studentService.findById(id));
     }
 
-    @GetMapping("/searchStudent")
+    @GetMapping("/api/searchStudent")
     public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") Integer current_page){
         if(current_page==null){
             current_page=0;

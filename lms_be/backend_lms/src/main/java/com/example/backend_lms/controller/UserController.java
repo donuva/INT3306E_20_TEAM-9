@@ -40,13 +40,13 @@ public class UserController {
     String Upload_Folder;
 
 
-    @GetMapping("/me")
+    @GetMapping("/api/me")
     public UserDTO me(Principal p){
         String username = p.getName();
         return userService.findByUsername(username);
     }
 
-    @GetMapping("/student/me")
+    @GetMapping("/api/student/me")
     public StudentDTO getStudent(Principal p) throws NotFoundException {
         String username = p.getName();
 
@@ -54,25 +54,25 @@ public class UserController {
     }
 
 
-    @GetMapping("/teacher/me")
+    @GetMapping("/api/teacher/me")
     public TeacherDTO getTeacher(Principal p) throws NotFoundException {
         String username = p.getName();
         return teacherService.findByUserId(userService.findByUsername(username).getId());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/admin/delete-student/{id}")
+    @DeleteMapping("/api/admin/delete-student/{id}")
     public void deleteStudent(@PathVariable("id") int id) throws NotFoundException {
         studentService.delete(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/admin/delete-teacher/{id}")
+    @DeleteMapping("/api/admin/delete-teacher/{id}")
     public void deleteTeacher(@PathVariable("id") int id) throws NotFoundException {
         teacherService.delete(id);
     }
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/admin/new")
+    @PostMapping("/api/admin/new")
     public void createAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         validateRegister.validateEntry(userDTO.getUsername(), userDTO.getPhone(), userDTO.getEmail());
 
@@ -93,7 +93,7 @@ public class UserController {
 
     }
 
-    @PutMapping("/admin/update")
+    @PutMapping("/api/admin/update")
     public ResponseEntity<UserDTO> updateAdminAccount(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws NotFoundException, IOException {
         if(file != null){
             String filename = file.getOriginalFilename();
@@ -113,7 +113,7 @@ public class UserController {
                 .body(userService.updateAdmin(userDTO));
     }
 
-    @PutMapping("/user/update")
+    @PutMapping("/api/user/update")
     public ResponseEntity<UserDTO> updateUser(@ModelAttribute UserDTO userDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
         if(file != null){
             String filename = file.getOriginalFilename();
@@ -131,14 +131,14 @@ public class UserController {
                 .body(userService.updateUser(userDTO));
     }
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/api/getUser/{id}")
     public ResponseEntity<UserDTO> findUser(@PathVariable("id")int id) throws NotFoundException {
         return ResponseEntity.ok(userService.findById(id));
     }
 
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping("/api/admin/delete/{id}")
     public void deleteAdminAccount(@PathVariable("id") int id) throws NotFoundException {
         userService.deleteAdmin(id);
     }

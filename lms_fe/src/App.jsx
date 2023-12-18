@@ -59,7 +59,7 @@ function App() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/me',
+      url: 'http://localhost:8080/api/me',
       headers: {
         'Authorization': token,
       }
@@ -110,7 +110,7 @@ function App() {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/renewJwt',
+      url: 'http://localhost:8080/api/renewJwt',
       headers: {
         'Authorization': 'Bearer ' + token
       }

@@ -59,7 +59,7 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/teacher/course/lesson',
+        url: 'http://localhost:8080/api/teacher/course/lesson',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },

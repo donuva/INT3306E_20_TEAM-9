@@ -20,7 +20,7 @@ const onSearch = async (name) => {
     const config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/searchStudent?name=' + name + '&current_page=0',
+      url: 'http://localhost:8080/api/searchStudent?name=' + name + '&current_page=0',
       headers: {
         // ...formData.getHeaders(),
       },

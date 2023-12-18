@@ -25,12 +25,12 @@ public class LessonController {
     @Value("${upload.folder}")
     String Upload_Folder;
 
-    @GetMapping("/course/lesson/{id}")
+    @GetMapping("/api/course/lesson/{id}")
     public LessonDTO getLesson(@PathVariable("id") int id) throws NotFoundException {
         return lessonService.getById(id);
     }
 
-    @PostMapping("/teacher/course/lesson")
+    @PostMapping("/api/teacher/course/lesson")
     @ResponseStatus(HttpStatus.OK)
     public void createLesson(@ModelAttribute LessonDTO lessonDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         if (file!=null) {
@@ -50,13 +50,13 @@ public class LessonController {
         lessonService.create(lessonDTO);
     }
 
-    @DeleteMapping("/teacher/course/lesson/{id}")
+    @DeleteMapping("/api/teacher/course/lesson/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteLesson(@PathVariable("id") int id) throws NotFoundException {
         lessonService.delete(id);
     }
 
-    @PutMapping("/teacher/course/lesson")
+    @PutMapping("/api/teacher/course/lesson")
     @ResponseStatus(HttpStatus.OK)
     public LessonDTO updateLesson(@ModelAttribute LessonDTO lessonDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws NotFoundException, IOException {
         if (file!=null) {

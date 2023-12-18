@@ -40,7 +40,7 @@ const AddExercise = ({ checkTokenExpiration, isTeacher }) => {
         },
         "deadline": formattedDate
       });
-      const response = await axios.post('http://localhost:8080/teacher/exercise/create', formData, {
+      const response = await axios.post('http://localhost:8080/api/teacher/exercise/create', formData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')

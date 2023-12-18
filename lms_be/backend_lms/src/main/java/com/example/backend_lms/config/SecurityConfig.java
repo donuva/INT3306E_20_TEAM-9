@@ -39,10 +39,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((auth)-> auth
-                .requestMatchers("/student/**").hasAnyAuthority("STUDENT", "ADMIN")
-                .requestMatchers("/teacher/**").hasAnyAuthority("TEACHER", "ADMIN")
-                .requestMatchers("/create/**","/login").permitAll()
-                .requestMatchers("/**").authenticated())
+                .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT", "ADMIN")
+                .requestMatchers("/api/teacher/**").hasAnyAuthority("TEACHER", "ADMIN")
+                .requestMatchers("/api/create/**","/api/login").permitAll()
+                .requestMatchers("/api/**").authenticated())
                 .httpBasic(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
