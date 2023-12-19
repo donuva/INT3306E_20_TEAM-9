@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, message, Card, Radio } from 'antd';
+import { Form, Input, Button, DatePicker, message, Card, Radio, Grid } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const RegistrationForm = ({ type }) => {
+  const { useBreakpoint } = Grid;
+  const { md } = useBreakpoint();
+
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [userType, setUserType] = useState('student');
@@ -52,39 +56,91 @@ const RegistrationForm = ({ type }) => {
   };
 
   return (
-    <Card title={`Register`} style={{ width: 400, margin: 'auto', marginTop: 50 }}>
+    <Card title={`Register`} style={{ width: md ? 400 : '100%', margin: 'auto', marginTop: 50 }}>
       <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
-        <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please input your name!' }]}>
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[{ required: true, message: 'Please input your name!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input placeholder="Enter your name" />
         </Form.Item>
-        <Form.Item name="bio" label="Bio" rules={[{ required: true, message: 'Please input your bio!' }]}>
+        <Form.Item
+          name="bio"
+          label="Bio"
+          rules={[{ required: true, message: 'Please input your bio!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input.TextArea placeholder="Enter your bio" />
         </Form.Item>
-        <Form.Item name="birthdate" label="Birthdate" rules={[{ required: true, message: 'Please select your birthdate!' }]}>
+        <Form.Item
+          name="birthdate"
+          label="Birthdate"
+          rules={[{ required: true, message: 'Please select your birthdate!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
         </Form.Item>
-        <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your username!' }]}>
+        <Form.Item
+          name="username"
+          label="Username"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input placeholder="Enter your username" />
         </Form.Item>
-        <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your password!' }]}>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input.Password placeholder="Enter your password" />
         </Form.Item>
-        <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Please input your email!' }]}>
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[{ required: true, message: 'Please input your email!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input placeholder="Enter your email" />
         </Form.Item>
-        <Form.Item name="phone" label="Phone" rules={[{ required: true, message: 'Please input your phone number!' }]}>
+        <Form.Item
+          name="phone"
+          label="Phone"
+          rules={[{ required: true, message: 'Please input your phone number!' }]}
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input placeholder="Enter your phone number" />
         </Form.Item>
-        <Form.Item name="userType" label="User Type">
+        <Form.Item
+          name="userType"
+          label="User Type"
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Radio.Group onChange={onUserTypeChange} value={userType} defaultValue={userType}>
             <Radio value="student">Student</Radio>
             <Radio value="teacher">Teacher</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item name="image" label="Image Link">
+        <Form.Item
+          name="image"
+          label="Image Link"
+          labelCol={{ span: md ? 8 : 24 }}
+          wrapperCol={{ span: md ? 16 : 24 }}
+        >
           <Input type="file" onChange={handleImageUpload} />
         </Form.Item>
-        <Form.Item>
+        <Form.Item wrapperCol={{ span: md ? 16 : 24, offset: md ? 8 : 0 }}>
           <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
             Register
           </Button>
