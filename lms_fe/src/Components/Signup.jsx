@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, message, Card, Radio, Grid } from 'antd';
+import { Form, Input, Button, DatePicker, message, Card, Radio, Grid, Upload } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 
 
 const RegistrationForm = ({ type }) => {
@@ -16,11 +17,7 @@ const RegistrationForm = ({ type }) => {
     setUserType(e.target.value);
   };
 
-  const handleImageUpload = (e) => {
-    const imageFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append('file', imageFile);
-  };
+
   const formatDate = (date) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
@@ -29,34 +26,55 @@ const RegistrationForm = ({ type }) => {
     return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
   };
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    const formData = new FormData();
-    Object.keys(values).forEach((key) => {
-      if (key === 'birthdate') {
-        formData.append(`user.${key}`, formatDate(values[key]['$d']));
-      } else {
-        formData.append(`user.${key}`, values[key]);
-      }
-    });
-    console.log(formData)
-    // Gửi yêu cầu API tại đây
-    // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
-    const url = userType === 'student' ? 'http://localhost:8080/api/create/student' : 'http://localhost:8080/api/create/teacher';
-    axios.post(url, formData)
-      .then(() => {
-        console.log('Registration successful:');
-        message.success('Registration successful');
-        navigate('/login')
-      })
-      .catch((error) => {
-        console.error('Registration failed:', error.response.data);
-        message.error('Registration failed: ' + error.response.data);
+  const onFinish = async () => {
+
+    try {
+      const values = await form.validateFields();
+
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => {
+        if (key === 'birthdate') {
+          formData.append(`user.${key}`, formatDate(values[key]['$d']));
+        }
+        else if (key != 'file') {
+          formData.append(`user.${key}`, values[key]);
+        }
       });
+      if (values.file?.[0]?.originFileObj) {
+        formData.append('file', values.file[0].originFileObj);
+      }
+
+      console.log(formData)
+      // Gửi yêu cầu API tại đây
+      // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
+      const url = userType === 'student' ? 'http://localhost:8080/api/create/student' : 'http://localhost:8080/api/create/teacher';
+      axios.post(url, formData)
+        .then(() => {
+          console.log('Registration successful:');
+          message.success('Registration successful');
+          navigate('/login')
+        })
+    }
+    catch (error) {
+      console.error('Registration failed:', error.response.data);
+      message.error('Registration failed: ' + error.response.data);
+    }
+  };
+
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must be smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
   };
 
   return (
-    <Card title={`Register`} style={{ width: md ? 400 : '100%', margin: 'auto', marginTop: 50 }}>
+    <Card title={`Register`} style={{ width: md ? 500 : '100%', margin: 'auto', marginTop: 50, marginBottom: 50 }}>
       <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
         <Form.Item
           name="name"
@@ -132,16 +150,32 @@ const RegistrationForm = ({ type }) => {
             <Radio value="teacher">Teacher</Radio>
           </Radio.Group>
         </Form.Item>
+
+
         <Form.Item
-          name="image"
-          label="Image Link"
-          labelCol={{ span: md ? 8 : 24 }}
-          wrapperCol={{ span: md ? 16 : 24 }}
+          label="Upload"
+          name="file"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => e && e.fileList}
+        // Allow only the latest file
         >
-          <Input type="file" onChange={handleImageUpload} />
+          <Upload.Dragger
+            beforeUpload={beforeUpload}
+            maxCount={1} // Limit the number of files to 1
+
+          >
+            <UploadOutlined></UploadOutlined>
+            <p className="ant-upload-drag-icon">
+
+
+            </p>
+            <p className="ant-upload-text" style={{ overflow: 'clip' }}>Click or drag file to this area to upload</p>
+          </Upload.Dragger>
         </Form.Item>
-        <Form.Item wrapperCol={{ span: md ? 16 : 24, offset: md ? 8 : 0 }}>
-          <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+
+
+        <Form.Item >
+          <Button type="primary" htmlType="submit" style={{ margin: 'auto' }}>
             Register
           </Button>
         </Form.Item>
