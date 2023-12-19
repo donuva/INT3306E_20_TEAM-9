@@ -85,6 +85,10 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
           <Button type='primary'>Create new course</Button>
         </Link>
       }
+      {
+        pageInfo.totalElements == 0 &&
+        <NoData />
+      }
       <div className="course-grid">
         {courses.map((course) => (
           <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
