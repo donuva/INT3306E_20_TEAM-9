@@ -236,7 +236,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
             <div style={{ display: "flex", minHeight: "1000px" }}>
                 <Sidebar cid={cid} isTeacher={isTeacher} selected={"6"}></Sidebar>
                 <div style={{ display: "flex", flex: 1, padding: "20px" }}>
-                    <div style={{ marginLeft: "5vw", width: '30vw' }}>
+                    <div style={{ marginLeft: "8vw", width: '30vw' }}>
                         <Card title="Students">
                             <List
                                 style={{ overflowY: 'scroll', height: '1000px' }}
@@ -268,7 +268,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                             />
                         </Card>
                     </div>
-                    <div style={{ marginLeft: '20vw', marginRight: "5vw", width: '30vw' }}>
+                    <div style={{ marginLeft: '20vw', width: '30vw' }}>
                         <Card title="Requests" >
                             <List
                                 style={{ overflowY: 'scroll', height: '1000px' }}

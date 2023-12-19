@@ -79,7 +79,7 @@ export default function AllCourse({ checkTokenExpiration }) {
     <div style={{ marginTop: '30px' }}>
       <h1 style={{ marginTop: '30px', marginBottom: '30px' }}>All Courses</h1>
       <Input
-        style={{ width: '15vw' }}
+        style={{ width: '10vw' }}
         type="text"
         placeholder="Search..."
         value={searchText}
@@ -113,7 +113,7 @@ export default function AllCourse({ checkTokenExpiration }) {
 
                   cover={<img height='200px' alt="example" src={getImage(course.id)} />}
                 >
-                  <Meta style={{ width: '100%' }} title={course.name} description={course.teacher.user.name} />
+                  <Meta style={{ width: '100%' }} title={course.name} description={<p><strong>Teacher:</strong>  {course.teacher.user.name}</p>} />
                 </Card>
 
               </Link>
