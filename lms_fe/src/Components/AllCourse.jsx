@@ -113,7 +113,7 @@ export default function AllCourse({ checkTokenExpiration }) {
 
                   cover={<img height='200px' alt="example" src={getImage(course.id)} />}
                 >
-                  <Meta style={{ width: '100%' }} title={course.name} description={course.teacher.user.name} />
+                  <Meta style={{ width: '100%' }} title={course.name} description={<p><strong>Teacher:</strong>  {course.teacher.user.name}</p>} />
                 </Card>
 
               </Link>
