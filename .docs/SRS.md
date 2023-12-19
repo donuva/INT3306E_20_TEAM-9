@@ -140,6 +140,25 @@ Tác nhân được xếp vào loại này nếu chưa đăng nhập.
         </ol>
       </td>
     </tr>
+    <tr>
+      <td rowspan="5">Xem tin tức</td>
+      <td>ID</td>
+      <td>UNAUTH_005</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Theo dõi tin tức liên quan đến Giáo dục.</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Không</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        Hiển thị các bài báo liên quan đến Giáo dục trong nước (tổng hợp từ VNExpress). Mỗi tin có tiêu đề, tóm tắt & ảnh minh hoạ.
+      </td>
+    </tr>
   </tbody>
 </table>
 
