@@ -38,8 +38,7 @@ function Notification({ checkTokenExpiration, isTeacher }) {
         setNotification(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
         setPageInfo(response.data);
 
-        console.log("đây là noti ")
-        console.log(notification)
+
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);

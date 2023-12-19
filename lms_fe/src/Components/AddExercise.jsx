@@ -46,7 +46,6 @@ const AddExercise = ({ checkTokenExpiration, isTeacher }) => {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },
       });
-      console.log('Exercise created:', response.data);
       message.success('Created exercise')
       navigate(`/app/courses/${cid}`);
     } catch (error) {

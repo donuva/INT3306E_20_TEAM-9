@@ -151,12 +151,10 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
               )}
             />
 
-            <hr></hr>
-            <h6>Lesson List</h6>
+            <h6 style={{ marginTop: '20px' }}>Lesson List</h6>
             <List
               bordered
               dataSource={lessonList}
-              style={{ marginTop: '30px' }}
               renderItem={(item) => (
                 <List.Item onClick={() => handleLessonClick(item.id)}>
                   <Link style={{ textAlign: 'left', textDecoration: 'none', color: 'black', fontSize: 'medium' }}>

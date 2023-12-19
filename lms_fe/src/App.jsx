@@ -32,7 +32,6 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     checkTokenExpiration();
-    console.log(isTeacher);
   }, [isLoggedIn])
 
 
@@ -67,7 +66,6 @@ function App() {
 
     axios.request(config)
       .then((response) => {
-        console.log('Authorization' + `Bearer ${token}`);
         localStorage.setItem('user', JSON.stringify(response.data));
         setLoggedIn(true)
 
@@ -118,7 +116,6 @@ function App() {
 
     axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         localStorage.setItem('jwt', response.data);
       })
       .catch((error) => {

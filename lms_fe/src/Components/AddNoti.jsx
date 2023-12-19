@@ -52,7 +52,6 @@ const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-  console.log(cid);
   return (
     <div style={{ display: 'flex', minHeight: '1000px' }}>
       <Sidebar cid={cid} isTeacher={isTeacher} selected={'1'}></Sidebar>

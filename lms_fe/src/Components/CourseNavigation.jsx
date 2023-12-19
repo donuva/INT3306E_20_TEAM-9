@@ -36,6 +36,7 @@ const CourseNavigation = () => {
     <>
       <Space>
         <Button
+          style={{ color: '#ECE3CE' }}
           shape="circle"
           type="secondary"
           icon={<ArrowLeftOutlined />}
@@ -44,13 +45,13 @@ const CourseNavigation = () => {
       </Space >
       <Space>
         <NavLink to="/app/courses">
-          <Button style={{ fontSize: 'medium' }} type="text" icon={<HomeOutlined />}><strong>Home</strong> </Button>
+          <Button style={{ fontSize: 'large', color: '#ECE3CE' }} type="text" icon={<HomeOutlined />}><strong>Home</strong> </Button>
         </NavLink>
         <NavLink to="/app/allCourse" >
-          <Button style={{ fontSize: 'medium' }} type="text" icon={<ReadOutlined />}><strong>Courses</strong> </Button>
+          <Button style={{ fontSize: 'large', color: '#ECE3CE' }} type="text" icon={<ReadOutlined />}><strong>Courses</strong> </Button>
         </NavLink>
         <NavLink to="/app/articles">
-          <Button style={{ fontSize: 'medium' }} type="text" icon={<FileSearchOutlined />}><strong>Articles</strong> </Button>
+          <Button style={{ fontSize: 'large', color: '#ECE3CE' }} type="text" icon={<FileSearchOutlined />}><strong>Articles</strong> </Button>
         </NavLink>
       </Space>
     </>
