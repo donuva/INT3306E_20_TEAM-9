@@ -31,7 +31,7 @@ const Articles = () => {
                 indicator={
                     <LoadingOutlined
                         style={{
-                            fontSize: 24,
+                            fontSize: 50,
                         }}
                         spin
                     />

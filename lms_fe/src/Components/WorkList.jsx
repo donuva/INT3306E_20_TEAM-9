@@ -26,7 +26,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/api/teacher/getScoreByExercise/${eid}?current_page=${page}`,
+            url: `http://fall2324w20g9.int3306.freeddns.org/api/teacher/getScoreByExercise/${eid}?current_page=${page}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -83,7 +83,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/api/teacher/exercise/addScore/${id}`,
+            url: `http://fall2324w20g9.int3306.freeddns.org/api/teacher/exercise/addScore/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             },
@@ -141,7 +141,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/api/teacher/exercise/getWork/${id}`,
+            url: `http://fall2324w20g9.int3306.freeddns.org/api/teacher/exercise/getWork/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -176,7 +176,7 @@ export default function WorkList({ checkTokenExpiration, isTeacher }) {
         let config = {
             method: 'delete',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/api/teacher/exercise/deleteScore/${id}`,
+            url: `http://fall2324w20g9.int3306.freeddns.org/api/teacher/exercise/deleteScore/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             },

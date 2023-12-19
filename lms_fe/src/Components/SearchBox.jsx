@@ -20,7 +20,7 @@ const onSearch = async (name) => {
     const config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/api/searchStudent?name=' + name + '&current_page=0',
+      url: 'http://fall2324w20g9.int3306.freeddns.org/api/searchStudent?name=' + name + '&current_page=0',
       headers: {
         // ...formData.getHeaders(),
       },

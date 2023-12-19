@@ -28,7 +28,7 @@ function Notification({ checkTokenExpiration, isTeacher }) {
       navigate('/login');
     }
     axios
-      .get(`http://localhost:8080/api/course/notification?course_id=${cid}` + "&current_page=" + page, {
+      .get(`http://fall2324w20g9.int3306.freeddns.org/api/course/notification?course_id=${cid}` + "&current_page=" + page, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }

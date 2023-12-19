@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, message, Card, Radio, Grid, Upload } from 'antd';
+import { Form, Input, Button, DatePicker, message, Card, Radio, Grid } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 
 
 const RegistrationForm = ({ type }) => {
@@ -17,7 +16,11 @@ const RegistrationForm = ({ type }) => {
     setUserType(e.target.value);
   };
 
-
+  const handleImageUpload = (e) => {
+    const imageFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', imageFile);
+  };
   const formatDate = (date) => {
     const newDate = new Date(date);
     const day = newDate.getDate();
@@ -47,7 +50,7 @@ const RegistrationForm = ({ type }) => {
       console.log(formData)
       // Gửi yêu cầu API tại đây
       // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
-      const url = userType === 'student' ? 'http://localhost:8080/api/create/student' : 'http://localhost:8080/api/create/teacher';
+      const url = userType === 'student' ? 'http://fall2324w20g9.int3306.freeddns.org/api/create/student' : 'http://fall2324w20g9.int3306.freeddns.org/api/create/teacher';
       axios.post(url, formData)
         .then(() => {
           console.log('Registration successful:');
@@ -74,7 +77,7 @@ const RegistrationForm = ({ type }) => {
   };
 
   return (
-    <Card title={`Register`} style={{ width: md ? 500 : '100%', margin: 'auto', marginTop: 50, marginBottom: 50 }}>
+    <Card title={`Register`} style={{ width: md ? 400 : '100%', margin: 'auto', marginTop: 50 }}>
       <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
         <Form.Item
           name="name"

@@ -58,7 +58,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     const config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `http://localhost:8080/api/course/${cid}`,
+      url: `http://fall2324w20g9.int3306.freeddns.org/api/course/${cid}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
       },
@@ -78,7 +78,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   }, []);
 
   const handleLeave = () => {
-    axios.delete(`http://localhost:8080/api/student/leave/${cid}`, {
+    axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/student/leave/${cid}`, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
       }
@@ -96,7 +96,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   };
 
   const handleLessonClick = (lessonId) => {
-    const lessonApiUrl = `http://localhost:8080/api/course/lesson/${lessonId}`;
+    const lessonApiUrl = `http://fall2324w20g9.int3306.freeddns.org/api/course/lesson/${lessonId}`;
     axios
       .get(lessonApiUrl, {
         headers: {

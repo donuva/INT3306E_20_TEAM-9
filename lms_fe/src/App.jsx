@@ -60,7 +60,7 @@ function App() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/api/me',
+      url: 'http://fall2324w20g9.int3306.freeddns.org/api/me',
       headers: {
         'Authorization': token,
       }
@@ -111,7 +111,7 @@ function App() {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/api/renewJwt',
+      url: 'http://fall2324w20g9.int3306.freeddns.org/api/renewJwt',
       headers: {
         'Authorization': 'Bearer ' + token
       }

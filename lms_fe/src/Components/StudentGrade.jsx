@@ -21,7 +21,7 @@ const StudentGrade = ({ checkTokenExpiration, isTeacher }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/student/getCourseScore/${cid}`, { // vẫn static
+      .get(`http://fall2324w20g9.int3306.freeddns.org/api/student/getCourseScore/${cid}`, { // vẫn static
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }

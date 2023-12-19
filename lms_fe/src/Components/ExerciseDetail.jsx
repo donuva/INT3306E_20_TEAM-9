@@ -35,7 +35,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
         const config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:8080/api/exercise/${eid}`,
+            url: `http://fall2324w20g9.int3306.freeddns.org/api/exercise/${eid}`,
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('jwt'),
             },
@@ -61,7 +61,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             const config = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: `http://localhost:8080/api/student/getExerciseScore/${eid}`,
+                url: `http://fall2324w20g9.int3306.freeddns.org/api/student/getExerciseScore/${eid}`,
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('jwt'),
                 },
@@ -115,7 +115,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                 const formattedDate = parsedDate.format(outputFormat);
                 const updateConfig = {
                     method: 'put',
-                    url: `http://localhost:8080/api/teacher/exercise/update`,
+                    url: `http://fall2324w20g9.int3306.freeddns.org/api/teacher/exercise/update`,
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
                         'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
     };
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:8080/api/teacher/exercise/delete/${eid}`, {
+        axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/exercise/delete/${eid}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -228,7 +228,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                     formData.append('student.id', localStorage.getItem('student_id'));
                     const submitWorkConfig = {
                         method: 'post',
-                        url: `http://localhost:8080/api/student/exercise/submit`,
+                        url: `http://fall2324w20g9.int3306.freeddns.org/api/student/exercise/submit`,
                         headers: {
                             'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
                             'Content-Type': 'multipart/form-data',
@@ -264,7 +264,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
 
             const config = {
                 method: 'delete',
-                url: `http://localhost:8080/api/student/exercise/delete/${work.id}`,
+                url: `http://fall2324w20g9.int3306.freeddns.org/api/student/exercise/delete/${work.id}`,
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
                 },
@@ -310,7 +310,7 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
             formData.append('id', work.id)
             const submitWorkConfig = {
                 method: 'post',
-                url: `http://localhost:8080/api/student/exercise/submit`,
+                url: `http://fall2324w20g9.int3306.freeddns.org/api/student/exercise/submit`,
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
                     'Content-Type': 'multipart/form-data',
