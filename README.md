@@ -69,11 +69,11 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 
 ## Chi Tiết
 
-- [Đặc tả yêu cầu](./docs/SRS.md)
+- [Đặc tả yêu cầu](./.docs/SRS.md)
 - [Thiết kế giao diện](https://www.figma.com/file/63NtzLAeJcc4K0naM92C0P/Education-Management-System?type=design&node-id=0%3A1&mode=design&t=N8Az3P8c6qr1EGbq-1)
 - [Lược đồ cơ sở dữ liệu](./.docs/schema.md)
-- [Công cụ phát triển](./docs/tools.md)
-- [Hướng dẫn cài đặt và chạy ứng dụng](./docs/installation.md)
+- [Công cụ phát triển](./.docs/tools.md)
+- [Hướng dẫn cài đặt và chạy ứng dụng](./.docs/installation.md)
 - 
 
 ## Minh hoạ
