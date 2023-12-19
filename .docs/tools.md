@@ -10,7 +10,7 @@
 ### Runtime, cơ sở dữ liệu
 
 - **Node.js 10+**. Nếu sử dụng Windows, có thể tải trực tiếp file `.msi` từ [https://nodejs.org](https://nodejs.org), còn nếu sử dụng Linux, cài đặt bằng [nvm](https://github.com/nvm-sh/nvm)
-- **MySQL** 
+- **MySQL**. Tải & cài đặt [trên Windows](https://dev.mysql.com/downloads/installer/), hoặc [Linux](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html).
 
 ## IDE
 
@@ -27,8 +27,4 @@
 
 ## Deploy Server
 
-<!-- * [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/) -->
-<!-- * [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-* [![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)](https://redux.js.org/)
-* [![Ant Design](https://img.shields.io/badge/-AntDesign-%230170FE?style=for-the-badge&logo=ant-design&logoColor=white)](https://ant.design/)
-* [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/) -->
+DDNS Server của thầy.   
