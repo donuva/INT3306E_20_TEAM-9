@@ -11,18 +11,26 @@
     <br>
 </p>
 
-## 📝 Table of Contents
+## 📝 Mục Lục
 
-- [About The Project](#about-the-project)
-- [Key Features](#key-features)
-- [Built With](#built-with)
-- [Screen Shots](#screen-shots)
+- [Giới Thiệu](#Giới-Thiệu)
+- [Tổng Quan](#Tổng-Quan---Chức-Năng-Chính)
+- [Minh hoạ](#Minh-hoạ)
 - [Full Demo](#full-demo)
-- [Acknowledgements](#acknowledgements)
 
-## About The Project
 
-lorem ipsum
+## Giới Thiệu
+
+Đây là project cuối kì của môn "Phát triển ứng dụng web", thiết kế một Hệ thống quản lý học tập (Learning Management System, LMS) trên website. 
+
+
+### Nhóm gồm các thành viên:
+  - Đoàn Văn Nguyên: 21020111
+  - Nguyễn Minh Quang: 21020230
+  - Nguyễn Quang Huy: 21020633
+  - Hà Nguyễn Anh Sơn: 21021537
+  - Nguyễn Đức Trọng: 21021546
+
 
 <!-- <p align="center">
   <br>
@@ -34,9 +42,17 @@ lorem ipsum
 
 This repository contains the web portion (front-end | backend), but doesn't include the AI models. -->
 
-## Key Features
+## Tổng Quan - Chức Năng Chính
 
-lorem ipsum
+
+- Tài khoản xác thực ba loại người dùng khác nhau: Student - Teacher - Admin.
+- Thêm / sửa / xoá các khoá học, với trình tìm kiếm / hiển thị / truy cập khoá học. 
+- Hệ thống thông báo dạng Push Notification.
+- Thêm bài học / bài tập với tệp `.pdf` hoặc video Youtube. 
+- Hệ thống chấm điểm và xem điểm dưới dạng bảng. 
+
+
+
 <!-- * Authentication
 * Authorization for diffrent uesr roles (student | instructor | admin)
 * Youtube integration for course Lectures
@@ -51,15 +67,17 @@ lorem ipsum
 * Text moderation system -->
 
 
-## Built With
-* [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-<!-- * [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-* [![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)](https://redux.js.org/)
-* [![Ant Design](https://img.shields.io/badge/-AntDesign-%230170FE?style=for-the-badge&logo=ant-design&logoColor=white)](https://ant.design/)
-* [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/) -->
+## Chi Tiết
 
-## Screenshots
-| login screen                                        | Courses Screen                          |
+- [Đặc tả yêu cầu](./.docs/SRS.md)
+- [Thiết kế giao diện](https://www.figma.com/file/63NtzLAeJcc4K0naM92C0P/Education-Management-System?type=design&node-id=0%3A1&mode=design&t=N8Az3P8c6qr1EGbq-1)
+- [Lược đồ cơ sở dữ liệu](./.docs/schema.md)
+- [Công cụ phát triển](./.docs/tools.md)
+- [Hướng dẫn cài đặt và chạy ứng dụng](./.docs/installation.md)
+- 
+
+## Minh hoạ
+<!-- | login screen                                        | Courses Screen                          |
 | ----------------------------                        | ----------------------------------------|
 | ![login screen][ref-login]                          | ![courses screen][ref-courses-screen]   |
 | Lectures Screen                                     | Modules Screen                          |
@@ -69,7 +87,7 @@ lorem ipsum
 | Exam taking Screen                                  | Grading Screen                          |
 | ![Exam taking Screen][ref-exam-taking-screen]       | ![Grading Screen][ref-grading-screen]   |
 | Grade Book Screen                                   | Course Settings Screen                  | 
-| ![Grade Book Screen][ref-grade-book-screen]         | ![Course Settings Screen][ref-course-settings-screen] |
+| ![Grade Book Screen][ref-grade-book-screen]         | ![Course Settings Screen][ref-course-settings-screen] | -->
 
 ## Full Demo
 
@@ -79,31 +97,6 @@ TODO: may include a youtube video demo
   <img width=640px height=360px src="https://user-images.githubusercontent.com/30159212/211315771-ebdf99ba-fbf1-42d2-a2f8-c6fabf788040.png" alt="IMAGE ALT TEXT HERE" border="10"/>
 </a> -->
 
-## Acknowledgements
-
-This project could not be possible without these members:
-
-TODO: members' names
-
-- 
-- 
-- 
-- 
-
-TODO: Add project screenshot links
-
-<!-- [ref-login]: 
-[ref-courses-screen]: 
-[ref-lectures-screen]: 
-[ref-modules-screen]: 
-[ref-assessment-creation]: 
-[ref-assessment-view]: 
-[ref-exam-taking-screen]: 
-[ref-grading-screen]: 
-[ref-grade-book-screen]: 
-[ref-course-settings-screen]: 
-
- -->
 
 
 
