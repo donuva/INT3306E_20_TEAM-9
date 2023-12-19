@@ -33,7 +33,7 @@ export default function AllCourse({ checkTokenExpiration }) {
     }
   }, [])
   useEffect(() => {
-    const baseUrl = 'http://localhost:8080/api/course/search';
+    const baseUrl = 'http://fall2324w20g9.int3306.freeddns.org/api/course/search';
     const params = {};
     if (page !== null) {
       params.current_page = page;

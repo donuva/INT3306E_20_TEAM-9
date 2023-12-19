@@ -28,7 +28,7 @@ const AddNoti = ({ checkTokenExpiration, isTeacher }) => {
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/api/teacher/course/notification',
+        url: 'http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/notification',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')

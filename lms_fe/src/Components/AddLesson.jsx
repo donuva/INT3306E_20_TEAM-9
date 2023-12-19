@@ -59,7 +59,7 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/api/teacher/course/lesson',
+        url: 'http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/lesson',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },

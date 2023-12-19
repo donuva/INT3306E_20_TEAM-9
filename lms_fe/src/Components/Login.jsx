@@ -20,7 +20,7 @@ const Login = ({ setLoggedIn }) => {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "http://localhost:8080/api/login",
+            url: "http://fall2324w20g9.int3306.freeddns.org/api/login",
             data: data,
         };
 
@@ -40,7 +40,7 @@ const Login = ({ setLoggedIn }) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/api/me',
+            url: 'http://fall2324w20g9.int3306.freeddns.org/api/me',
             headers: {
                 'Authorization': token,
             }
@@ -53,7 +53,7 @@ const Login = ({ setLoggedIn }) => {
                 console.log(response.data.role);
                 if (response.data.role === 'TEACHER') {
                     console.log("TEACHER");
-                    axios.get('http://localhost:8080/api/teacher/me', {
+                    axios.get('http://fall2324w20g9.int3306.freeddns.org/api/teacher/me', {
                         headers: {
                             'Authorization': token
                         }
@@ -66,7 +66,7 @@ const Login = ({ setLoggedIn }) => {
                     navigate('/app/courses');
                 } else {
                     console.log("STUDENT");
-                    axios.get('http://localhost:8080/api/student/me', {
+                    axios.get('http://fall2324w20g9.int3306.freeddns.org/api/student/me', {
                         headers: {
                             'Authorization': token
                         }
