@@ -22,16 +22,16 @@ export default function Sidebar({ cid, isTeacher, selected }) {
 
     return (
 
-        <div className='sidenav' style={{ width: collapsed ? 80 : 200, backgroundColor: '#001529' }}>
+        <div className='sidenav' style={{ width: collapsed ? 80 : 200, backgroundColor: '#ECE3CE' }}>
 
             <Menu
                 mode="inline"
-                theme="dark"
                 inlineCollapsed={collapsed}
                 defaultSelectedKeys={[selected]}
-
+                theme='light'
+                style={{ backgroundColor: '#ECE3CE' }}
             >
-                <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#001529', color: 'white', border: '0px' }}>
+                <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#ECE3CE', color: 'black', border: '0px' }}>
                     {collapsed ? <RightOutlined /> : <LeftOutlined />}
                 </Button>
                 <Menu.Item key="0" icon={<AppstoreOutlined />}>

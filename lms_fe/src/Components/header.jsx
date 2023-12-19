@@ -11,9 +11,10 @@ const FlexedDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  background: #E9E9E9;
+  background: #3A4D39;
   width: calc(100% );
   padding:15px;
+
 `
 
 const Header = ({ isLoggedIn, setLoggedIn }) => {
