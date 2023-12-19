@@ -48,9 +48,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
   }, [page]); // Sử dụng page trong dependency array để cập nhật khi page thay đổi
 
 
-  if (pageInfo.totalElements == 0) {
-    return (<NoData />)
-  }
+
   const handlePageChange = (newPage) => {
     setSearchParams({ current_page: newPage });
   };
@@ -84,6 +82,10 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
         <Link to={'/app/create-course'}>
           <Button type='primary'>Create new course</Button>
         </Link>
+      }
+      {
+        pageInfo.totalElements == 0 &&
+        <NoData />
       }
       <div className="course-grid">
         {courses.map((course) => (
