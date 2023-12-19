@@ -48,11 +48,8 @@ const Login = ({ setLoggedIn }) => {
 
         axios.request(config)
             .then((response) => {
-                console.log('Authorization' + `Bearer ${token}`);
                 localStorage.setItem('user', JSON.stringify(response.data));
-                console.log(response.data.role);
                 if (response.data.role === 'TEACHER') {
-                    console.log("TEACHER");
                     axios.get('http://fall2324w20g9.int3306.freeddns.org/api/teacher/me', {
                         headers: {
                             'Authorization': token
@@ -65,7 +62,6 @@ const Login = ({ setLoggedIn }) => {
                     setLoggedIn(true)
                     navigate('/app/courses');
                 } else {
-                    console.log("STUDENT");
                     axios.get('http://fall2324w20g9.int3306.freeddns.org/api/student/me', {
                         headers: {
                             'Authorization': token

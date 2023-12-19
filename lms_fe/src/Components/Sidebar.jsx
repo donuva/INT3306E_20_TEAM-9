@@ -27,6 +27,7 @@ export default function Sidebar({ cid, isTeacher, selected }) {
 
             <Menu
                 mode="inline"
+                theme="light"
                 inlineCollapsed={collapsed}
                 defaultSelectedKeys={[selected]}
                 theme='light'
@@ -54,7 +55,6 @@ export default function Sidebar({ cid, isTeacher, selected }) {
                 <Menu.Item key="3" icon={<CommentOutlined />}>
                     <Link style={{ textDecoration: 'none' }} to={`/app/courses/${cid}/forum`}>Forum</Link>
                 </Menu.Item>
-
                 {isTeacher === true &&
                     <Menu.Item key="4" icon={<ExperimentOutlined />}>
                         <Link style={{ textDecoration: 'none' }} to={`/app/addExercise/${cid}`}>New Exercise</Link>

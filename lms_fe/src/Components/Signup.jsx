@@ -47,13 +47,11 @@ const RegistrationForm = ({ type }) => {
         formData.append('file', values.file[0].originFileObj);
       }
 
-      console.log(formData)
       // Gửi yêu cầu API tại đây
       // Sử dụng fetch hoặc thư viện tương tự để gửi yêu cầu API đến server
       const url = userType === 'student' ? 'http://fall2324w20g9.int3306.freeddns.org/api/create/student' : 'http://fall2324w20g9.int3306.freeddns.org/api/create/teacher';
       axios.post(url, formData)
         .then(() => {
-          console.log('Registration successful:');
           message.success('Registration successful');
           navigate('/login')
         })

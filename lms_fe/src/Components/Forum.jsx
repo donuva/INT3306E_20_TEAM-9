@@ -58,9 +58,6 @@ function Forum({ checkTokenExpiration, isTeacher }) {
 
         setComments(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
         setPageInfo(response.data);
-
-        console.log("đây là comment ")
-        console.log(comments.course_id)
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -152,18 +149,6 @@ function Forum({ checkTokenExpiration, isTeacher }) {
 
                 title="Discussion"
               />
-              {/* {discussion.user._id === user._id && (
-              // <Button
-              //   disabled={!(discussion.user._id === user._id)}
-              //   className="deleteButton"
-              //   onClick={() => {
-              //     // dispatch(removeDiscussion(discussion._id))
-              //     console.log("deleted")
-              //   }}
-              // >
-              //   delete
-              // </Button>
-            )} */}
             </div>
           }
         >
@@ -187,18 +172,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
                   <span style={{ display: "flex", alignContent: "left" }} >
                     <Avatar src={"/storage/" + comment.user.ava_url} />
                     <span style={{ paddingTop: "10px", paddingLeft: "10px" }}>{' ' + comment.user.username}</span>
-                    {/* { && (
-                  <Button
-                    disabled={!(comment.user._id === Luser._id)}
-                    className="deleteButton"
-                    onClick={() => {
-                      // dispatch(removeComment(dId, comment))
-                      console.log("lol")
-                    }}
-                  >
-                    delete
-                  </Button>
-                )} */}
+
                   </span>
                 }
               >
