@@ -11,7 +11,7 @@ const FlexedDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  background: #4F6F52;
+  background: #3A4D39;
   width: calc(100% );
   padding:15px;
 `
