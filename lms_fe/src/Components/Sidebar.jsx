@@ -18,7 +18,6 @@ export default function Sidebar({ cid, isTeacher, selected }) {
     const [collapsed, setCollapsed] = useState(true);
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
-        console.log(selected)
     };
 
     return (
@@ -26,6 +25,7 @@ export default function Sidebar({ cid, isTeacher, selected }) {
         <div className='sidenav' style={{ width: collapsed ? 80 : 200, backgroundColor: '#ECE3CE' }}>
 
             <Menu
+                style={{ backgroundColor: '#ECE3CE', border: '0' }}
                 mode="inline"
                 theme="light"
                 inlineCollapsed={collapsed}
