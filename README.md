@@ -91,12 +91,11 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 
 ## Full Demo
 
-TODO: may include a youtube video demo
-
 <!-- <a href="http://www.youtube.com/watch?feature=player_embedded&v=uvtkwOpwAYU" target="_blank">
   <img width=640px height=360px src="https://user-images.githubusercontent.com/30159212/211315771-ebdf99ba-fbf1-42d2-a2f8-c6fabf788040.png" alt="IMAGE ALT TEXT HERE" border="10"/>
 </a> -->
 
-
-
+## Run server
+java -jar backend_lms-lms_g9.release.jar
+/etc/jupyter/bin/expose 8080
 
