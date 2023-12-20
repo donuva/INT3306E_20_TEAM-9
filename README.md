@@ -74,7 +74,6 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 - [Lược đồ cơ sở dữ liệu](./.docs/schema.md)
 - [Công cụ phát triển](./.docs/tools.md)
 - [Hướng dẫn cài đặt và chạy ứng dụng](./.docs/installation.md)
-- 
 
 ## Minh hoạ
 <!-- | login screen                                        | Courses Screen                          |
