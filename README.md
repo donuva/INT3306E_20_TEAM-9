@@ -96,6 +96,8 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 </a> -->
 
 ## Run server
+```
 java -jar backend_lms-lms_g9.release.jar
 /etc/jupyter/bin/expose 8080
+```
 
