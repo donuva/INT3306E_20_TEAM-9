@@ -19,4 +19,6 @@ public interface NotificationRepo extends JpaRepository<Notification, Integer> {
     @Query("select n from Notification n where n.course.id in :x")
     Page<Notification> findAllByStudent(@Param("x") List<Integer> courses_id, Pageable pageable);
 
+    @Query("SELECT n FROM Notification n WHERE n.course.id = :x")
+    List<Notification> findAllByCourse(@Param("x") int course_id);
 }

@@ -1,13 +1,11 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.*;
-import com.example.backend_lms.entity.Course;
-import com.example.backend_lms.entity.CourseEnroll;
-import com.example.backend_lms.entity.Student;
-import com.example.backend_lms.entity.Teacher;
+import com.example.backend_lms.entity.*;
 import com.example.backend_lms.exception.NotAllowedException;
 import com.example.backend_lms.repo.*;
 import jakarta.transaction.Transactional;
+import jakarta.transaction.UserTransaction;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,6 +38,12 @@ public class CourseService {
 
     @Autowired
     CourseEnrollRepo courseEnrollRepo;
+
+    @Autowired
+    NotificationRepo notificationRepo;
+
+    @Autowired
+    ExerciseRepo exerciseRepo;
 
     public boolean checkIsStudentEnrolled(int student_id, int course_id) {
         if (courseRepo.findById(course_id).isPresent()) {
@@ -289,5 +295,31 @@ public class CourseService {
             pageDTO.setTotalElements(page.getTotalElements());
             pageDTO.setData(page.stream().map(this::convertListing).collect(Collectors.toList()));
             return pageDTO;
+        }
+        public CalendarDTO courseCalendar (int course_id){
+            CalendarDTO calendarDTO = new CalendarDTO();
+            List<EventDTO> eventDTOS = new ArrayList<>();
+            List<Notification> notifications = notificationRepo.findAllByCourse(course_id);
+            List<Exercise> exercises = exerciseRepo.findByCourseId(course_id);
+            for(Notification notification: notifications){
+                EventDTO eventDTO = new EventDTO();
+                eventDTO.setId(notification.getId());
+                eventDTO.setType("success");
+                eventDTO.setTitle(notification.getTopic());
+                eventDTO.setDate(notification.getCreatedAt());
+                eventDTOS.add(eventDTO);
+            }
+
+            for(Exercise exercise: exercises){
+                EventDTO eventDTO = new EventDTO();
+                eventDTO.setId(exercise.getId());
+                eventDTO.setType("error");
+                eventDTO.setTitle(exercise.getTitle());
+                eventDTO.setDate(exercise.getDeadline());
+                eventDTOS.add(eventDTO);
+            }
+
+            calendarDTO.setEvents(eventDTOS);
+            return calendarDTO;
         }
     }

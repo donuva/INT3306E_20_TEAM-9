@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -192,5 +193,10 @@ public class CourseController {
         UserDTO userDTO = userService.findByUsername(username);
         StudentDTO studentDTO = studentService.findByUserId(userDTO.getId());
         return ResponseEntity.ok(courseService.getCoursePreview(cid, studentDTO));
+    }
+
+    @GetMapping("/api/course/{cid}/calendar")
+    public ResponseEntity<CalendarDTO> getCalendar(@PathVariable("cid") int cid){
+        return ResponseEntity.ok(courseService.courseCalendar(cid));
     }
 }

@@ -13,4 +13,5 @@ public interface ExerciseRepo extends JpaRepository<Exercise, Integer> {
     @Query("select e from Exercise e where e.course.id =:x")
     List<Exercise> findByCourseId(@Param("x") int course_id);
 
+
 }
