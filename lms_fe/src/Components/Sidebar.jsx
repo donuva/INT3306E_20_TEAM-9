@@ -18,6 +18,7 @@ export default function Sidebar({ cid, isTeacher, selected }) {
     const [collapsed, setCollapsed] = useState(true);
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
+        console.log(selected)
     };
 
     return (
@@ -30,10 +31,9 @@ export default function Sidebar({ cid, isTeacher, selected }) {
                 theme="light"
                 inlineCollapsed={collapsed}
                 defaultSelectedKeys={[selected]}
-                theme='light'
-                style={{ backgroundColor: '#ECE3CE' }}
+
             >
-                <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#ECE3CE', color: 'black', border: '0px' }}>
+                <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#ECE3CE', color: '#3A4D39', border: '0px' }}>
                     {collapsed ? <RightOutlined /> : <LeftOutlined />}
                 </Button>
                 <Menu.Item key="0" icon={<AppstoreOutlined />}>
@@ -62,7 +62,7 @@ export default function Sidebar({ cid, isTeacher, selected }) {
                 }
                 {isTeacher === true &&
                     <Menu.Item key="5" icon={<FileTextOutlined />}>
-                        <Link style={{ textDecoration: 'none' }} to={`/app/addLesson/${cid}`}>New Lesson</Link>
+                        <Link style={{ textDecoration: 'none'}} to={`/app/addLesson/${cid}`}>New Lesson</Link>
                     </Menu.Item>
                 }
 
