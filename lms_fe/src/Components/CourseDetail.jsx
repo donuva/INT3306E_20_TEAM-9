@@ -184,7 +184,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
             {isTeacher && (
 
               <Button type='default' style={{ alignItems: 'center' }} onClick={handleEditCourse}>
-                Change course info
+                Edit
               </Button>
             )}
           </div>
