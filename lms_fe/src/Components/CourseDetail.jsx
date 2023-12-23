@@ -132,23 +132,6 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     setModalVisible(false);
   };
 
-  const handleDeleteCourse = () => {
-    axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/${cid}`, {
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-      }
-    }).then((response) => {
-      alert('Deleted course!')
-      navigate('/app/courses')
-    }).catch((error) => {
-      console.log(error);
-      messageApi.open({
-        type: 'error',
-        content: 'Delete course fail!',
-        duration: 5,
-      });
-    })
-  }
 
   const handleSaveEditCourse = () => {
     // // Gửi yêu cầu cập nhật lên server
@@ -182,18 +165,6 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
       });
   };
 
-  const items = [
-
-    {
-      label: <Button type='link' style={{ width: '100%' }} onClick={handleEditCourse}>Edit</Button>
-      ,
-      key: '0',
-    },
-    {
-      label: <Button type='link' style={{ width: '100%', color: 'red' }} onClick={handleDeleteCourse}>Delete</Button>,
-      key: '1',
-    },
-  ];
 
 
   return (
@@ -211,17 +182,10 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
                 <ContainerOutlined /> <strong>Description: </strong>{course.description}</p>
             </article>
             {isTeacher && (
-              <div style={{ marginLeft: 'auto', marginRight: '0px' }}>
-                <Dropdown arrow
-                  menu={{ items }}
-                  trigger={['click']}
-                  placement='bottom'
-                >
-                  <Button type='default' style={{ alignItems: 'center' }}>
-                    Change course info
-                  </Button>
-                </Dropdown>
-              </div>
+
+              <Button type='default' style={{ alignItems: 'center' }} onClick={handleEditCourse}>
+                Change course info
+              </Button>
             )}
           </div>
           <div style={{ marginLeft: '30px', marginRight: '30px' }}>
