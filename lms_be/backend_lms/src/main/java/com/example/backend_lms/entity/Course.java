@@ -23,11 +23,11 @@ public class Course extends TimeAuditable{
     @ManyToOne
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Lesson> lessonList;
 
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Exercise> exerciseList;
 
     @ManyToMany(fetch = FetchType.LAZY)

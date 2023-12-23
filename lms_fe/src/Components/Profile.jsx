@@ -125,7 +125,7 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
           <Meta style={{
             display: 'block'
           }}
-            avatar={<Avatar size={{
+            avatar={<Avatar style={{ margin: 'auto' }} size={{
               xs: 24,
               sm: 32,
               md: 40,

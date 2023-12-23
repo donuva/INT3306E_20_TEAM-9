@@ -1,29 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Collapse, Badge, Button, Card, List, Menu, message, Modal } from 'antd'; // Include Modal
+import React, { useState, useEffect } from 'react';
+import { Button, List, message, Modal, Input, Dropdown, Space, Menu } from 'antd'; // Include Modal
 import {
-  ExperimentOutlined,
-  NotificationOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  BarChartOutlined,
-  AppstoreOutlined,
   ContainerOutlined,
   BulbOutlined,
   UserOutlined,
-  RightOutlined,
-  LeftOutlined,
-  DashboardOutlined,
   FormOutlined,
   BookOutlined,
+  DownOutlined,
+  MoreOutlined,
+  DashOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { AppContext } from './AppContext';
 
 const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const navigate = useNavigate();
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+
+  const handleEditModalCancel = () => {
+    setEditModalVisible(false);
+  };
+
+  const handleEditCourse = () => {
+    setEditModalVisible(true);
+  };
+
+
 
   const [messageApi, contextHolder] = message.useMessage();
   const [userData, setUserData] = useState({
@@ -77,6 +82,12 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     });
   }, []);
 
+  // const [editCourseInfo, setEditCourseInfo] = useState({
+  //   name: course.name,
+  //   category: course.category,
+  //   description: course.description,
+  // });
+
   const handleLeave = () => {
     axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/student/leave/${cid}`, {
       headers: {
@@ -121,6 +132,70 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     setModalVisible(false);
   };
 
+  const handleDeleteCourse = () => {
+    axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/${cid}`, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+      }
+    }).then((response) => {
+      alert('Deleted course!')
+      navigate('/app/courses')
+    }).catch((error) => {
+      console.log(error);
+      messageApi.open({
+        type: 'error',
+        content: 'Delete course fail!',
+        duration: 5,
+      });
+    })
+  }
+
+  const handleSaveEditCourse = () => {
+    // // Gửi yêu cầu cập nhật lên server
+
+    // setCourse((prev) => ({
+    //   ...prev,
+    //   description: editCourseInfo.description,
+    //   name: editCourseInfo.name,
+    //   category: editCourseInfo.category,
+    // }));
+
+
+    axios
+      .put(
+        `http://fall2324w20g9.int3306.freeddns.org/api/teacher/course`,
+        course,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+          },
+        }
+      )
+      .then((response) => {
+        messageApi.success('Course updated successfully!');
+
+        handleEditModalCancel();
+      })
+      .catch((error) => {
+        console.error('Error updating course:', error);
+        messageApi.error('Failed to update course. Please try again.');
+      });
+  };
+
+  const items = [
+
+    {
+      label: <Button type='link' style={{ width: '100%' }} onClick={handleEditCourse}>Edit</Button>
+      ,
+      key: '0',
+    },
+    {
+      label: <Button type='link' style={{ width: '100%', color: 'red' }} onClick={handleDeleteCourse}>Delete</Button>,
+      key: '1',
+    },
+  ];
+
+
   return (
     <>
       {contextHolder}
@@ -129,14 +204,27 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
 
         <div style={{ flex: 1, marginTop: '30px' }}>
           <h1>{course.name}</h1>
-          <div className='course_info' style={{ margin: '50px 40px', textAlign: 'left' }}>
-            <article>
+          <div className='course_info' style={{ margin: '50px 40px', textAlign: 'left', display: '' }}>
+            <article style={{ display: 'flex' }}>
               <p><UserOutlined /> <strong>Teacher: </strong> {teacher.name} <br />
                 <BulbOutlined /> <strong>Category: </strong> {course.category} <br />
                 <ContainerOutlined /> <strong>Description: </strong>{course.description}</p>
             </article>
+            {isTeacher && (
+              <div style={{ marginLeft: 'auto', marginRight: '0px' }}>
+                <Dropdown arrow
+                  menu={{ items }}
+                  trigger={['click']}
+                  placement='bottom'
+                >
+                  <Button type='default' style={{ alignItems: 'center' }}>
+                    Change course info
+                  </Button>
+                </Dropdown>
+              </div>
+            )}
           </div>
-          <div style={{ marginLeft: '30px' }}>
+          <div style={{ marginLeft: '30px', marginRight: '30px' }}>
             <hr></hr>
             <h6>Exercise List</h6>
             <List
@@ -151,7 +239,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
               )}
             />
 
-            <h6 style={{ marginTop: '20px' }}>Lesson List</h6>
+            <h6 style={{ marginTop: '100px' }}>Lesson List</h6>
             <List
               bordered
               dataSource={lessonList}
@@ -170,6 +258,39 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
               Leave course
             </Button>
           )}
+
+          <Modal
+            title="Edit Course"
+            visible={editModalVisible}
+            onCancel={handleEditModalCancel}
+            onOk={handleSaveEditCourse}
+          >
+            <label htmlFor="edit-course-name">Course Name:</label>
+            <Input
+              id="edit-course-name"
+              value={course.name}
+              onChange={(e) =>
+                setCourse((prev) => ({ ...prev, name: e.target.value }))
+              }
+            />
+            <label htmlFor="edit-course-category">Category:</label>
+            <Input
+              id="edit-course-category"
+              value={course.category}
+              onChange={(e) =>
+                setCourse((prev) => ({ ...prev, category: e.target.value }))
+              }
+            />
+            <label htmlFor="edit-course-description">Description:</label>
+            <Input.TextArea
+              id="edit-course-description"
+              value={course.description}
+              onChange={(e) =>
+                setCourse((prev) => ({ ...prev, description: e.target.value }))
+              }
+            />
+          </Modal>
+
 
           {/* Modal for displaying lesson details */}
           <Modal
@@ -200,7 +321,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
             </p>
           </Modal>
         </div>
-      </div>
+      </div >
     </>
   );
 };
