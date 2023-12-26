@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Upload, Button, message, Card, Menu } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import {
-  NotificationOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  AppstoreOutlined,
-  RightOutlined,
-  LeftOutlined,
-  ExperimentOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
+import Meta from 'antd/lib/card/Meta'
 
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';

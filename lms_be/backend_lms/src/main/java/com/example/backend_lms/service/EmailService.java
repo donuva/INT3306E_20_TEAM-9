@@ -42,4 +42,22 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
+    public void sendResetCode(String to, String code){
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message, StandardCharsets.UTF_8.name());
+
+        String subject = "Reset password code";
+        Context ctx = new Context();
+        ctx.setVariable("code", code);
+        String body = springTemplateEngine.process("reset.html",ctx);
+        try{
+            messageHelper.setTo(to);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(body, true);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        javaMailSender.send(message);
+    }
+
 }

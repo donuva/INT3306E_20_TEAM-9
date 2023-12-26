@@ -27,6 +27,8 @@ import CoursePreview from './Components/CoursePreview';
 import RequestList from './Components/RequestList';
 import Articles from './Components/Articles';
 import CourseCalendar from './Components/CourseCalendar';
+import NoData from './Components/NoData';
+import ChangePassword from './Components/ChangePassword';
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   const isTeacher = user && user.role === 'TEACHER' ? true : false;
@@ -171,9 +173,10 @@ function App() {
 
             <Route path='/app/courses/:cid/calendar' element={<CourseCalendar checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher}></CourseCalendar>} />
 
-
+            <Route path='/changePassword' element={<ChangePassword />} />
 
             <Route path="/app/articles" element={<Articles />} />
+            <Route path='*' element={<NoData />}></Route>
           </Routes>
           <Footer />
         </AppProvider>

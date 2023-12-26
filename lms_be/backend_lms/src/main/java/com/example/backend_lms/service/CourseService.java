@@ -225,6 +225,11 @@ public class CourseService {
             if(course.getStudentList().contains(student)){
                 return;
             }
+            CourseEnroll courseEnroll = courseEnrollRepo.findByCourseAndStudent(student_id, course_id).orElse(null);
+            if(courseEnroll!=null){
+                courseEnroll.setStatus(1);
+                courseEnrollRepo.save(courseEnroll);
+            }
             course.getStudentList().add(student);
             assert student != null;
             student.getCourseList().add(course);

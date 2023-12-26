@@ -1,14 +1,18 @@
 package com.example.backend_lms.service;
 
 import com.example.backend_lms.dto.UserDTO;
+import com.example.backend_lms.entity.ResetRequest;
 import com.example.backend_lms.entity.User;
-import com.example.backend_lms.exception.DuplicateKeyException;
+import com.example.backend_lms.repo.ResetRequestRepo;
 import com.example.backend_lms.repo.UserRepo;
-import com.example.backend_lms.validator.ValidateRegister;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +29,16 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    ResetRequestRepo resetRequestRepo;
+
+    @Autowired
+    EmailService emailService;
+
+    @Value("${jwt.secret:123456}")
+    private String secretKey;
+
 
     public UserDTO convert(User user) {
         return new ModelMapper().map(user, UserDTO.class);
@@ -48,14 +63,17 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void updatePassword(int user_id, String password) throws NotFoundException {
-
-        User current_user = userRepo.findById(user_id).orElse(null);
+    public void updatePassword( String password, String token) throws NotFoundException {
+        String username = checkTokenValid(token);
+        if(username==null){
+            throw new NotFoundException("Token invalid");
+        }
+        User current_user = userRepo.findByUsername(username);
         if (current_user != null) {
             current_user.setPassword(new BCryptPasswordEncoder().encode(password));
             userRepo.save(current_user);
         } else {
-            throw new NotFoundException("User_id không hợp lệ");
+            throw new NotFoundException("User not found");
         }
     }
 
@@ -93,7 +111,7 @@ public class UserService implements UserDetailsService {
     public UserDTO updateUser(UserDTO userDTO) throws NotFoundException {
         User user = userRepo.findById(userDTO.getId()).orElse(null);
         if (user != null) {
-            if(userDTO.getAva_url()==null){
+            if (userDTO.getAva_url() == null) {
                 userDTO.setAva_url(user.getAva_url());
             }
             userDTO.setPassword(user.getPassword());
@@ -105,4 +123,42 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void resetPassword(String username) {
+        User user = userRepo.findByUsername(username);
+        if (user != null) {
+
+            Claims claims = Jwts.claims().setSubject(username);
+            Date now = new Date();
+            long validity = 5;
+            Date exp = new Date(now.getTime() + validity * 60 * 1000);
+            ResetRequest resetCode = new ResetRequest();
+            resetCode.setUsername(username);
+            resetCode.setExpiredDate(exp);
+            resetRequestRepo.save(resetCode);
+            emailService.sendResetCode(user.getEmail(), Jwts.builder().setClaims(claims)
+                    .setIssuedAt(now)
+                    .setExpiration(exp)
+                    .signWith(SignatureAlgorithm.HS256, secretKey)
+                    .compact());
+
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    public String checkTokenValid(String token) {
+        try {
+           String username= Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+            ResetRequest resetRequest =  resetRequestRepo.findByUsername(username);
+            if(resetRequest!=null&&resetRequest.getExpiredDate().after(new Date())) {
+               resetRequestRepo.delete(resetRequest);
+                return username;
+            }
+        } catch (Exception ignored) {
+
+        }
+        return null;
+    }
+
 }
+

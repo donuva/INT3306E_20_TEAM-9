@@ -199,4 +199,9 @@ public class CourseController {
     public ResponseEntity<CalendarDTO> getCalendar(@PathVariable("cid") int cid){
         return ResponseEntity.ok(courseService.courseCalendar(cid));
     }
+
+    @PostMapping("/api/teacher/course/{course_id}/addStudent/{student_id}")
+    public void addStudent(@PathVariable("course_id") int course_id, @PathVariable("student_id") int student_id) throws NotFoundException {
+        courseService.addStudent(course_id, student_id);
+    }
 }

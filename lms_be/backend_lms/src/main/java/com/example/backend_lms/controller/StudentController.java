@@ -89,4 +89,10 @@ public class StudentController {
         }
         return ResponseEntity.ok(studentService.search(name, current_page));
     }
+
+    @GetMapping("/api/search/student/notInCourse/{course_id}")
+    public ResponseEntity<List<StudentDTO>> searchStudentNotInCourse(@PathVariable("course_id") int course_id,
+            @RequestParam(name = "name") String name) {
+        return ResponseEntity.ok(studentService.searchStudentNotInCourse(course_id, name));
+    }
 }
