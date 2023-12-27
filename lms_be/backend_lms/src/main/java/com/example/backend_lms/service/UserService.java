@@ -3,6 +3,7 @@ package com.example.backend_lms.service;
 import com.example.backend_lms.dto.UserDTO;
 import com.example.backend_lms.entity.ResetRequest;
 import com.example.backend_lms.entity.User;
+import com.example.backend_lms.exception.NotAllowedException;
 import com.example.backend_lms.repo.ResetRequestRepo;
 import com.example.backend_lms.repo.UserRepo;
 import io.jsonwebtoken.Claims;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.assertj.core.util.DateUtil.now;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -66,7 +69,7 @@ public class UserService implements UserDetailsService {
     public void updatePassword( String password, String token) throws NotFoundException {
         String username = checkTokenValid(token);
         if(username==null){
-            throw new NotFoundException("Token invalid");
+            throw new NotAllowedException("Token invalid");
         }
         User current_user = userRepo.findByUsername(username);
         if (current_user != null) {
@@ -124,6 +127,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void resetPassword(String username) {
+        resetRequestRepo.deleteAll();
         User user = userRepo.findByUsername(username);
         if (user != null) {
 
@@ -147,15 +151,19 @@ public class UserService implements UserDetailsService {
     }
 
     public String checkTokenValid(String token) {
+
         try {
            String username= Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
             ResetRequest resetRequest =  resetRequestRepo.findByUsername(username);
-            if(resetRequest!=null&&resetRequest.getExpiredDate().after(new Date())) {
+            if(resetRequest==null){
+                System.out.println("Null rooif");
+            }
+            if(resetRequest!=null) {
                resetRequestRepo.delete(resetRequest);
                 return username;
             }
         } catch (Exception ignored) {
-
+            System.out.println("catch");
         }
         return null;
     }

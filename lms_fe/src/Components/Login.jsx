@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = ({ setLoggedIn }) => {
     const [submit, setSubmit] = useState(false);
@@ -158,6 +158,10 @@ const Login = ({ setLoggedIn }) => {
                         >
                             Sign up
                         </Button>
+                    </Form.Item>
+                    <Form.Item>
+                        <Link to="/changePassword">Forgot password</Link>
+
                     </Form.Item>
                     {loginError && (
                         <p

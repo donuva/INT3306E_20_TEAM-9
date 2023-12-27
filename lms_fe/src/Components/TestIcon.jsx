@@ -17,6 +17,12 @@ const TestIcon = ({ setLoggedIn }) => {
   }
 
   const changePasswordHandler = () => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    localStorage.removeItem('student_id');
+    localStorage.removeItem('teacher_id');
+    setLoggedIn(false);
+
     navigate('/changePassword');
   }
 

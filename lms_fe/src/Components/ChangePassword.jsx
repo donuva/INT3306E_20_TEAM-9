@@ -23,7 +23,7 @@ export default function ChangePassword() {
 
             message.loading({
                 content: "Processing ...",
-                duration: 10
+                duration: 5
             });
             const response = await axios.request(config);
             console.log(response.data.data)
@@ -70,42 +70,54 @@ export default function ChangePassword() {
     return (
         <>
             {contextHolder}
-            <Card>
-                <label>Enter your username:</label>
-                <Input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-                <Button type="primary" onClick={handleResetPassword}>Submit</Button>
+
+            <Card title="Change password" style={{ minHeight: '800px', alignItems: 'center', display: 'flex', flexDirection: 'column', width: '50vw', margin: 'auto', marginTop: '50px', marginBottom: '50px' }} bordered>
+                {isSent == false && <>
+                    <h5>Enter your username:</h5>
+                    <Input style={{ width: '200px' }} type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+                    <br></br>
+                    <Button style={{ marginTop: '20px' }} type="primary" onClick={handleResetPassword}>Submit</Button>
+                </>
+                }
+                {isSent && <Form style={{ width: md ? 500 : '100%' }} form={form} name="register" onFinish={onFinish} scrollToFirstError>
+                    <Form.Item
+                        name="token"
+                        label="Token"
+                        rules={[{ required: true, message: 'Please input your token in email!' }]}
+                        labelCol={{ span: md ? 8 : 24 }}
+                        wrapperCol={{ span: md ? 16 : 24 }}
+                    >
+                        <Input placeholder="Enter your token" />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        label="Enter your new password"
+                        type="password"
+                        rules={[{ required: true, message: 'Please input your new password!' }]}
+                        labelCol={{ span: md ? 8 : 24 }}
+                        wrapperCol={{ span: md ? 16 : 24 }}
+                    >
+                        <Input placeholder="Enter your new password" />
+                    </Form.Item>
+                    <Form.Item
+                        name="re-password"
+                        type="password"
+                        label="Re-Enter your new password"
+                        rules={[{ required: true, message: 'Please re-enter your new password!' }]}
+                        labelCol={{ span: md ? 8 : 24 }}
+                        wrapperCol={{ span: md ? 16 : 24 }}
+                    >
+                        <Input placeholder="Re-Enter your new password" />
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ span: md ? 16 : 24, offset: md ? 8 : 0 }}>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+                }
             </Card>
 
-            {isSent && <Form style={{ width: md ? 500 : '100%' }} form={form} name="register" onFinish={onFinish} scrollToFirstError>
-                <Form.Item
-                    name="token"
-                    label="Token"
-                    rules={[{ required: true, message: 'Please input your token in email!' }]}
-                    labelCol={{ span: md ? 8 : 24 }}
-                    wrapperCol={{ span: md ? 16 : 24 }}
-                >
-                    <Input placeholder="Enter your token" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    label="Enter your new password"
-                    rules={[{ required: true, message: 'Please input your new password!' }]}
-                    labelCol={{ span: md ? 8 : 24 }}
-                    wrapperCol={{ span: md ? 16 : 24 }}
-                >
-                    <Input placeholder="Enter your new password" />
-                </Form.Item>
-                <Form.Item
-                    name="re-password"
-                    label="Re-Enter your new password"
-                    rules={[{ required: true, message: 'Please re-enter your new password!' }]}
-                    labelCol={{ span: md ? 8 : 24 }}
-                    wrapperCol={{ span: md ? 16 : 24 }}
-                >
-                    <Input placeholder="Re-Enter your new password" />
-                </Form.Item>
-            </Form>
-            }
 
         </>
     )

@@ -107,25 +107,8 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   };
 
   const handleLessonClick = (lessonId) => {
-    const lessonApiUrl = `http://fall2324w20g9.int3306.freeddns.org/api/course/lesson/${lessonId}`;
-    axios
-      .get(lessonApiUrl, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('jwt'),
-        },
-      })
-      .then((response) => {
-        setSelectedLesson({
-          id: lessonId,
-          topic: response.data.topic,
-          content: response.data.content,
-          url: response.data.url,
-        });
-        setModalVisible(true);
-      })
-      .catch((error) => {
-        console.error('Error fetching lesson:', error);
-      });
+    navigate(`/app/courses/${cid}/lesson/${lessonId}`)
+
   };
 
   const handleModalCancel = () => {
@@ -256,34 +239,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
           </Modal>
 
 
-          {/* Modal for displaying lesson details */}
-          <Modal
-            title={selectedLesson.topic}
-            visible={modalVisible}
-            onCancel={handleModalCancel}
-            footer={[
-              <Button key="back" onClick={handleModalCancel}>
-                Close
-              </Button>,
-            ]}
-          >
-            <p>
-              <strong>Topic:</strong> {selectedLesson.topic}
-            </p>
-            <p>
-              <strong>Content:</strong> {selectedLesson.content}
-            </p>
-            <p>
-              <strong>File:</strong>{' '}
-              {selectedLesson.url ? (
-                <a href={`/storage/${selectedLesson.url}`} target="_blank" rel="noopener noreferrer">
-                  Open File
-                </a>
-              ) : (
-                'File not found'
-              )}
-            </p>
-          </Modal>
+
         </div>
       </div >
     </>
