@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button, notification, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,6 +31,7 @@ const Login = ({ setLoggedIn }) => {
         } catch (error) {
             console.error(error);
             setLoginError("Login Error!");
+            message.error('Login Error!');
         }
     };
 
@@ -79,7 +80,6 @@ const Login = ({ setLoggedIn }) => {
             })
             .catch((error) => {
                 console.log(error);
-                console.log('Authorization' + token);
 
             });
     }, [submit]);
@@ -163,14 +163,14 @@ const Login = ({ setLoggedIn }) => {
                         <Link to="/changePassword">Forgot password</Link>
 
                     </Form.Item>
-                    {loginError && (
+                    {/* {loginError && (
                         <p
                             style={{ color: "red", marginTop: "10px" }}
                             className="error-message"
                         >
                             {loginError}
                         </p>
-                    )}
+                    )} */}
                 </Form>
             </div>
         </div >
