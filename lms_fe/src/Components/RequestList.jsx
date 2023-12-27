@@ -137,8 +137,8 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                         <p><strong>Name:</strong> {response.data.name}</p>
                         <p><strong>Email:</strong> {response.data.email}</p>
                         <p><strong>Mobile:</strong> {response.data.phone}</p>
-                        <p><strong>D.O.B:</strong> {response.data.birthdate}</p>
-                        <p><strong>Bio:</strong> {response.data.bio}</p>
+                        <p><strong>Birthday:</strong> {response.data.birthdate}</p>
+                        <p><strong>Description:</strong> {response.data.bio}</p>
                     </div>
                 ),
                 onOk() {
@@ -209,7 +209,18 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
     };
 
     const handleAddStudent = (id) => {
-        axios.post(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/${cid}/addStudent/${id}`, {
+        const updatedSearchResults = searchResults.map(student => {
+            if (student.id === id) {
+                return { ...student, isButtonClicked: true };
+            }
+            return student;
+        });
+
+        setSearchResults(updatedSearchResults);
+
+        const currentStudent = updatedSearchResults.find(student => student.id === id);
+
+        axios.post(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/${cid}/addStudent/${id}`, null, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("jwt"),
             }
@@ -226,8 +237,70 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                 content: 'Add student failed',
                 duration: 5,
             });
-        })
+        }).finally(() => {
+            if (currentStudent.isButtonClicked) {
+                return;
+            }
+        });
     }
+
+    const renderSearchResultsModal = () => {
+        return (
+            <Modal
+                title="Search Results"
+                visible={isButtonClicked}
+                onCancel={() => setIsButtonClicked(false)}
+                footer={[
+                    <Button key="ok" type="primary" onClick={() => {
+                        setIsButtonClicked(false);
+                        window.location.reload();
+                    }}>
+                        OK
+                    </Button>
+                ]}
+            >
+                {
+                    searchResults.length !== 0 ? (
+                        <List
+                            dataSource={searchResults}
+                            renderItem={(item) => (
+                                <List.Item actions={[
+                                    <Button
+                                        className="info-button"
+                                        style={{ width: '80px' }}
+                                        key="info"
+                                        type="primary"
+                                        onClick={() => handleInfoClick(item.user.id)}
+                                    >
+                                        Info
+                                    </Button>,
+                                    <Button
+                                        className="add-button"
+                                        style={{ width: '80px', backgroundColor: 'green', color: 'white' }}
+                                        type="primary"
+                                        onClick={() => handleAddStudent(item.id)}
+                                        disabled={item.isButtonClicked}
+                                    >
+                                        Add
+                                    </Button>
+                                ]}>
+                                    <List.Item.Meta
+                                        title={item.user.name}
+                                        description={item.user.email}
+                                        avatar={<Avatar src={'/storage/' + item.user.ava_url}></Avatar>}
+                                    />
+                                </List.Item>
+                            )}
+                        />
+                    ) : (
+                        <div style={{ minHeight: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            <h6>No Result</h6>
+                        </div>
+                    )
+                }
+            </Modal>
+        );
+    };
 
     return (
         <>
@@ -236,7 +309,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                 <Sidebar cid={cid} isTeacher={isTeacher} selected={"6"}></Sidebar>
                 <div style={{ display: "flex", flex: 1, padding: "30px" }}>
                     {/* Students Section */}
-                    <div style={{ width: '30vw', marginRight: '10vw' }}>
+                    <div style={{ width: '29vw' }}>
                         <Card title="Students">
                             <List
                                 style={{ height: '1000px' }}
@@ -273,7 +346,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                     </div>
 
                     {/* Search Section */}
-                    <div style={{ width: '15vw', marginRight: '10vw' }}>
+                    <div style={{ marginRight: '7vw', marginLeft: '7vw', width: '21vw' }}>
                         <div style={{ marginTop: '30px' }}>
                             <h5>Add student</h5>
                             <br />
@@ -291,54 +364,12 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                             }}>Search</Button>
                         </div>
 
-                        {isButtonClicked && (
-                            searchResults.length !== 0 ? (
-                                <Card style={{ marginTop: '50px' }}>
-                                    <List
-                                        style={{ height: '300px' }}
-                                        dataSource={searchResults}
-                                        renderItem={(item) => (
-                                            <List.Item actions={[
-                                                <Button
-                                                    className="info-button"
-                                                    style={{ width: '80px' }}
-                                                    key="info"
-                                                    type="primary"
-                                                    onClick={() => handleInfoClick(item.user.id)}
-                                                >
-                                                    Info
-                                                </Button>,
-                                                <Button
-                                                    style={{ width: '80px', backgroundColor: 'green', color: 'white' }}
-                                                    type="primary"
-                                                    onClick={() => handleAddStudent(item.id)}
-                                                    disabled={item.isButtonClicked}>
-                                                    Add Student
+                        {renderSearchResultsModal()}
 
-                                                </Button>
-                                            ]}>
-                                                <List.Item.Meta
-                                                    title={item.user.name}
-                                                    description={item.user.email}
-                                                    avatar={<Avatar src={'/storage/' + item.user.ava_url}></Avatar>}
-                                                />
-                                            </List.Item>
-                                        )}
-                                    />
-                                    <Button type="primary" onClick={() => setIsButtonClicked(false)}>OK</Button>
-                                </Card>
-                            ) : (
-                                <Card style={{ marginTop: '50px', minHeight: '200px', alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
-                                    <h6 style={{}}>No Result</h6>
-                                    <Button type="primary" onClick={() => setIsButtonClicked(false)}>OK</Button>
-
-                                </Card>
-                            )
-                        )}
                     </div>
 
                     {/* Requests Section */}
-                    <div style={{ width: '30vw' }}>
+                    <div style={{ width: '29vw' }}>
                         <Card title="Requests" >
                             <List
                                 style={{ height: '1000px' }}
@@ -370,7 +401,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                         <List.Item.Meta
                                             title={item.student.user.name}
                                             description={item.student.user.email}
-                                            avatar={<Avatar src={'/storage/' + item.user.ava_url}></Avatar>}
+                                            avatar={<Avatar src={'/storage/' + item.student.user.ava_url}></Avatar>}
 
                                         />
                                     </List.Item>

@@ -66,7 +66,7 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
       if (values.file?.[0]?.originFileObj) {
         formData.append('file', values.file[0].originFileObj);
       }
-      formData.append('bio', values.bio);
+      formData.append('description', values.bio);
 
       // Make the API request using axios
       const response = await axios.put('http://fall2324w20g9.int3306.freeddns.org/api/user/update', formData, {
