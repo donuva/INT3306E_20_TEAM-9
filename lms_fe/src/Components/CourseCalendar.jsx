@@ -17,7 +17,7 @@ const CourseCalendar = ({ checkTokenExpiration, isTeacher }) => {
 
     useEffect(() => {
         // Gọi API để lấy danh sách sự kiện
-        axios.get(`http://localhost:8080/api/course/${cid}/calendar`, {
+        axios.get(`http://fall2324w20g9.int3306.freeddns.org/api/course/${cid}/calendar`, {
             headers: {
                 "Authorization": 'Bearer ' + localStorage.getItem('jwt')
             }

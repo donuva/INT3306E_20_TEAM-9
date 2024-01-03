@@ -26,7 +26,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
 
   useEffect(() => {
     const role = isTeacher === true ? 'teacher' : 'student';
-    const baseUrl = `http://localhost:8080/api/${role}/courses`;
+    const baseUrl = `http://fall2324w20g9.int3306.freeddns.org/api/${role}/courses`;
     const params = {};
     if (page !== null) {
       params.current_page = page;
@@ -48,9 +48,7 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
   }, [page]); // Sử dụng page trong dependency array để cập nhật khi page thay đổi
 
 
-  if (pageInfo.totalElements == 0) {
-    return (<NoData />)
-  }
+
   const handlePageChange = (newPage) => {
     setSearchParams({ current_page: newPage });
   };

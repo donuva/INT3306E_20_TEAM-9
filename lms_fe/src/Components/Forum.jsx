@@ -49,7 +49,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
       navigate('/login');
     }
     axios
-      .get(`http://localhost:8080/api/course/${cid}/conversation?` + "current_page=" + page, {
+      .get(`http://fall2324w20g9.int3306.freeddns.org/api/course/${cid}/conversation?` + "current_page=" + page, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
@@ -58,9 +58,6 @@ function Forum({ checkTokenExpiration, isTeacher }) {
 
         setComments(response.data.data); // Lưu trữ dữ liệu lấy từ API vào state
         setPageInfo(response.data);
-
-        console.log("đây là comment ")
-        console.log(comments.course_id)
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -115,7 +112,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
       "msg": text
     });
     if (text !== '') {
-      axios.post('http://localhost:8080/api/course/conversation', commentData, {
+      axios.post('http://fall2324w20g9.int3306.freeddns.org/api/course/conversation', commentData, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
           'Content-Type': 'application/json'
@@ -152,18 +149,6 @@ function Forum({ checkTokenExpiration, isTeacher }) {
 
                 title="Discussion"
               />
-              {/* {discussion.user._id === user._id && (
-              // <Button
-              //   disabled={!(discussion.user._id === user._id)}
-              //   className="deleteButton"
-              //   onClick={() => {
-              //     // dispatch(removeDiscussion(discussion._id))
-              //     console.log("deleted")
-              //   }}
-              // >
-              //   delete
-              // </Button>
-            )} */}
             </div>
           }
         >
@@ -187,18 +172,7 @@ function Forum({ checkTokenExpiration, isTeacher }) {
                   <span style={{ display: "flex", alignContent: "left" }} >
                     <Avatar src={"/storage/" + comment.user.ava_url} />
                     <span style={{ paddingTop: "10px", paddingLeft: "10px" }}>{' ' + comment.user.username}</span>
-                    {/* { && (
-                  <Button
-                    disabled={!(comment.user._id === Luser._id)}
-                    className="deleteButton"
-                    onClick={() => {
-                      // dispatch(removeComment(dId, comment))
-                      console.log("lol")
-                    }}
-                  >
-                    delete
-                  </Button>
-                )} */}
+
                   </span>
                 }
               >

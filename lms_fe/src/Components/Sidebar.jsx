@@ -26,13 +26,14 @@ export default function Sidebar({ cid, isTeacher, selected }) {
         <div className='sidenav' style={{ width: collapsed ? 80 : 200, backgroundColor: '#ECE3CE' }}>
 
             <Menu
+                style={{ backgroundColor: '#ECE3CE', border: '0' }}
                 mode="inline"
+                theme="light"
                 inlineCollapsed={collapsed}
                 defaultSelectedKeys={[selected]}
-                theme='light'
-                style={{ backgroundColor: '#ECE3CE' }}
+
             >
-                <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#ECE3CE', color: 'black', border: '0px' }}>
+                <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#ECE3CE', color: '#3A4D39', border: '0px' }}>
                     {collapsed ? <RightOutlined /> : <LeftOutlined />}
                 </Button>
                 <Menu.Item key="0" icon={<AppstoreOutlined />}>
@@ -54,7 +55,6 @@ export default function Sidebar({ cid, isTeacher, selected }) {
                 <Menu.Item key="3" icon={<CommentOutlined />}>
                     <Link style={{ textDecoration: 'none' }} to={`/app/courses/${cid}/forum`}>Forum</Link>
                 </Menu.Item>
-
                 {isTeacher === true &&
                     <Menu.Item key="4" icon={<ExperimentOutlined />}>
                         <Link style={{ textDecoration: 'none' }} to={`/app/addExercise/${cid}`}>New Exercise</Link>
@@ -62,7 +62,7 @@ export default function Sidebar({ cid, isTeacher, selected }) {
                 }
                 {isTeacher === true &&
                     <Menu.Item key="5" icon={<FileTextOutlined />}>
-                        <Link style={{ textDecoration: 'none' }} to={`/app/addLesson/${cid}`}>New Lesson</Link>
+                        <Link style={{ textDecoration: 'none'}} to={`/app/addLesson/${cid}`}>New Lesson</Link>
                     </Menu.Item>
                 }
 

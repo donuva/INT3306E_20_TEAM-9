@@ -1,6 +1,5 @@
 package com.example.backend_lms.controller;
 
-
 import com.example.backend_lms.dto.PageDTO;
 import com.example.backend_lms.dto.StudentDTO;
 import com.example.backend_lms.dto.TeacherDTO;
@@ -35,10 +34,12 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/create/student")
-    public void createStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-        validateRegister.validateEntry(studentDTO.getUser().getUsername(),studentDTO.getUser().getPhone(), studentDTO.getUser().getEmail());
+    public void createStudent(@ModelAttribute StudentDTO studentDTO,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        validateRegister.validateEntry(studentDTO.getUser().getUsername(), studentDTO.getUser().getPhone(),
+                studentDTO.getUser().getEmail());
 
-        if (file!=null) {
+        if (file != null) {
             String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
@@ -47,16 +48,16 @@ public class StudentController {
             File saveFile = new File(Upload_Folder + newFilename);
 
             file.transferTo(saveFile);
-            studentDTO.getUser().setAva_url(newFilename); //luu file xuong db
-        }
-        else{
-            studentDTO.getUser().setAva_url("default_ava.png");
+            studentDTO.getUser().setAva_url(newFilename); // luu file xuong db
+        } else {
+            studentDTO.getUser().setAva_url("default_ava.jpg");
         }
         studentService.create(studentDTO);
     }
 
     @PutMapping("/api/student/update")
-    public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
+    public ResponseEntity<StudentDTO> updateStudent(@ModelAttribute StudentDTO studentDTO,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
         if (file != null) {
             String filename = file.getOriginalFilename();
@@ -68,24 +69,30 @@ public class StudentController {
             File saveFile = new File(Upload_Folder + newFilename);
 
             file.transferTo(saveFile);
-            studentDTO.getUser().setAva_url(newFilename); //luu file xuong db
+            studentDTO.getUser().setAva_url(newFilename); // luu file xuong db
         }
 
         return ResponseEntity.ok(studentService.update(studentDTO));
     }
 
-
-
     @GetMapping("/api/getStudent/{id}")
-    public ResponseEntity<StudentDTO> findStudent(@PathVariable("id")int id) throws NotFoundException {
+    public ResponseEntity<StudentDTO> findStudent(@PathVariable("id") int id) throws NotFoundException {
         return ResponseEntity.ok(studentService.findById(id));
     }
 
     @GetMapping("/api/searchStudent")
-    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") Integer current_page){
-        if(current_page==null){
-            current_page=0;
+    public ResponseEntity<PageDTO<List<StudentDTO>>> searchStudent(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam("current_page") Integer current_page) {
+        if (current_page == null) {
+            current_page = 0;
         }
         return ResponseEntity.ok(studentService.search(name, current_page));
+    }
+
+    @GetMapping("/api/search/student/notInCourse/{course_id}")
+    public ResponseEntity<List<StudentDTO>> searchStudentNotInCourse(@PathVariable("course_id") int course_id,
+            @RequestParam(name = "name") String name) {
+        return ResponseEntity.ok(studentService.searchStudentNotInCourse(course_id, name));
     }
 }

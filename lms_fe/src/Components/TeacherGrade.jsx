@@ -17,8 +17,7 @@ const TeacherGrade = ({ checkTokenExpiration, isTeacher }) => {
   const handleEdit = (id) => {
     const scoreExerciseDTOS = data.find((dataItem) => dataItem.studentDTO.id === id);
     setModalData(scoreExerciseDTOS.scoreExerciseDTOS);
-    console.log("đây là điểm hs id " + id);
-    console.log(modalData);
+
     setIsModalVisible(true);
   };
   useEffect(() => {
@@ -29,7 +28,7 @@ const TeacherGrade = ({ checkTokenExpiration, isTeacher }) => {
   }, []);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/teacher/getCourseScore/${cid}`, {
+      .get(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/getCourseScore/${cid}`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
@@ -37,8 +36,7 @@ const TeacherGrade = ({ checkTokenExpiration, isTeacher }) => {
       .then((response) => {
 
         setData(response.data); // Lưu trữ dữ liệu lấy từ API vào state
-        console.log('đây là data')
-        console.log(data);
+
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);

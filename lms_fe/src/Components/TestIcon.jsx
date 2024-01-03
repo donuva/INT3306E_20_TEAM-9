@@ -16,13 +16,27 @@ const TestIcon = ({ setLoggedIn }) => {
     navigate('/login');
   }
 
+  const changePasswordHandler = () => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    localStorage.removeItem('student_id');
+    localStorage.removeItem('teacher_id');
+    setLoggedIn(false);
+
+    navigate('/changePassword');
+  }
+
   const menu = (
     <Menu>
       <Menu.Item key="PROFILE">
-        <NavLink to={'/app/profile'}>My Profile</NavLink>
+        <NavLink style={{ textDecoration: 'none' }} to={'/app/profile'}>My Profile</NavLink>
       </Menu.Item>
+
+      <Menu.Item key="changePassword" onClick={changePasswordHandler}>Change Password</Menu.Item>
+
       <Menu.Item onClick={clickHandler} key="SIGN_OUT">Sign out</Menu.Item>
     </Menu>
+
   )
 
   return (
@@ -30,7 +44,7 @@ const TestIcon = ({ setLoggedIn }) => {
       style={{}}
       overlay={menu}
       trigger={['click']}
-      placement="topRight"
+      placement="bottom"
       arrow
     >
       <Avatar src={'/storage/' + (JSON.parse(localStorage.getItem('user'))).ava_url}

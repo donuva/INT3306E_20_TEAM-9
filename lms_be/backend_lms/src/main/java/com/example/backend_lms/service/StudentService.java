@@ -27,12 +27,12 @@ public class StudentService {
     @Autowired
     StudentRepo studentRepo;
 
-    public StudentDTO convert(Student student){
+    public StudentDTO convert(Student student) {
         return new ModelMapper().map(student, StudentDTO.class);
     }
 
     @Transactional
-    public void create(StudentDTO studentDTO){
+    public void create(StudentDTO studentDTO) {
         UserDTO user = studentDTO.getUser();
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setRole("STUDENT");
@@ -42,9 +42,9 @@ public class StudentService {
 
     @Transactional
     public void delete(int id) throws NotFoundException {
-        if(studentRepo.findById(id).isPresent()) {
+        if (studentRepo.findById(id).isPresent()) {
             studentRepo.deleteById(id);
-        }else{
+        } else {
             throw new NotFoundException("Không tim thấy học sinh");
         }
     }
@@ -52,22 +52,22 @@ public class StudentService {
     @Transactional
     public StudentDTO update(StudentDTO studentDTO) throws NotFoundException {
         Student student = studentRepo.findById(studentDTO.getId()).orElse(null);
-        if(student!=null){
+        if (student != null) {
             studentDTO.getUser().setPassword(student.getUser().getPassword());
             studentDTO.getUser().setRole(student.getUser().getRole());
             studentRepo.save(new ModelMapper().map(studentDTO, Student.class));
             return studentDTO;
-        }else{
+        } else {
             throw new NotFoundException("Không tìm thấy học sinh");
         }
     }
 
-    public PageDTO<List<StudentDTO>> search(String name, int current_page){
+    public PageDTO<List<StudentDTO>> search(String name, int current_page) {
         Sort sortBy = Sort.by("user.name").descending();
 
         PageRequest pageRequest = PageRequest.of(current_page, 15, sortBy);
 
-        Page<Student> page = studentRepo.findByName("%"+name+"%", pageRequest);
+        Page<Student> page = studentRepo.findByName("%" + name + "%", pageRequest);
 
         List<StudentDTO> studentDTOS = page.get().map(this::convert).collect(Collectors.toList());
         PageDTO<List<StudentDTO>> pageDTO = new PageDTO<>();
@@ -81,16 +81,27 @@ public class StudentService {
     public StudentDTO findById(int id) throws NotFoundException {
         if (studentRepo.findById(id).isPresent()) {
             return convert(studentRepo.findById(id).orElse(null));
-        }else{
+        } else {
             throw new NotFoundException("Không tìm thấy học sinh");
         }
     }
 
     public StudentDTO findByUserId(int id) throws NotFoundException {
-        if(studentRepo.findByUserId(id).isPresent()){
+        if (studentRepo.findByUserId(id).isPresent()) {
             return convert(studentRepo.findByUserId(id).orElse(null));
-        }else{
+        } else {
             throw new NotFoundException("Không tìm thấy học sinh");
         }
     }
+
+    public List<StudentDTO> searchStudentNotInCourse(int course_id, String name) {
+
+        PageRequest pageRequest = PageRequest.of(0, 15, Sort.by("user.name").ascending());
+        if (StringUtils.hasText(name)) {
+            return studentRepo.searchStudentNotInCourse(course_id, "%" + name + "%", pageRequest).get().map(this::convert).collect(Collectors.toList());
+        } else {
+            return studentRepo.searchStudentNotInCourse(course_id, "%", pageRequest).get().map(this::convert).collect(Collectors.toList());
+        }
+    }
 }
+

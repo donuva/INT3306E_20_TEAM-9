@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Upload, Button, message, Card, Menu } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import {
-  NotificationOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  AppstoreOutlined,
-  RightOutlined,
-  LeftOutlined,
-  ExperimentOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons'; import Meta from 'antd/lib/card/Meta'
+import Meta from 'antd/lib/card/Meta'
 
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
@@ -59,7 +50,7 @@ const AddLesson = ({ checkTokenExpiration, isTeacher }) => {
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:8080/api/teacher/course/lesson',
+        url: 'http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/lesson',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },

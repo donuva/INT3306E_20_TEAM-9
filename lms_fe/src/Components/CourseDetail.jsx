@@ -1,29 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Collapse, Badge, Button, Card, List, Menu, message, Modal } from 'antd'; // Include Modal
+import React, { useState, useEffect } from 'react';
+import { Button, List, message, Modal, Input, Dropdown, Space, Menu } from 'antd'; // Include Modal
 import {
-  ExperimentOutlined,
-  NotificationOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  BarChartOutlined,
-  AppstoreOutlined,
   ContainerOutlined,
   BulbOutlined,
   UserOutlined,
-  RightOutlined,
-  LeftOutlined,
-  DashboardOutlined,
   FormOutlined,
   BookOutlined,
+  DownOutlined,
+  MoreOutlined,
+  DashOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { AppContext } from './AppContext';
 
 const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   const navigate = useNavigate();
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+
+  const handleEditModalCancel = () => {
+    setEditModalVisible(false);
+  };
+
+  const handleEditCourse = () => {
+    setEditModalVisible(true);
+  };
+
+
 
   const [messageApi, contextHolder] = message.useMessage();
   const [userData, setUserData] = useState({
@@ -58,7 +63,7 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     const config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `http://localhost:8080/api/course/${cid}`,
+      url: `http://fall2324w20g9.int3306.freeddns.org/api/course/${cid}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
       },
@@ -77,8 +82,14 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
     });
   }, []);
 
+  // const [editCourseInfo, setEditCourseInfo] = useState({
+  //   name: course.name,
+  //   category: course.category,
+  //   description: course.description,
+  // });
+
   const handleLeave = () => {
-    axios.delete(`http://localhost:8080/api/student/leave/${cid}`, {
+    axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/student/leave/${cid}`, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
       }
@@ -96,30 +107,48 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
   };
 
   const handleLessonClick = (lessonId) => {
-    const lessonApiUrl = `http://localhost:8080/api/course/lesson/${lessonId}`;
-    axios
-      .get(lessonApiUrl, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('jwt'),
-        },
-      })
-      .then((response) => {
-        setSelectedLesson({
-          id: lessonId,
-          topic: response.data.topic,
-          content: response.data.content,
-          url: response.data.url,
-        });
-        setModalVisible(true);
-      })
-      .catch((error) => {
-        console.error('Error fetching lesson:', error);
-      });
+    navigate(`/app/courses/${cid}/lesson/${lessonId}`)
+
   };
 
   const handleModalCancel = () => {
     setModalVisible(false);
   };
+
+
+  const handleSaveEditCourse = () => {
+    // // Gửi yêu cầu cập nhật lên server
+
+    // setCourse((prev) => ({
+    //   ...prev,
+    //   description: editCourseInfo.description,
+    //   name: editCourseInfo.name,
+    //   category: editCourseInfo.category,
+    // }));
+
+
+    axios
+      .put(
+        `http://fall2324w20g9.int3306.freeddns.org/api/teacher/course`,
+        course,
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+          },
+        }
+      )
+      .then((response) => {
+        messageApi.success('Course updated successfully!');
+
+        handleEditModalCancel();
+      })
+      .catch((error) => {
+        console.error('Error updating course:', error);
+        messageApi.error('Failed to update course. Please try again.');
+      });
+  };
+
+
 
   return (
     <>
@@ -129,14 +158,20 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
 
         <div style={{ flex: 1, marginTop: '30px' }}>
           <h1>{course.name}</h1>
-          <div className='course_info' style={{ margin: '50px 40px', textAlign: 'left' }}>
-            <article>
+          <div className='course_info' style={{ margin: '50px 40px', textAlign: 'left', display: '' }}>
+            <article style={{ display: 'flex' }}>
               <p><UserOutlined /> <strong>Teacher: </strong> {teacher.name} <br />
                 <BulbOutlined /> <strong>Category: </strong> {course.category} <br />
                 <ContainerOutlined /> <strong>Description: </strong>{course.description}</p>
             </article>
+            {isTeacher && (
+
+              <Button type='default' style={{ alignItems: 'center' }} onClick={handleEditCourse}>
+                Edit
+              </Button>
+            )}
           </div>
-          <div style={{ marginLeft: '30px' }}>
+          <div style={{ marginLeft: '30px', marginRight: '30px' }}>
             <hr></hr>
             <h6>Exercise List</h6>
             <List
@@ -151,12 +186,10 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
               )}
             />
 
-            <hr></hr>
-            <h6>Lesson List</h6>
+            <h6 style={{ marginTop: '100px' }}>Lesson List</h6>
             <List
               bordered
               dataSource={lessonList}
-              style={{ marginTop: '30px' }}
               renderItem={(item) => (
                 <List.Item onClick={() => handleLessonClick(item.id)}>
                   <Link style={{ textAlign: 'left', textDecoration: 'none', color: 'black', fontSize: 'medium' }}>
@@ -173,36 +206,42 @@ const CourseDetail = ({ checkTokenExpiration, isTeacher }) => {
             </Button>
           )}
 
-          {/* Modal for displaying lesson details */}
           <Modal
-            title={selectedLesson.topic}
-            visible={modalVisible}
-            onCancel={handleModalCancel}
-            footer={[
-              <Button key="back" onClick={handleModalCancel}>
-                Close
-              </Button>,
-            ]}
+            title="Edit Course"
+            visible={editModalVisible}
+            onCancel={handleEditModalCancel}
+            onOk={handleSaveEditCourse}
           >
-            <p>
-              <strong>Topic:</strong> {selectedLesson.topic}
-            </p>
-            <p>
-              <strong>Content:</strong> {selectedLesson.content}
-            </p>
-            <p>
-              <strong>File:</strong>{' '}
-              {selectedLesson.url ? (
-                <a href={`/storage/${selectedLesson.url}`} target="_blank" rel="noopener noreferrer">
-                  Open File
-                </a>
-              ) : (
-                'File not found'
-              )}
-            </p>
+            <label htmlFor="edit-course-name">Course Name:</label>
+            <Input
+              id="edit-course-name"
+              value={course.name}
+              onChange={(e) =>
+                setCourse((prev) => ({ ...prev, name: e.target.value }))
+              }
+            />
+            <label htmlFor="edit-course-category">Category:</label>
+            <Input
+              id="edit-course-category"
+              value={course.category}
+              onChange={(e) =>
+                setCourse((prev) => ({ ...prev, category: e.target.value }))
+              }
+            />
+            <label htmlFor="edit-course-description">Description:</label>
+            <Input.TextArea
+              id="edit-course-description"
+              value={course.description}
+              onChange={(e) =>
+                setCourse((prev) => ({ ...prev, description: e.target.value }))
+              }
+            />
           </Modal>
+
+
+
         </div>
-      </div>
+      </div >
     </>
   );
 };

@@ -38,8 +38,7 @@ function CreateCourse({ checkTokenExpiration }) {
   };
 
   const handleSubmit = () => {
-    console.log(formData)
-    axios.post('http://localhost:8080/api/teacher/course', formData, {
+    axios.post('http://fall2324w20g9.int3306.freeddns.org/api/teacher/course', formData, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
         'Content-Type': 'application/json'
@@ -58,7 +57,7 @@ function CreateCourse({ checkTokenExpiration }) {
 
   return (
 
-    <div style={{ margin: 'auto', marginTop: '20px', marginBottom: '20px', maxWidth: '50vw' }}>
+    <div style={{ margin: 'auto', marginTop: '20px', marginBottom: '20px', maxWidth: '40vw' }}>
       <Card title="Create a New Course" hoverable>
         <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item label="Course Name" name="name" rules={[{ required: true, message: 'Please input the course name!' }]}>

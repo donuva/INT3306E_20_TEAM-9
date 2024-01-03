@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, notification } from "antd";
+import { Form, Input, Button, notification, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = ({ setLoggedIn }) => {
     const [submit, setSubmit] = useState(false);
@@ -20,7 +20,7 @@ const Login = ({ setLoggedIn }) => {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "http://localhost:8080/api/login",
+            url: "http://fall2324w20g9.int3306.freeddns.org/api/login",
             data: data,
         };
 
@@ -31,6 +31,7 @@ const Login = ({ setLoggedIn }) => {
         } catch (error) {
             console.error(error);
             setLoginError("Login Error!");
+            message.error('Login Error!');
         }
     };
 
@@ -40,7 +41,7 @@ const Login = ({ setLoggedIn }) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8080/api/me',
+            url: 'http://fall2324w20g9.int3306.freeddns.org/api/me',
             headers: {
                 'Authorization': token,
             }
@@ -48,12 +49,9 @@ const Login = ({ setLoggedIn }) => {
 
         axios.request(config)
             .then((response) => {
-                console.log('Authorization' + `Bearer ${token}`);
                 localStorage.setItem('user', JSON.stringify(response.data));
-                console.log(response.data.role);
                 if (response.data.role === 'TEACHER') {
-                    console.log("TEACHER");
-                    axios.get('http://localhost:8080/api/teacher/me', {
+                    axios.get('http://fall2324w20g9.int3306.freeddns.org/api/teacher/me', {
                         headers: {
                             'Authorization': token
                         }
@@ -65,8 +63,7 @@ const Login = ({ setLoggedIn }) => {
                     setLoggedIn(true)
                     navigate('/app/courses');
                 } else {
-                    console.log("STUDENT");
-                    axios.get('http://localhost:8080/api/student/me', {
+                    axios.get('http://fall2324w20g9.int3306.freeddns.org/api/student/me', {
                         headers: {
                             'Authorization': token
                         }
@@ -83,7 +80,6 @@ const Login = ({ setLoggedIn }) => {
             })
             .catch((error) => {
                 console.log(error);
-                console.log('Authorization' + token);
 
             });
     }, [submit]);
@@ -163,14 +159,18 @@ const Login = ({ setLoggedIn }) => {
                             Sign up
                         </Button>
                     </Form.Item>
-                    {loginError && (
+                    <Form.Item>
+                        <Link to="/changePassword">Forgot password</Link>
+
+                    </Form.Item>
+                    {/* {loginError && (
                         <p
                             style={{ color: "red", marginTop: "10px" }}
                             className="error-message"
                         >
                             {loginError}
                         </p>
-                    )}
+                    )} */}
                 </Form>
             </div>
         </div >

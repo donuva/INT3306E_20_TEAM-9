@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>backend_lms</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>lms_g9.release</version>
     <name>backend_lms</name>
     <description>backend_lms</description>
     <properties>

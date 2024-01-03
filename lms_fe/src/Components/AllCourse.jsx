@@ -33,7 +33,7 @@ export default function AllCourse({ checkTokenExpiration }) {
     }
   }, [])
   useEffect(() => {
-    const baseUrl = 'http://localhost:8080/api/course/search';
+    const baseUrl = 'http://fall2324w20g9.int3306.freeddns.org/api/course/search';
     const params = {};
     if (page !== null) {
       params.current_page = page;
@@ -79,7 +79,7 @@ export default function AllCourse({ checkTokenExpiration }) {
     <div style={{ marginTop: '30px' }}>
       <h1 style={{ marginTop: '30px', marginBottom: '30px' }}>All Courses</h1>
       <Input
-        style={{ width: '15vw' }}
+        style={{ width: '10vw' }}
         type="text"
         placeholder="Search..."
         value={searchText}

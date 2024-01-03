@@ -66,10 +66,10 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
       if (values.file?.[0]?.originFileObj) {
         formData.append('file', values.file[0].originFileObj);
       }
-      formData.append('bio', values.bio);
+      formData.append('description', values.bio);
 
       // Make the API request using axios
-      const response = await axios.put('http://localhost:8080/api/user/update', formData, {
+      const response = await axios.put('http://fall2324w20g9.int3306.freeddns.org/api/user/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
@@ -125,7 +125,7 @@ const Profile = ({ setLoggedIn, checkTokenExpiration }) => {
           <Meta style={{
             display: 'block'
           }}
-            avatar={<Avatar size={{
+            avatar={<Avatar style={{ margin: 'auto' }} size={{
               xs: 24,
               sm: 32,
               md: 40,

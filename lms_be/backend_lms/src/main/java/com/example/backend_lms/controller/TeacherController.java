@@ -33,11 +33,13 @@ public class TeacherController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/create/teacher")
-    public void createTeacher(@ModelAttribute TeacherDTO teacherDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+    public void createTeacher(@ModelAttribute TeacherDTO teacherDTO,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
-        validateRegister.validateEntry(teacherDTO.getUser().getUsername(),teacherDTO.getUser().getPhone(), teacherDTO.getUser().getEmail());
+        validateRegister.validateEntry(teacherDTO.getUser().getUsername(), teacherDTO.getUser().getPhone(),
+                teacherDTO.getUser().getEmail());
 
-        if (file!=null) {
+        if (file != null) {
             String filename = file.getOriginalFilename();
             assert filename != null;
             String extension = filename.substring(filename.lastIndexOf("."));
@@ -46,18 +48,19 @@ public class TeacherController {
             File saveFile = new File(Upload_Folder + newFilename);
 
             file.transferTo(saveFile);
-            teacherDTO.getUser().setAva_url(newFilename); //luu file xuong db
-        }else{
-            teacherDTO.getUser().setAva_url("default_ava.png");
+            teacherDTO.getUser().setAva_url(newFilename); // luu file xuong db
+        } else {
+            teacherDTO.getUser().setAva_url("default_ava.jpg");
         }
         teacherDTO.getUser().setRole("TEACHER");
         teacherService.create(teacherDTO);
     }
 
     @PutMapping("/api/teacher/update")
-    public ResponseEntity<TeacherDTO> updateTeacher(@ModelAttribute TeacherDTO teacherDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
+    public ResponseEntity<TeacherDTO> updateTeacher(@ModelAttribute TeacherDTO teacherDTO,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws IOException, NotFoundException {
 
-        if (file!=null) {
+        if (file != null) {
             String filename = file.getOriginalFilename();
 
             assert filename != null;
@@ -67,26 +70,25 @@ public class TeacherController {
             File saveFile = new File(Upload_Folder + newFilename);
 
             file.transferTo(saveFile);
-            teacherDTO.getUser().setAva_url(newFilename); //luu file xuong db
+            teacherDTO.getUser().setAva_url(newFilename); // luu file xuong db
         }
         teacherDTO.getUser().setRole("TEACHER");
         return ResponseEntity.ok(teacherService.update(teacherDTO));
     }
 
-
-
     @GetMapping("/api/getTeacher/{id}")
-    public ResponseEntity<TeacherDTO> findTeacher(@PathVariable("id")int id) throws NotFoundException {
+    public ResponseEntity<TeacherDTO> findTeacher(@PathVariable("id") int id) throws NotFoundException {
         return ResponseEntity.ok(teacherService.findById(id));
     }
 
     @GetMapping("/api/searchTeacher")
-    public ResponseEntity<PageDTO<List<TeacherDTO>>>searchTeacher(@RequestParam( name ="name", required=false) String name, @RequestParam("current_page") Integer current_page){
-        if(current_page==null){
-            current_page=0;
+    public ResponseEntity<PageDTO<List<TeacherDTO>>> searchTeacher(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam("current_page") Integer current_page) {
+        if (current_page == null) {
+            current_page = 0;
         }
         return ResponseEntity.ok(teacherService.search(name, current_page));
     }
-
 
 }

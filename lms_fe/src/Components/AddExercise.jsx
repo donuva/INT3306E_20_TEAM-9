@@ -40,13 +40,12 @@ const AddExercise = ({ checkTokenExpiration, isTeacher }) => {
         },
         "deadline": formattedDate
       });
-      const response = await axios.post('http://localhost:8080/api/teacher/exercise/create', formData, {
+      const response = await axios.post('http://fall2324w20g9.int3306.freeddns.org/api/teacher/exercise/create', formData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         },
       });
-      console.log('Exercise created:', response.data);
       message.success('Created exercise')
       navigate(`/app/courses/${cid}`);
     } catch (error) {

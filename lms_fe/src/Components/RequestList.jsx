@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { List, Card, message, Button, Modal, Avatar } from "antd";
+import { List, Card, message, Button, Modal, Avatar, Input, Space } from "antd";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 
@@ -11,8 +11,11 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
     const navigate = useNavigate();
     const [requests, setRequests] = useState([]);
     const [students, setStudents] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
 
+    const [name, setName] = useState('');
     const [messageApi, contextHolder] = message.useMessage();
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
 
     useEffect(() => {
         if (!checkTokenExpiration()) {
@@ -23,7 +26,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/teacher/getRequestList/${cid}`, {
+            .get(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/getRequestList/${cid}`, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("jwt"),
                 },
@@ -38,7 +41,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/teacher/courses/${cid}/students`, {
+            .get(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/courses/${cid}/students`, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("jwt"),
                 },
@@ -63,7 +66,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
         const currentItem = updatedRequests.find(request => request.id === id);
 
-        axios.post(`http://localhost:8080/api/teacher/acceptRequest/${id}?code=1`, null, {
+        axios.post(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/acceptRequest/${id}?code=1`, null, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -98,7 +101,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
 
         const currentItem = updatedRequests.find(request => request.id === id);
 
-        axios.post(`http://localhost:8080/api/teacher/acceptRequest/${id}?code=2`, null, {
+        axios.post(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/acceptRequest/${id}?code=2`, null, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -121,7 +124,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
     }
 
     const handleInfoClick = (id) => {
-        axios.get(`http://localhost:8080/api/getUser/${id}`, {
+        axios.get(`http://fall2324w20g9.int3306.freeddns.org/api/getUser/${id}`, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("jwt"),
             },
@@ -134,8 +137,8 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                         <p><strong>Name:</strong> {response.data.name}</p>
                         <p><strong>Email:</strong> {response.data.email}</p>
                         <p><strong>Mobile:</strong> {response.data.phone}</p>
-                        <p><strong>BirthDate:</strong> {response.data.birthdate}</p>
-                        <p><strong>Bio:</strong> {response.data.bio}</p>
+                        <p><strong>Birthday:</strong> {response.data.birthdate}</p>
+                        <p><strong>Description:</strong> {response.data.bio}</p>
                     </div>
                 ),
                 onOk() {
@@ -152,47 +155,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
         });
     }
 
-    // const handleInfoClick = (id) => {
-    //     axios.get(`http://localhost:8080/api/getUser/${id}`, {
-    //         headers: {
-    //             Authorization: "Bearer " + localStorage.getItem("jwt"),
-    //         },
-    //     }).then((response) => {
-    //         Modal.info({
-    //             title: 'Student Info',
-    //             content: (
-    //                 <div>
-    //                     <p><strong>Name:</strong> {response.data.name}</p>
-    //                     <p><strong>Email:</strong> {response.data.email}</p>
-    //                     <p><strong>Mobile:</strong> {response.data.phone}</p>
-    //                     <p><strong>BirthDate:</strong> {response.data.birthdate}</p>
-    //                     <p><strong>Bio:</strong> {response.data.bio}</p>
-    //                 </div>
-    //             ),
-    //             onOk() {
-    //                 // Đóng Modal khi nhấn OK
-    //             },
-    //         });
-    //     }).catch((error) => {
-    //         console.log(error);
-    //         messageApi.open({
-    //             type: 'error',
-    //             content: 'Failed to fetch student info',
-    //             duration: 5,
-    //         });
-    //     });
-    //     }).catch((error) => {
-    //         console.log(error);
-    //         messageApi.open({
-    //             type: 'error',
-    //             content: 'Deny fail',
-    //             duration: 5,
-    //         });
-    //     });
-    //     if (currentItem.isButtonClicked) {
-    //         return;
-    //     }
-    // }
+
 
     const handleRemoveStudent = (id) => {
         const updatedStudents = students.map(student => {
@@ -207,7 +170,7 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
         const currentStudent = updatedStudents.find(student => student.id === id);
 
 
-        axios.delete(`http://localhost:8080/api/teacher/courses/${cid}/removeStudent/${id}`, {
+        axios.delete(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/courses/${cid}/removeStudent/${id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
@@ -230,16 +193,126 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
         }
     }
 
+    const handleSearchName = () => {
+        axios
+            .get(`http://fall2324w20g9.int3306.freeddns.org/api/search/student/notInCourse/${cid}?name=${name}`, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("jwt"),
+                },
+            })
+            .then((response) => {
+                setSearchResults(response.data.map(student => ({ ...student, isButtonClicked: false })));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const handleAddStudent = (id) => {
+        const updatedSearchResults = searchResults.map(student => {
+            if (student.id === id) {
+                return { ...student, isButtonClicked: true };
+            }
+            return student;
+        });
+
+        setSearchResults(updatedSearchResults);
+
+        const currentStudent = updatedSearchResults.find(student => student.id === id);
+
+        axios.post(`http://fall2324w20g9.int3306.freeddns.org/api/teacher/course/${cid}/addStudent/${id}`, null, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("jwt"),
+            }
+        }).then((response) => {
+            messageApi.open({
+                type: 'success',
+                content: 'Add student succeed',
+                duration: 5,
+            });
+        }).catch((error) => {
+            console.log(error);
+            messageApi.open({
+                type: 'error',
+                content: 'Add student failed',
+                duration: 5,
+            });
+        }).finally(() => {
+            if (currentStudent.isButtonClicked) {
+                return;
+            }
+        });
+    }
+
+    const renderSearchResultsModal = () => {
+        return (
+            <Modal
+                title="Search Results"
+                visible={isButtonClicked}
+                onCancel={() => setIsButtonClicked(false)}
+                footer={[
+                    <Button key="ok" type="primary" onClick={() => {
+                        setIsButtonClicked(false);
+                        window.location.reload();
+                    }}>
+                        OK
+                    </Button>
+                ]}
+            >
+                {
+                    searchResults.length !== 0 ? (
+                        <List
+                            dataSource={searchResults}
+                            renderItem={(item) => (
+                                <List.Item actions={[
+                                    <Button
+                                        className="info-button"
+                                        style={{ width: '80px' }}
+                                        key="info"
+                                        type="primary"
+                                        onClick={() => handleInfoClick(item.user.id)}
+                                    >
+                                        Info
+                                    </Button>,
+                                    <Button
+                                        className="add-button"
+                                        style={{ width: '80px', backgroundColor: 'green', color: 'white' }}
+                                        type="primary"
+                                        onClick={() => handleAddStudent(item.id)}
+                                        disabled={item.isButtonClicked}
+                                    >
+                                        Add
+                                    </Button>
+                                ]}>
+                                    <List.Item.Meta
+                                        title={item.user.name}
+                                        description={item.user.email}
+                                        avatar={<Avatar src={'/storage/' + item.user.ava_url}></Avatar>}
+                                    />
+                                </List.Item>
+                            )}
+                        />
+                    ) : (
+                        <div style={{ minHeight: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            <h6>No Result</h6>
+                        </div>
+                    )
+                }
+            </Modal>
+        );
+    };
+
     return (
         <>
             {contextHolder}
             <div style={{ display: "flex", minHeight: "1000px" }}>
                 <Sidebar cid={cid} isTeacher={isTeacher} selected={"6"}></Sidebar>
-                <div style={{ display: "flex", flex: 1, padding: "20px" }}>
-                    <div style={{ marginLeft: "5vw", width: '30vw' }}>
+                <div style={{ display: "flex", flex: 1, padding: "30px" }}>
+                    {/* Students Section */}
+                    <div style={{ width: '29vw' }}>
                         <Card title="Students">
                             <List
-                                style={{ overflowY: 'scroll', height: '1000px' }}
+                                style={{ height: '1000px' }}
                                 dataSource={students}
                                 renderItem={(item) => (
                                     <List.Item actions={[
@@ -262,16 +335,44 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                         <List.Item.Meta
                                             title={item.user.name}
                                             description={item.user.email}
+                                            avatar={<Avatar src={'/storage/' + item.user.ava_url}></Avatar>}
+
+
                                         />
                                     </List.Item>
                                 )}
                             />
                         </Card>
                     </div>
-                    <div style={{ marginLeft: '20vw', marginRight: "5vw", width: '30vw' }}>
+
+                    {/* Search Section */}
+                    <div style={{ marginRight: '7vw', marginLeft: '7vw', width: '21vw' }}>
+                        <div style={{ marginTop: '30px' }}>
+                            <h5>Add student</h5>
+                            <br />
+                            <Input
+                                style={{ width: '50%' }}
+                                placeholder="Enter student name..."
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <br />
+                            <Button type="primary" style={{ marginTop: '10px' }} onClick={() => {
+                                handleSearchName();
+                                setIsButtonClicked(true)
+                            }}>Search</Button>
+                        </div>
+
+                        {renderSearchResultsModal()}
+
+                    </div>
+
+                    {/* Requests Section */}
+                    <div style={{ width: '29vw' }}>
                         <Card title="Requests" >
                             <List
-                                style={{ overflowY: 'scroll', height: '1000px' }}
+                                style={{ height: '1000px' }}
                                 dataSource={requests}
                                 renderItem={(item) => (
                                     <List.Item actions={[
@@ -284,9 +385,6 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                         >
                                             Accept
                                         </Button>,
-                                        // <Button key="info" onClick={() => handleInfoClick(item.student.user.id)}>
-                                        // Info
-                                        // </Button>,
                                         <Button
                                             className="deny-button"
                                             style={{ background: '#ff3333', color: 'white', width: '80px' }}
@@ -303,6 +401,8 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                                         <List.Item.Meta
                                             title={item.student.user.name}
                                             description={item.student.user.email}
+                                            avatar={<Avatar src={'/storage/' + item.student.user.ava_url}></Avatar>}
+
                                         />
                                     </List.Item>
                                 )}
@@ -312,5 +412,6 @@ export default function RequestList({ isTeacher, checkTokenExpiration }) {
                 </div>
             </div>
         </>
+
     );
 }

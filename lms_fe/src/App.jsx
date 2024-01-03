@@ -27,13 +27,15 @@ import CoursePreview from './Components/CoursePreview';
 import RequestList from './Components/RequestList';
 import Articles from './Components/Articles';
 import CourseCalendar from './Components/CourseCalendar';
+import NoData from './Components/NoData';
+import ChangePassword from './Components/ChangePassword';
+import LessonDetail from './Components/LessonDetail';
 function App() {
   const user = JSON.parse(localStorage.getItem('user'));
   const isTeacher = user && user.role === 'TEACHER' ? true : false;
   const [isLoggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     checkTokenExpiration();
-    console.log(isTeacher);
   }, [isLoggedIn])
 
 
@@ -60,7 +62,7 @@ function App() {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/api/me',
+      url: 'http://fall2324w20g9.int3306.freeddns.org/api/me',
       headers: {
         'Authorization': token,
       }
@@ -68,7 +70,6 @@ function App() {
 
     axios.request(config)
       .then((response) => {
-        console.log('Authorization' + `Bearer ${token}`);
         localStorage.setItem('user', JSON.stringify(response.data));
         setLoggedIn(true)
 
@@ -111,7 +112,7 @@ function App() {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/api/renewJwt',
+      url: 'http://fall2324w20g9.int3306.freeddns.org/api/renewJwt',
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -119,7 +120,6 @@ function App() {
 
     axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         localStorage.setItem('jwt', response.data);
       })
       .catch((error) => {
@@ -174,9 +174,11 @@ function App() {
 
             <Route path='/app/courses/:cid/calendar' element={<CourseCalendar checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher}></CourseCalendar>} />
 
-
+            <Route path='/app/courses/:cid/lesson/:lessonId' element={<LessonDetail checkTokenExpiration={checkTokenExpiration} isTeacher={isTeacher} />} />
+            <Route path='/changePassword' element={<ChangePassword />} />
 
             <Route path="/app/articles" element={<Articles />} />
+            <Route path='*' element={<NoData />}></Route>
           </Routes>
           <Footer />
         </AppProvider>

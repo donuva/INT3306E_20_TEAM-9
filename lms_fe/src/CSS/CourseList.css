@@ -9,10 +9,10 @@
 
 .course-item {
     text-decoration: none;
-    color: black;
+    /* color: black;
     border: 0.05px solid grey;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: hidden; */
 }
 
 .pagination {
