@@ -21,7 +21,7 @@ export default function ChangePassword() {
                 url: 'http://fall2324w20g9.int3306.freeddns.org/api/resetPassword?username=' + username
             };
 
-            message.loading({
+            messageApi.loading({
                 content: "Processing ...",
                 duration: 5
             });
@@ -38,7 +38,7 @@ export default function ChangePassword() {
 
     const onFinish = async () => {
         if (form.getFieldValue('password') != form.getFieldValue('re-password')) {
-            message.error('Re-enter password is not match');
+            messageApi.error('Re-enter password is not match');
             return;
         }
 
@@ -57,13 +57,17 @@ export default function ChangePassword() {
             const url = 'http://fall2324w20g9.int3306.freeddns.org/api/resetPassword'
             axios.post(url, formData)
                 .then(() => {
-                    message.success('Update password successful');
+                    messageApi.success('Update password successful');
                     navigate('/login')
+                })
+                .catch((error) => {
+                    console.log(error);
+                    messageApi.error('Update password failed'+ error.response.data);
                 })
         }
         catch (error) {
             console.error('Update password failed:', error.response.data);
-            message.error('Update password failed: ' + error.response.data);
+            messageApi.error('Update password failed: ' + error.response.data);
         }
     };
 
