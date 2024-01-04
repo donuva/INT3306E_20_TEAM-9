@@ -1,13 +1,13 @@
 <p align="center">
   <br>
   
-  <img width=230px height=116px  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScmAMoBxdCklYrrPCwAisg1xfbmNXOgQLuvw&usqp=CAU" alt="Project logo">
+  <img  src="https://i.imgur.com/hkW4YhJ.png" alt="Project logo">
  
 </p>
 
 ---
 
-<p align="center"> Hệ thống quản lý các trung tâm giáo dục - A Learning Mangment System
+<p align="center">EduHub - Hệ thống quản lý các trung tâm giáo dục (Learning Mangment System)
     <br>
 </p>
 
@@ -74,7 +74,6 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 - [Lược đồ cơ sở dữ liệu](./.docs/schema.md)
 - [Công cụ phát triển](./.docs/tools.md)
 - [Hướng dẫn cài đặt và chạy ứng dụng](./.docs/installation.md)
-- 
 
 ## Minh hoạ
 <!-- | login screen                                        | Courses Screen                          |
