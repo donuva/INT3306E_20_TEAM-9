@@ -7,7 +7,7 @@
 
 ---
 
-<p align="center">EduHub - Hệ thống quản lý các trung tâm giáo dục (Learning Mangment System)
+<p align="center">EduHub - Hệ thống quản lý trung tâm giáo dục (Learning Mangment System)
     <br>
 </p>
 
@@ -15,8 +15,7 @@
 
 - [Giới Thiệu](#Giới-Thiệu)
 - [Tổng Quan](#Tổng-Quan---Chức-Năng-Chính)
-- [Minh hoạ](#Minh-hoạ)
-- [Full Demo](#full-demo)
+- [Chi tiết](#Chi-Tiết)
 
 
 ## Giới Thiệu
@@ -75,18 +74,7 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 - [Công cụ phát triển](./.docs/tools.md)
 - [Hướng dẫn cài đặt và chạy ứng dụng](./.docs/installation.md)
 
-## Minh hoạ
-<!-- | login screen                                        | Courses Screen                          |
-| ----------------------------                        | ----------------------------------------|
-| ![login screen][ref-login]                          | ![courses screen][ref-courses-screen]   |
-| Lectures Screen                                     | Modules Screen                          |
-| ![lectures screen][ref-lectures-screen]             | ![modules screen][ref-modules-screen]   |
-| Assessment Creation Screen                          | Assessment View Screen                  |
-| ![Assessment Creation][ref-assessment-creation]     | ![Assessment View][ref-assessment-view] |
-| Exam taking Screen                                  | Grading Screen                          |
-| ![Exam taking Screen][ref-exam-taking-screen]       | ![Grading Screen][ref-grading-screen]   |
-| Grade Book Screen                                   | Course Settings Screen                  | 
-| ![Grade Book Screen][ref-grade-book-screen]         | ![Course Settings Screen][ref-course-settings-screen] | -->
+
 
 ## Full Demo
 
