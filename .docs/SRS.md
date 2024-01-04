@@ -205,6 +205,28 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
           <li>Click vào đường link dẫn tới bài báo gốc</li>
       </td>
     </tr>
+    <tr>
+      <td rowspan="4">Quên mật khẩu</td>
+      <td>ID</td>
+      <td>AUTH_ChangePassword</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Đổi mật khẩu mới</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Nhập thông tin username</li>
+          <li>Nếu thông tin chính xác, thư chứa code để đổi mật khẩu sẽ được gửi về mail</li>
+          <li>Nhập lại code và nhập mật khẩu mới</li>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -221,7 +243,7 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
     <tr>
       <td rowspan="4">Tạo khóa học</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_001</td>
+      <td>TEACHER_CreateCourse</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -247,9 +269,33 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       </td>
     </tr>
     <tr>
+      <td rowspan="4">Sửa khóa học</td>
+      <td>ID</td>
+      <td>TEACHER_ModifiedCourse</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Sửa thông tin giới thiệu khóa học</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực với tài khoản giảng viên</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Vào khóa học cụ thể</li>
+          <li>Chọn nút "Edit" bên dưới mục "Thông tin giới thiệu khóa học"</li>
+            </ol>
+          </li>
+        </ol>
+      </td>
+    </tr>
+    <tr>
       <td rowspan="4">Đăng bài học</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_002</td>
+      <td>TEACHER_CreateLesson</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -279,7 +325,7 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
     <tr>
       <td rowspan="4">Đăng bài tập</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_003</td>
+      <td>TEACHER_CreateExercise</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -307,13 +353,13 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       </td>
     </tr>
     <tr>
-      <td rowspan="4">Tạo bài kiểm tra</td>
+      <td rowspan="4">Sửa/xóa bài tập</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_004</td>
+      <td>TEACHER_ModifiedExercise</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Tạo bài kiểm tra trắc nghiệm cho một khóa học</td>
+      <td>Sửa/ xóa thông tin bài tập</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -323,26 +369,41 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       <td>Luồng hoạt động</td>
       <td>
         <ol>
-          <li>Chọn tính năng tạo bài kiểm tra</li>
-          <li>Nhập thông tin cho bài kiểm tra, bao gồm: <em>tiêu đề, thời gian làm bài, thời gian bắt đầu, các câu hỏi và đáp án, biểu điểm</em></li>
-          <li>
-            Gửi yêu cầu tạo bài kiểm tra
-            <ol>
-              <li>Thông tin về bài kiểm tra thiếu hoặc không hợp lệ: hiển thị thông báo lỗi</li>
-              <li>Thông tin về bài kiểm tra hợp lệ: thông báo tạo thành công</li>
-            </ol>
-          </li>
+          <li>Chọn bài tập giáo viên muốn sửa/xóa trong exercise List</li>
+          <li>chọn "edit" để sửa, "delete" để xóa bài tập</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="4">Sửa xóa bài học</td>
+      <td>ID</td>
+      <td>TEACHER_ModifiedLesson</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Sửa/ xóa thông tin bài giảng</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực với tài khoản giảng viên và truy cập vào khóa học do mình tạo</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Chọn bài học giáo viên muốn sửa/xóa trong exercise List</li>
+          <li>chọn "edit" để sửa, "delete" để xóa</li>
         </ol>
       </td>
     </tr>
     <tr>
       <td rowspan="4">Thống kê bài tập, bài kiểm tra</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_005</td>
+      <td>TEACHER_CourseScore</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Thống kê số lượng học viên làm bài tập, bài kiểm tra và nội dung bài làm</td>
+      <td>Xem điểm tổng kết và điểm chi tiết của học viên</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -371,13 +432,13 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       </td>
     </tr>
     <tr>
-      <td rowspan="4">Đóng khóa học</td>
+      <td rowspan="4">Tạo thông báo trong khóa học</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_006</td>
+      <td>TEACHER_CourseNotification</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Sau khi đóng khóa học, người dùng chỉ có thể xem, không thể tương tác với khóa học nữa</td>
+      <td>Tạo thông báo cho các học viên trong khóa</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -387,21 +448,39 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       <td>Luồng hoạt động</td>
       <td>
         <ol>
-          <li>Chọn tính năng đóng khóa học</li>
-          <li>
-            Xác nhận đóng khóa học
-            <ol>
-              <li>Đồng ý: đóng khóa học</li>
-              <li>Hủy</li>
-            </ol>
+          <li>Chọn khóa học cụ thể</li>
+          <li>Chọn nút "Notification" bên tay trái 
           </li>
+        </ol>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="4">Tìm kiếm học viên cụ thể</td>
+      <td>ID</td>
+      <td>TEACHER_StudentSearch</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Có thể tìm kiếm theo tên cụ thể của học sinh để thêm vào lớp học</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực với tài khoản giảng viên và truy cập vào khóa học *kín* do mình tạo</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Chọn khóa học cụ thể</li>
+          <li>Chọn nút "Request List" bên trái màn hình  </li>
+          <li>Gõ tên học sinh trong SearchBar, ấn vào "Search" để tìm kiếm học sinh cụ thể trong database </li>
         </ol>
       </td>
     </tr>
     <tr>
       <td rowspan="4">Xử lý yêu cầu tham gia khóa học</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_007</td>
+      <td>TEACHER_CourseEnrollAccept</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -426,13 +505,13 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       </td>
     </tr>
     <tr>
-      <td rowspan="4">Xóa học viên</td>
+      <td rowspan="4">Thêm / Xóa học viên</td>
       <td>ID</td>
-      <td>AUTH_TEACHER_008</td>
+      <td>TEACHER_StudentManagement</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Loại học viên khỏi khóa học</td>
+      <td>Thêm hoặc xoá học viên trong khoá học</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -443,9 +522,9 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
       <td>
         <ol>
           <li>Chọn học viên</li>
-          <li>Chọn tính năng xóa học viên
+          <li>Chọn tính năng xóa / thêm học viên
             <ol>
-              <li>Đồng ý: Loại học viên khỏi khóa học</li>
+              <li>Đồng ý: Thêm / Loại học viên khỏi khóa học</li>
               <li>Hủy</li>
             </ol>
           </li>
@@ -468,9 +547,9 @@ Tác nhân được xếp vào loại này nếu đã đăng nhập thành công
   </thead>
   <tbody>
     <tr>
-      <td rowspan="4">Tham gia khóa học</td>
+      <td rowspan="4">Gửi yêu cầu tham gia khóa học</td>
       <td>ID</td>
-      <td>AUTH_STUDENT_001</td>
+      <td>STUDENT_EnrollRequest</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -490,13 +569,13 @@ Tác nhân được xếp vào loại này nếu đã đăng nhập thành công
       </td>
     </tr>
     <tr>
-      <td rowspan="4">Đánh giá khóa học</td>
+      <td rowspan="4">Xem thông tin giáo viên khóa học</td>
       <td>ID</td>
-      <td>AUTH_STUDENT_002</td>
+      <td>STUDENT_TeacherInfo</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Đánh giá khóa học theo thang điểm 5, đi kèm lời nhận xét(nếu có)</td>
+      <td>Xem thông tin của giảng viên từng môn học cụ thể</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -506,43 +585,19 @@ Tác nhân được xếp vào loại này nếu đã đăng nhập thành công
       <td>Luồng hoạt động</td>
       <td>
         <ol>
-          <li>Chọn tính năng đánh giá</li>
-          <li>Chọn điểm đánh giá và nhập nhận xét</li>
-          <li>Gửi đánh giá</li>
-        </ol>
-      </td>
-    </tr>
-    <tr>
-      <td rowspan="4">Bình luận về bài học</td>
-      <td>ID</td>
-      <td>AUTH_STUDENT_003</td>
-    </tr>
-    <tr>
-      <td>Mô tả</td>
-      <td>Đưa ra câu hỏi, thảo luận bên dưới một bài học</td>
-    </tr>
-    <tr>
-      <td>Điều kiện</td>
-      <td>Đã xác thực với tài khoản học viên</td>
-    </tr>
-    <tr>
-      <td>Luồng hoạt động</td>
-      <td>
-        <ol>
-          <li>Truy cập vào trang bài học</li>
-          <li>Nhập nội dung bình luận</li>
-          <li>Gửi bình luận</li>
+          <li>Chọn một khóa học muốn join vào.</li>
+          <li>Thông tin giảng viên được hiện thị trong màn hình preview</li>
         </ol>
       </td>
     </tr>
     <tr>
       <td rowspan="4">Nộp bài tập</td>
       <td>ID</td>
-      <td>AUTH_STUDENT_004</td>
+      <td>STUDENT_SubmitWork</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Trình bày bài làm và gửi</td>
+      <td>Nộp bài tập để giáo viên chấm điểm</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -552,21 +607,20 @@ Tác nhân được xếp vào loại này nếu đã đăng nhập thành công
       <td>Luồng hoạt động</td>
       <td>
         <ol>
-          <li>Truy cập vào trang bài học</li>
-          <li>Chọn nộp bài tập</li>
-          <li>Trình bày bài làm</li>
-          <li>Chọn nộp</li>
+          <li>Chọn khóa học cụ thể</li>
+          <li>chọn bài tập cụ thể trong danh sách Excercise List</li>
+          <li>Chọn "Submit your work" để nộp</li>
         </ol>
       </td>
     </tr>
     <tr>
-      <td rowspan="4">Làm bài kiểm tra</td>
+      <td rowspan="4">Xem bài tập</td>
       <td>ID</td>
-      <td>AUTH_STUDENT_005</td>
+      <td>STUDENT_ViewExercise</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Trả lời các câu hỏi trắc nghiệm</td>
+      <td>Xem lại và sửa bài nộp</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
@@ -576,10 +630,31 @@ Tác nhân được xếp vào loại này nếu đã đăng nhập thành công
       <td>Luồng hoạt động</td>
       <td>
         <ol>
-          <li>Chọn bài kiểm tra trong khóa học</li>
-          <li>Chọn đáp án hoặc nhập đáp án cho mỗi câu hỏi trắc nghiệm</li>
-          <li>Nộp bài</li>
-          <li>Xem điểm</li>
+          <li>Chọn khóa học cụ thể</li>
+          <li>Chọn bài tập cụ thể trong danh sách Excercise List</li>
+          <li>Chọn "Open file" để xem lại , chọn "edit" để sửa bài nộp</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="4">Xem điểm cá nhân</td>
+      <td>ID</td>
+      <td>STUDENT_Gradebook</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Xem lại bài làm và điểm của mình</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực với tài khoản học viên</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Chọn khóa học cụ thể</li>
+          <li>Chọn "Grade" để xem lại bài và điểm bài đó </li>
         </ol>
       </td>
     </tr>
