@@ -62,7 +62,7 @@ export default function ChangePassword() {
                 })
                 .catch((error) => {
                     console.log(error);
-                    messageApi.error('Update password failed'+ error.response.data);
+                    messageApi.error('Update password failed: ' + error.response.data);
                 })
         }
         catch (error) {
