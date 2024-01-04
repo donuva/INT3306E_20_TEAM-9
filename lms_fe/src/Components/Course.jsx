@@ -75,19 +75,19 @@ export default function Course({ checkTokenExpiration, isTeacher }) {
   };
 
   return (
-    <div>
+    <div >
       <h1 style={{ marginTop: '30px', marginBottom: '30px' }}>Courses List</h1>
 
       {isTeacher === true &&
         <Link to={'/app/create-course'}>
-          <Button type='primary'>Create new course</Button>
+          <Button type='primary' style={{ marginBottom: '50px' }}>Create new course</Button>
         </Link>
       }
       {
         pageInfo.totalElements == 0 &&
         <NoData />
       }
-      <div className="course-grid">
+      <div className="course-grid" style={{ minHeight: '800px' }}>
         {courses.map((course) => (
           <Link to={`/app/courses/${course.id}`} key={course.id} className='course-item'>
             <Card

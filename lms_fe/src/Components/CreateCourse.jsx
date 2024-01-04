@@ -46,18 +46,18 @@ function CreateCourse({ checkTokenExpiration }) {
     })
       .then((response) => {
         // Xử lý kết quả sau khi tạo khóa học thành công
-        message.success('Lecture added successfully!');
-
+        message.success('Course created successfully!');
+        navigate('/app/courses');
       })
       .catch((error) => {
-        console.error('Error adding lecture:', error);
-        message.error('Failed to add lecture');
+        console.error('Error adding course:', error);
+        message.error('Failed to add course!');
       });
   };
 
   return (
 
-    <div style={{ margin: 'auto', marginTop: '20px', marginBottom: '20px', maxWidth: '40vw' }}>
+    <div style={{ margin: 'auto', marginTop: '50px', marginBottom: '20px', maxWidth: '40vw', minHeight: '800px' }}>
       <Card title="Create a New Course" hoverable>
         <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item label="Course Name" name="name" rules={[{ required: true, message: 'Please input the course name!' }]}>
