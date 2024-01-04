@@ -34,7 +34,7 @@ Tác nhân được xếp vào loại này nếu chưa đăng nhập.
     <tr>
       <td rowspan="4">Đăng ký</td>
       <td>ID</td>
-      <td>UNAUTH_001</td>
+      <td>UNAUTH_Signup</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -64,7 +64,7 @@ Tác nhân được xếp vào loại này nếu chưa đăng nhập.
     <tr>
       <td rowspan="4">Đăng nhập</td>
       <td>ID</td>
-      <td>UNAUTH_002</td>
+      <td>UNAUTH_Login</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -91,78 +91,33 @@ Tác nhân được xếp vào loại này nếu chưa đăng nhập.
       </td>
     </tr>
     <tr>
-      <td rowspan="4">Tìm kiếm và xem thông tin khóa học</td>
+      <td rowspan="4">Quên mật khâu</td>
       <td>ID</td>
-      <td>UNAUTH_003</td>
+      <td>UNAUTH_ResetPassword</td>
     </tr>
     <tr>
       <td>Mô tả</td>
-      <td>Tìm kiếm khóa học dựa trên những tiêu chí như <em>tên khóa học, giảng viên, chủ đề ...</em></td>
+      <td>Quên mật khẩu khi đăng nhập</td>
     </tr>
     <tr>
       <td>Điều kiện</td>
-      <td>Không</td>
+      <td>Người dùng chưa xác thực</td>
     </tr>
     <tr>
       <td>Luồng hoạt động</td>
       <td>
         <ol>
-          <li>Nhập tiêu chí tìm kiếm khóa học</li>
-          <li>Gửi yêu cầu tìm kiếm</li>
+          <li>Nhập thông tin đăng nhập (username)</li>
+          <li>Nếu thông tin chính xác, thư chứa code để đổi mật khẩu sẽ được gửi về mail</li>
+          <li>Nhập lại code và nhập mật khẩu mới
           </li>
-          <li>Điều hướng đến trang hiển thị kết quả tìm kiếm</li>
-          <li>Nếu kết quả tìm kiếm không rỗng, chọn lấy một để xem thông tin khóa học đó</li>
         </ol>
       </td>
     </tr>
-    <tr>
-      <td rowspan="4">Tìm kiếm và xem thông tin người dùng</td>
-      <td>ID</td>
-      <td>UNAUTH_004</td>
-    </tr>
-    <tr>
-      <td>Mô tả</td>
-      <td>Tìm kiếm người dùng dựa theo tên</td>
-    </tr>
-    <tr>
-      <td>Điều kiện</td>
-      <td>Không</td>
-    </tr>
-    <tr>
-      <td>Luồng hoạt động</td>
-      <td>
-        <ol>
-          <li>Nhập tên người dùng cần tìm</li>
-          <li>Gửi yêu cầu tìm kiếm</li>
-          </li>
-          <li>Điều hướng đến trang hiển thị kết quả tìm kiếm</li>
-          <li>Nếu kết quả tìm kiếm không rỗng, chọn lấy một để xem thông tin về người dùng đó</li>
-        </ol>
-      </td>
-    </tr>
-    <tr>
-      <td rowspan="5">Xem tin tức</td>
-      <td>ID</td>
-      <td>UNAUTH_005</td>
-    </tr>
-    <tr>
-      <td>Mô tả</td>
-      <td>Theo dõi tin tức liên quan đến Giáo dục.</td>
-    </tr>
-    <tr>
-      <td>Điều kiện</td>
-      <td>Không</td>
-    </tr>
-    <tr>
-      <td>Luồng hoạt động</td>
-      <td>
-        Hiển thị các bài báo liên quan đến Giáo dục trong nước (tổng hợp từ VNExpress). Mỗi tin có tiêu đề, tóm tắt & ảnh minh hoạ.
-      </td>
-    </tr>
+
   </tbody>
 </table>
 
-**_Lưu ý:_** Tính năng tìm kiếm luôn khả dụng cho dù tác nhân đã xác thực hay chưa.
 
 ## **Đã xác thực**
 
@@ -181,7 +136,7 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
     <tr>
       <td rowspan="4">Đăng xuất</td>
       <td>ID</td>
-      <td>AUTH_001</td>
+      <td>AUTH_Logout</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -203,7 +158,7 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
     <tr>
       <td rowspan="4">Sửa thông tin tài khoản</td>
       <td>ID</td>
-      <td>AUTH_002</td>
+      <td>AUTH_ProfileInfoEdit</td>
     </tr>
     <tr>
       <td>Mô tả</td>
@@ -227,6 +182,27 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
             </ol>
           </li>
         </ol>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="4">Xem báo giáo dục tổng hợp</td>
+      <td>ID</td>
+      <td>AUTH_Articles</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Xem các thông tin tổng hợp từ nguồn báo VnExpress về giáo dục</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Chọn mục Articles</li>
+          <li>Click vào đường link dẫn tới bài báo gốc</li>
       </td>
     </tr>
   </tbody>
