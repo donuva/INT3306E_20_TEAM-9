@@ -227,6 +227,48 @@ Các tính năng trong bảng ngay dưới đây áp dụng cho bất cứ ngư�
           <li>Nhập lại code và nhập mật khẩu mới</li>
       </td>
     </tr>
+    <tr>
+      <td rowspan="4">Xem sự kiện sắp tới</td>
+      <td>ID</td>
+      <td>AUTH_Calendar</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Xem các thông báo hiển thị trong lịch, hạn nộp bài tập, bài kiểm tra</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Chọn khóa học cụ thể</li>
+          <li>Vào mục Calender để xem các thông báo hiển thị trong lịch, hạn nộp bài tập, bài kiểm tra</li>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="4">Thảo luận</td>
+      <td>ID</td>
+      <td>AUTH_Conversation</td>
+    </tr>
+    <tr>
+      <td>Mô tả</td>
+      <td>Tạo các hội thoại trong khóa học</td>
+    </tr>
+    <tr>
+      <td>Điều kiện</td>
+      <td>Đã xác thực</td>
+    </tr>
+    <tr>
+      <td>Luồng hoạt động</td>
+      <td>
+        <ol>
+          <li>Chọn khóa học cụ thể</li>
+          <li>Truy cập Discussion</li>
+      </td>
+    </tr>
   </tbody>
 </table>
 
