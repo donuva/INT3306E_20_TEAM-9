@@ -68,6 +68,7 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 
 ## Chi Tiết
 
+- [Slide thuyết trình](https://docs.google.com/presentation/d/1SRcoPh-gWgNj7zBD9eHhCGioIoxsI_Ci88gqBudCC-8/edit?usp=sharing)
 - [Đặc tả yêu cầu](./.docs/SRS.md)
 - [Thiết kế giao diện](https://www.figma.com/file/63NtzLAeJcc4K0naM92C0P/Education-Management-System?type=design&node-id=0%3A1&mode=design&t=N8Az3P8c6qr1EGbq-1)
 - [Lược đồ cơ sở dữ liệu](./.docs/schema.md)
