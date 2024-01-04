@@ -1,5 +1,14 @@
 # Lược đồ cơ sở dữ liệu
 
+## ER Diagram
+
+<p align="center">
+  <br>
+  
+  <img  src="./ERD.png" alt="Project logo">
+ 
+</p>
+
 ## Các chức năng
 
 ### Dùng chung
