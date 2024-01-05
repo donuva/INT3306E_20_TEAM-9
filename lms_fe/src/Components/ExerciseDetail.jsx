@@ -374,9 +374,9 @@ const ExerciseDetail = ({ checkTokenExpiration, isTeacher }) => {
                             <Button type="primary" onClick={handleUpdate}>
                                 Edit
                             </Button>
-                            <Button type="primary" style={{ backgroundColor: 'red' }} onClick={handleDelete}>
+                            {/* <Button type="primary" style={{ backgroundColor: 'red' }} onClick={handleDelete}>
                                 Delete
-                            </Button>
+                            </Button> */}
                         </Space>
                     )}
 
