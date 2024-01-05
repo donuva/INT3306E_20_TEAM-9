@@ -32,7 +32,7 @@ public class LessonController {
 
     @PostMapping("/api/teacher/course/lesson")
     @ResponseStatus(HttpStatus.OK)
-    public void createLesson(@ModelAttribute LessonDTO lessonDTO, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+    public void createLesson(@ModelAttribute LessonDTO lessonDTO, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         if (file!=null) {
             String filename = file.getOriginalFilename();
             assert filename != null;
